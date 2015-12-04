@@ -37,7 +37,8 @@ func (o *GetSubscriptionByAccountIDReader) ReadResponse(response client.Response
 	}
 }
 
-/*
+/*GetSubscriptionByAccountIDOK
+
 success
 */
 type GetSubscriptionByAccountIDOK struct {
@@ -56,7 +57,8 @@ func (o *GetSubscriptionByAccountIDOK) readResponse(response client.Response, co
 	return nil
 }
 
-/*
+/*GetSubscriptionByAccountIDInternalServerError
+
 error
 */
 type GetSubscriptionByAccountIDInternalServerError struct {

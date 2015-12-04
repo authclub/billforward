@@ -41,6 +41,24 @@ func (a *Client) CreateAccount(params CreateAccountParams) (*CreateAccountOK, er
 	return result.(*CreateAccountOK), nil
 }
 
+/*Delete the account specified by the account-ID parameter.
+
+{"nickname":"Retire","response":"deleteAccount.html"}
+*/
+func (a *Client) DeleteAccount(params DeleteAccountParams) (*DeleteAccountOK, error) {
+	// TODO: Validate the params before sending
+
+	result, err := a.transport.Submit(&client.Operation{
+		ID:     "deleteAccount",
+		Params: &params,
+		Reader: &DeleteAccountReader{formats: a.formats},
+	})
+	if err != nil {
+		return nil, err
+	}
+	return result.(*DeleteAccountOK), nil
+}
+
 /*Returns a single account, specified by the account-ID parameter.
 
 {"nickname":"Retrieve an existing account","response":"getAccountByID.html"}

@@ -37,7 +37,8 @@ func (o *CreateAccountReader) ReadResponse(response client.Response, consumer ht
 	}
 }
 
-/*
+/*CreateAccountOK
+
 success
 */
 type CreateAccountOK struct {
@@ -56,7 +57,8 @@ func (o *CreateAccountOK) readResponse(response client.Response, consumer httpki
 	return nil
 }
 
-/*
+/*CreateAccountInternalServerError
+
 error
 */
 type CreateAccountInternalServerError struct {

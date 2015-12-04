@@ -37,7 +37,8 @@ func (o *GetAllAccountsReader) ReadResponse(response client.Response, consumer h
 	}
 }
 
-/*
+/*GetAllAccountsOK
+
 success
 */
 type GetAllAccountsOK struct {
@@ -56,7 +57,8 @@ func (o *GetAllAccountsOK) readResponse(response client.Response, consumer httpk
 	return nil
 }
 
-/*
+/*GetAllAccountsInternalServerError
+
 error
 */
 type GetAllAccountsInternalServerError struct {

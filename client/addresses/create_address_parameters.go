@@ -11,13 +11,14 @@ import (
 	"github.com/authclub/billforward/models"
 )
 
-/*
-CreateAddressParams contains all the parameters to send to the API endpoint
+/*CreateAddressParams contains all the parameters to send to the API endpoint
 for the create address operation typically these are written to a http.Request
 */
 type CreateAddressParams struct {
-	/*
+
+	/*Request
 	  The address object to be created.
+
 	*/
 	Request *models.CreateAddressRequest
 }

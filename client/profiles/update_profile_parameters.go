@@ -11,13 +11,14 @@ import (
 	"github.com/authclub/billforward/models"
 )
 
-/*
-UpdateProfileParams contains all the parameters to send to the API endpoint
+/*UpdateProfileParams contains all the parameters to send to the API endpoint
 for the update profile operation typically these are written to a http.Request
 */
 type UpdateProfileParams struct {
-	/*
+
+	/*Request
 	  The profile object to be updated.
+
 	*/
 	Request *models.UpdateProfileRequest
 }

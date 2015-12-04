@@ -37,7 +37,8 @@ func (o *GetAccountByIDReader) ReadResponse(response client.Response, consumer h
 	}
 }
 
-/*
+/*GetAccountByIDOK
+
 success
 */
 type GetAccountByIDOK struct {
@@ -56,7 +57,8 @@ func (o *GetAccountByIDOK) readResponse(response client.Response, consumer httpk
 	return nil
 }
 
-/*
+/*GetAccountByIDInternalServerError
+
 error
 */
 type GetAccountByIDInternalServerError struct {

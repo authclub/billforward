@@ -10,17 +10,19 @@ import (
 	"github.com/go-swagger/go-swagger/swag"
 )
 
-/*
-GetInvoiceAsPDFParams contains all the parameters to send to the API endpoint
+/*GetInvoiceAsPDFParams contains all the parameters to send to the API endpoint
 for the get invoice as p d f operation typically these are written to a http.Request
 */
 type GetInvoiceAsPDFParams struct {
-	/*
+
+	/*ID
 	  The ID of the invoice.
+
 	*/
 	ID string
-	/*
+	/*TierBreakdown
 	  Whether to provide a breakdown of charge tiering.
+
 	*/
 	TierBreakdown bool
 }

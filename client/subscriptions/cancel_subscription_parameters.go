@@ -11,14 +11,16 @@ import (
 	"github.com/authclub/billforward/models"
 )
 
-/*
-CancelSubscriptionParams contains all the parameters to send to the API endpoint
+/*CancelSubscriptionParams contains all the parameters to send to the API endpoint
 for the cancel subscription operation typically these are written to a http.Request
 */
 type CancelSubscriptionParams struct {
+
+	/*SubscriptionID*/
 	SubscriptionID string
-	/*
+	/*SubscriptionCancellation
 	  The cancellation request
+
 	*/
 	SubscriptionCancellation *models.MutableBillingEntity
 }

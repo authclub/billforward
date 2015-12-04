@@ -37,7 +37,8 @@ func (o *GetAllProductsReader) ReadResponse(response client.Response, consumer h
 	}
 }
 
-/*
+/*GetAllProductsOK
+
 success
 */
 type GetAllProductsOK struct {
@@ -56,7 +57,8 @@ func (o *GetAllProductsOK) readResponse(response client.Response, consumer httpk
 	return nil
 }
 
-/*
+/*GetAllProductsInternalServerError
+
 error
 */
 type GetAllProductsInternalServerError struct {

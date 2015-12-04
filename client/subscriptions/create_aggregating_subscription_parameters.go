@@ -11,11 +11,12 @@ import (
 	"github.com/authclub/billforward/models"
 )
 
-/*
-CreateAggregatingSubscriptionParams contains all the parameters to send to the API endpoint
+/*CreateAggregatingSubscriptionParams contains all the parameters to send to the API endpoint
 for the create aggregating subscription operation typically these are written to a http.Request
 */
 type CreateAggregatingSubscriptionParams struct {
+
+	/*Request*/
 	Request *models.CreateAggregatingSubscriptionRequest
 }
 

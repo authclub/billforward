@@ -11,11 +11,12 @@ import (
 	"github.com/authclub/billforward/models"
 )
 
-/*
-BatchCreateSubscriptionsParams contains all the parameters to send to the API endpoint
+/*BatchCreateSubscriptionsParams contains all the parameters to send to the API endpoint
 for the batch create subscriptions operation typically these are written to a http.Request
 */
 type BatchCreateSubscriptionsParams struct {
+
+	/*Request*/
 	Request *models.CreateSubscriptionBatchRequest
 }
 

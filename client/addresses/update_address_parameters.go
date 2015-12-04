@@ -11,13 +11,14 @@ import (
 	"github.com/authclub/billforward/models"
 )
 
-/*
-UpdateAddressParams contains all the parameters to send to the API endpoint
+/*UpdateAddressParams contains all the parameters to send to the API endpoint
 for the update address operation typically these are written to a http.Request
 */
 type UpdateAddressParams struct {
-	/*
+
+	/*Request
 	  The address object to be created.
+
 	*/
 	Request *models.UpdateAddressRequest
 }

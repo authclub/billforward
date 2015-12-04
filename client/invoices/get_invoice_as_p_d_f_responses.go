@@ -37,7 +37,8 @@ func (o *GetInvoiceAsPDFReader) ReadResponse(response client.Response, consumer 
 	}
 }
 
-/*
+/*GetInvoiceAsPDFOK
+
 pdf file of the invoice
 */
 type GetInvoiceAsPDFOK struct {
@@ -54,7 +55,8 @@ func (o *GetInvoiceAsPDFOK) readResponse(response client.Response, consumer http
 	return nil
 }
 
-/*
+/*GetInvoiceAsPDFInternalServerError
+
 error
 */
 type GetInvoiceAsPDFInternalServerError struct {

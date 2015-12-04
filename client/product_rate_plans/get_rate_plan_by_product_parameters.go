@@ -10,35 +10,41 @@ import (
 	"github.com/go-swagger/go-swagger/swag"
 )
 
-/*
-GetRatePlanByProductParams contains all the parameters to send to the API endpoint
+/*GetRatePlanByProductParams contains all the parameters to send to the API endpoint
 for the get rate plan by product operation typically these are written to a http.Request
 */
 type GetRatePlanByProductParams struct {
-	/*
+
+	/*IncludeRetired
 	  Whether retired products should be returned.
+
 	*/
 	IncludeRetired bool
-	/*
+	/*Offset
 	  The offset from the first product-rate-plan to return.
+
 	*/
 	Offset int32
-	/*
+	/*Order
 	  Ihe direction of any ordering, either ASC or DESC.
+
 	*/
 	Order string
-	/*
+	/*OrderBy
 	  Specify a field used to order the result set.
+
 	*/
 	OrderBy string
-	/*
+	/*Organizations
 	  A list of organization-IDs used to restrict the scope of API calls.
+
 	*/
 	Organizations []string
-
+	/*ProductID*/
 	ProductID string
-	/*
+	/*Records
 	  The maximum number of product-rate-plans to return.
+
 	*/
 	Records int32
 }

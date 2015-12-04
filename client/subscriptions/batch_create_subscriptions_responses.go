@@ -37,7 +37,8 @@ func (o *BatchCreateSubscriptionsReader) ReadResponse(response client.Response, 
 	}
 }
 
-/*
+/*BatchCreateSubscriptionsOK
+
 success
 */
 type BatchCreateSubscriptionsOK struct {
@@ -56,7 +57,8 @@ func (o *BatchCreateSubscriptionsOK) readResponse(response client.Response, cons
 	return nil
 }
 
-/*
+/*BatchCreateSubscriptionsInternalServerError
+
 error
 */
 type BatchCreateSubscriptionsInternalServerError struct {

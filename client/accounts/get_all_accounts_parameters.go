@@ -10,43 +10,51 @@ import (
 	"github.com/go-swagger/go-swagger/swag"
 )
 
-/*
-GetAllAccountsParams contains all the parameters to send to the API endpoint
+/*GetAllAccountsParams contains all the parameters to send to the API endpoint
 for the get all accounts operation typically these are written to a http.Request
 */
 type GetAllAccountsParams struct {
-	/*
+
+	/*Ids
 	  A list of account IDs used to filter the output.
+
 	*/
 	Ids []string
-	/*
+	/*IncludeRetired
 	  Whether retired products should be returned.
+
 	*/
 	IncludeRetired bool
-
+	/*Metadata*/
 	Metadata string
-	/*
+	/*Offset
 	  The offset from the first taxation-link to return.
+
 	*/
 	Offset int32
-	/*
+	/*Order
 	  Ihe direction of any ordering, either ASC or DESC.
+
 	*/
 	Order string
-	/*
+	/*OrderBy
 	  Specify a field used to order the result set.
+
 	*/
 	OrderBy string
-	/*
+	/*Organizations
 	  A list of organization-IDs used to restrict the scope of API calls.
+
 	*/
 	Organizations []string
-	/*
+	/*Records
 	  The maximum number of taxation-links to return.
+
 	*/
 	Records int32
-	/*
+	/*UsersOnly
 	  Whether only accounts have a user should be returned.
+
 	*/
 	UsersOnly bool
 }

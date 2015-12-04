@@ -10,19 +10,22 @@ import (
 	"github.com/go-swagger/go-swagger/swag"
 )
 
-/*GetAccountByIDParams contains all the parameters to send to the API endpoint
-for the get account by ID operation typically these are written to a http.Request
+/*DeleteAccountParams contains all the parameters to send to the API endpoint
+for the delete account operation typically these are written to a http.Request
 */
-type GetAccountByIDParams struct {
+type DeleteAccountParams struct {
 
 	/*AccountID*/
 	AccountID string
-	/*Organizations*/
+	/*Organizations
+	  A list of organization-IDs used to restrict the scope of API calls.
+
+	*/
 	Organizations []string
 }
 
 // WriteToRequest writes these params to a swagger request
-func (o *GetAccountByIDParams) WriteToRequest(r client.Request, reg strfmt.Registry) error {
+func (o *DeleteAccountParams) WriteToRequest(r client.Request, reg strfmt.Registry) error {
 
 	var res []error
 

@@ -37,7 +37,8 @@ func (o *GetInvoicesByAccountIDReader) ReadResponse(response client.Response, co
 	}
 }
 
-/*
+/*GetInvoicesByAccountIDOK
+
 success
 */
 type GetInvoicesByAccountIDOK struct {
@@ -56,7 +57,8 @@ func (o *GetInvoicesByAccountIDOK) readResponse(response client.Response, consum
 	return nil
 }
 
-/*
+/*GetInvoicesByAccountIDInternalServerError
+
 error
 */
 type GetInvoicesByAccountIDInternalServerError struct {
