@@ -7,114 +7,83 @@ import (
 	"encoding/json"
 
 	strfmt "github.com/go-openapi/strfmt"
-	"github.com/go-openapi/swag"
 
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
 
-/*Notification Notification
-
-swagger:model Notification
-*/
+// Notification Notification
+// swagger:model Notification
 type Notification struct {
 
-	/* { "description" : "If true notifications will continue to be sent until an acknowledgment is received.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "If true notifications will continue to be sent until an acknowledgment is received.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	AckEnabled bool `json:"ackEnabled"`
 
-	/* { "description" : "The UTC DateTime when the notification was acked if it is ack enabled.", "verbs":["POST","PUT","GET"] }
-	 */
+	// { "description" : "The UTC DateTime when the notification was acked if it is ack enabled.", "verbs":["POST","PUT","GET"] }
 	Acked strfmt.DateTime `json:"acked,omitempty"`
 
-	/* { "description" : "The action associated with the notification.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "The action associated with the notification.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	Action *string `json:"action"`
 
-	/* { "description" : "ID of the user who last updated the entity.", "verbs":[] }
-	 */
+	// { "description" : "ID of the user who last updated the entity.", "verbs":[] }
 	ChangedBy string `json:"changedBy,omitempty"`
 
-	/* changes
-	 */
-	Changes []strfmt.Base64 `json:"changes,omitempty"`
+	// changes
+	Changes []strfmt.Base64 `json:"changes"`
 
-	/* { "description" : "The UTC DateTime when the object was created.", "verbs":[] }
-	 */
+	// { "description" : "The UTC DateTime when the object was created.", "verbs":[] }
 	Created strfmt.DateTime `json:"created,omitempty"`
 
-	/* { "description" : "The URL the notification will be sent to.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "The URL the notification will be sent to.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	DestinationURL *string `json:"destinationURL"`
 
-	/* { "description" : "The domain of the notification.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "The domain of the notification.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	Domain *string `json:"domain"`
 
-	/* entity
-	 */
-	Entity []strfmt.Base64 `json:"entity,omitempty"`
+	// entity
+	Entity []strfmt.Base64 `json:"entity"`
 
-	/* { "description" : "The id of the entity associated with the notification.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "The id of the entity associated with the notification.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	EntityID *string `json:"entityID"`
 
-	/* { "description" : "The UTC DateTime of the notification's final send attempt.", "verbs":["POST","PUT","GET"] }
-	 */
+	// { "description" : "The UTC DateTime of the notification's final send attempt.", "verbs":["POST","PUT","GET"] }
 	FinalSendAttempt strfmt.DateTime `json:"finalSendAttempt,omitempty"`
 
-	/* { "description" : "Format of the notification.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "Format of the notification.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	Format *string `json:"format"`
 
-	/* { "description" : "ID of the notification.", "verbs":["POST","PUT","GET"] }
-	 */
+	// { "description" : "ID of the notification.", "verbs":["POST","PUT","GET"] }
 	ID string `json:"id,omitempty"`
 
-	/* { "description" : "The UTC DateTime of the notifications's last send attempt.", "verbs":["POST","PUT","GET"] }
-	 */
+	// { "description" : "The UTC DateTime of the notifications's last send attempt.", "verbs":["POST","PUT","GET"] }
 	LastSendAttempt strfmt.DateTime `json:"lastSendAttempt,omitempty"`
 
-	/* { "description" : "The UTC DateTime of the notification's next send attempt.", "verbs":["POST","PUT","GET"] }
-	 */
+	// { "description" : "The UTC DateTime of the notification's next send attempt.", "verbs":["POST","PUT","GET"] }
 	NextSendAttempt strfmt.DateTime `json:"nextSendAttempt,omitempty"`
 
-	/* { "description" : "Organization associated with the notification.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "Organization associated with the notification.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	OrganizationID *string `json:"organizationID"`
 
-	/* { "description" : "Whether the notification has been sent.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "Whether the notification has been sent.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	State *string `json:"state"`
 
-	/* { "description" : "The number of send attempts for this notification.", "verbs":["POST","PUT","GET"] }
-	 */
+	// { "description" : "The number of send attempts for this notification.", "verbs":["POST","PUT","GET"] }
 	TotalSendAttempts int32 `json:"totalSendAttempts,omitempty"`
 
-	/* { "description" : "The UTC DateTime when the object was last updated.", "verbs":[] }
-	 */
+	// { "description" : "The UTC DateTime when the object was last updated.", "verbs":[] }
 	Updated strfmt.DateTime `json:"updated,omitempty"`
 
-	/* { "description" : "Webhook associated with the notification.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "Webhook associated with the notification.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	WebhookID *string `json:"webhookID"`
 }
 
@@ -194,17 +163,69 @@ func (m *Notification) validateAckEnabled(formats strfmt.Registry) error {
 
 var notificationTypeActionPropEnum []interface{}
 
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Accept","Active","AwaitingPayment","AwaitingRefund","Cancelled","Completed","Created","Error","Expiring","Expired","Failed","Migrated","NeedsAmendments","Paid","Pending","Provisioned","Refunded","Reject","Trial","Unknown","Unpaid","Updated","Voided","PaymentFailed"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		notificationTypeActionPropEnum = append(notificationTypeActionPropEnum, v)
+	}
+}
+
+const (
+	// NotificationActionAccept captures enum value "Accept"
+	NotificationActionAccept string = "Accept"
+	// NotificationActionActive captures enum value "Active"
+	NotificationActionActive string = "Active"
+	// NotificationActionAwaitingPayment captures enum value "AwaitingPayment"
+	NotificationActionAwaitingPayment string = "AwaitingPayment"
+	// NotificationActionAwaitingRefund captures enum value "AwaitingRefund"
+	NotificationActionAwaitingRefund string = "AwaitingRefund"
+	// NotificationActionCancelled captures enum value "Cancelled"
+	NotificationActionCancelled string = "Cancelled"
+	// NotificationActionCompleted captures enum value "Completed"
+	NotificationActionCompleted string = "Completed"
+	// NotificationActionCreated captures enum value "Created"
+	NotificationActionCreated string = "Created"
+	// NotificationActionError captures enum value "Error"
+	NotificationActionError string = "Error"
+	// NotificationActionExpiring captures enum value "Expiring"
+	NotificationActionExpiring string = "Expiring"
+	// NotificationActionExpired captures enum value "Expired"
+	NotificationActionExpired string = "Expired"
+	// NotificationActionFailed captures enum value "Failed"
+	NotificationActionFailed string = "Failed"
+	// NotificationActionMigrated captures enum value "Migrated"
+	NotificationActionMigrated string = "Migrated"
+	// NotificationActionNeedsAmendments captures enum value "NeedsAmendments"
+	NotificationActionNeedsAmendments string = "NeedsAmendments"
+	// NotificationActionPaid captures enum value "Paid"
+	NotificationActionPaid string = "Paid"
+	// NotificationActionPending captures enum value "Pending"
+	NotificationActionPending string = "Pending"
+	// NotificationActionProvisioned captures enum value "Provisioned"
+	NotificationActionProvisioned string = "Provisioned"
+	// NotificationActionRefunded captures enum value "Refunded"
+	NotificationActionRefunded string = "Refunded"
+	// NotificationActionReject captures enum value "Reject"
+	NotificationActionReject string = "Reject"
+	// NotificationActionTrial captures enum value "Trial"
+	NotificationActionTrial string = "Trial"
+	// NotificationActionUnknown captures enum value "Unknown"
+	NotificationActionUnknown string = "Unknown"
+	// NotificationActionUnpaid captures enum value "Unpaid"
+	NotificationActionUnpaid string = "Unpaid"
+	// NotificationActionUpdated captures enum value "Updated"
+	NotificationActionUpdated string = "Updated"
+	// NotificationActionVoided captures enum value "Voided"
+	NotificationActionVoided string = "Voided"
+	// NotificationActionPaymentFailed captures enum value "PaymentFailed"
+	NotificationActionPaymentFailed string = "PaymentFailed"
+)
+
 // prop value enum
 func (m *Notification) validateActionEnum(path, location string, value string) error {
-	if notificationTypeActionPropEnum == nil {
-		var res []string
-		if err := json.Unmarshal([]byte(`["Accept","Active","AwaitingPayment","AwaitingRefund","Cancelled","Completed","Created","Error","Expiring","Expired","Failed","Migrated","NeedsAmendments","Paid","Pending","Provisioned","Refunded","Reject","Trial","Unknown","Unpaid","Updated","Voided","PaymentFailed"]`), &res); err != nil {
-			return err
-		}
-		for _, v := range res {
-			notificationTypeActionPropEnum = append(notificationTypeActionPropEnum, v)
-		}
-	}
 	if err := validate.Enum(path, location, value, notificationTypeActionPropEnum); err != nil {
 		return err
 	}
@@ -245,17 +266,229 @@ func (m *Notification) validateDestinationURL(formats strfmt.Registry) error {
 
 var notificationTypeDomainPropEnum []interface{}
 
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Notification","Organization","OrganizationGateway","Product","User","Subscription","Profile","ProductRatePlan","Client","Invoice","PricingComponentValue","Account","PricingComponentValueChange","PricingComponentTier","PricingComponent","PricingCalculation","Coupon","CouponDiscount","CouponDefinition","CouponInstance","CouponModifier","CouponRule","CouponBookDefinition","CouponBook","InvoiceLine","Webhook","WebhookSubscription","SubscriptionCancellation","NotificationSnapshot","InvoicePayment","Payment","PaymentMethod","PaymentMethodSubscriptionLink","DunningLine","CybersourceToken","Card","Alias","PaypalSimplePaymentReconciliation","FreePaymentReconciliation","LocustworldPaymentReconciliation","CouponInstanceExistingValue","TaxLine","TaxationStrategy","TaxationLink","Address","AmendmentPriceNTime","Authority","UnitOfMeasure","SearchResult","Amendment","AuditLog","Password","Username","FixedTermDefinition","FixedTerm","Refund","CreditNote","Receipt","AmendmentCompoundConstituent","APIConfiguration","StripeToken","BraintreeToken","BalancedToken","AuthorizeNetToken","PaypalToken","SpreedlyToken","SagePayToken","TrustCommerceToken","PayVisionToken","SagePayOutstandingTransaction","SagePayEnabledCardType","SagePayTransaction","GatewayRevenue","Migration","AdhocSubscription","SubscriptionCharge","ComponentChange","Verification","UsageRoundingStrategies","PricingComponentValueMigrationChargeAmendmentMapping","AmendmentDiscardAmendment","EntityTime","AggregatingComponent","PricingComponentMigrationValue","MetadataKeyValue","Metadata","AggregationLink","BFPermission","Role","PermissionLink","PayVisionTransaction","KashToken","DataSynchronizationJob","DataSynchronizationJobError","DataSynchronizationConfiguration","DataSynchronizationAppConfiguration","AggregationChildrenResponse","InvoiceLinePayment","EmailSubscription","EmailProvider","TimeResponse","Email","RevenueAttribution","Unknown"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		notificationTypeDomainPropEnum = append(notificationTypeDomainPropEnum, v)
+	}
+}
+
+const (
+	// NotificationDomainNotification captures enum value "Notification"
+	NotificationDomainNotification string = "Notification"
+	// NotificationDomainOrganization captures enum value "Organization"
+	NotificationDomainOrganization string = "Organization"
+	// NotificationDomainOrganizationGateway captures enum value "OrganizationGateway"
+	NotificationDomainOrganizationGateway string = "OrganizationGateway"
+	// NotificationDomainProduct captures enum value "Product"
+	NotificationDomainProduct string = "Product"
+	// NotificationDomainUser captures enum value "User"
+	NotificationDomainUser string = "User"
+	// NotificationDomainSubscription captures enum value "Subscription"
+	NotificationDomainSubscription string = "Subscription"
+	// NotificationDomainProfile captures enum value "Profile"
+	NotificationDomainProfile string = "Profile"
+	// NotificationDomainProductRatePlan captures enum value "ProductRatePlan"
+	NotificationDomainProductRatePlan string = "ProductRatePlan"
+	// NotificationDomainClient captures enum value "Client"
+	NotificationDomainClient string = "Client"
+	// NotificationDomainInvoice captures enum value "Invoice"
+	NotificationDomainInvoice string = "Invoice"
+	// NotificationDomainPricingComponentValue captures enum value "PricingComponentValue"
+	NotificationDomainPricingComponentValue string = "PricingComponentValue"
+	// NotificationDomainAccount captures enum value "Account"
+	NotificationDomainAccount string = "Account"
+	// NotificationDomainPricingComponentValueChange captures enum value "PricingComponentValueChange"
+	NotificationDomainPricingComponentValueChange string = "PricingComponentValueChange"
+	// NotificationDomainPricingComponentTier captures enum value "PricingComponentTier"
+	NotificationDomainPricingComponentTier string = "PricingComponentTier"
+	// NotificationDomainPricingComponent captures enum value "PricingComponent"
+	NotificationDomainPricingComponent string = "PricingComponent"
+	// NotificationDomainPricingCalculation captures enum value "PricingCalculation"
+	NotificationDomainPricingCalculation string = "PricingCalculation"
+	// NotificationDomainCoupon captures enum value "Coupon"
+	NotificationDomainCoupon string = "Coupon"
+	// NotificationDomainCouponDiscount captures enum value "CouponDiscount"
+	NotificationDomainCouponDiscount string = "CouponDiscount"
+	// NotificationDomainCouponDefinition captures enum value "CouponDefinition"
+	NotificationDomainCouponDefinition string = "CouponDefinition"
+	// NotificationDomainCouponInstance captures enum value "CouponInstance"
+	NotificationDomainCouponInstance string = "CouponInstance"
+	// NotificationDomainCouponModifier captures enum value "CouponModifier"
+	NotificationDomainCouponModifier string = "CouponModifier"
+	// NotificationDomainCouponRule captures enum value "CouponRule"
+	NotificationDomainCouponRule string = "CouponRule"
+	// NotificationDomainCouponBookDefinition captures enum value "CouponBookDefinition"
+	NotificationDomainCouponBookDefinition string = "CouponBookDefinition"
+	// NotificationDomainCouponBook captures enum value "CouponBook"
+	NotificationDomainCouponBook string = "CouponBook"
+	// NotificationDomainInvoiceLine captures enum value "InvoiceLine"
+	NotificationDomainInvoiceLine string = "InvoiceLine"
+	// NotificationDomainWebhook captures enum value "Webhook"
+	NotificationDomainWebhook string = "Webhook"
+	// NotificationDomainWebhookSubscription captures enum value "WebhookSubscription"
+	NotificationDomainWebhookSubscription string = "WebhookSubscription"
+	// NotificationDomainSubscriptionCancellation captures enum value "SubscriptionCancellation"
+	NotificationDomainSubscriptionCancellation string = "SubscriptionCancellation"
+	// NotificationDomainNotificationSnapshot captures enum value "NotificationSnapshot"
+	NotificationDomainNotificationSnapshot string = "NotificationSnapshot"
+	// NotificationDomainInvoicePayment captures enum value "InvoicePayment"
+	NotificationDomainInvoicePayment string = "InvoicePayment"
+	// NotificationDomainPayment captures enum value "Payment"
+	NotificationDomainPayment string = "Payment"
+	// NotificationDomainPaymentMethod captures enum value "PaymentMethod"
+	NotificationDomainPaymentMethod string = "PaymentMethod"
+	// NotificationDomainPaymentMethodSubscriptionLink captures enum value "PaymentMethodSubscriptionLink"
+	NotificationDomainPaymentMethodSubscriptionLink string = "PaymentMethodSubscriptionLink"
+	// NotificationDomainDunningLine captures enum value "DunningLine"
+	NotificationDomainDunningLine string = "DunningLine"
+	// NotificationDomainCybersourceToken captures enum value "CybersourceToken"
+	NotificationDomainCybersourceToken string = "CybersourceToken"
+	// NotificationDomainCard captures enum value "Card"
+	NotificationDomainCard string = "Card"
+	// NotificationDomainAlias captures enum value "Alias"
+	NotificationDomainAlias string = "Alias"
+	// NotificationDomainPaypalSimplePaymentReconciliation captures enum value "PaypalSimplePaymentReconciliation"
+	NotificationDomainPaypalSimplePaymentReconciliation string = "PaypalSimplePaymentReconciliation"
+	// NotificationDomainFreePaymentReconciliation captures enum value "FreePaymentReconciliation"
+	NotificationDomainFreePaymentReconciliation string = "FreePaymentReconciliation"
+	// NotificationDomainLocustworldPaymentReconciliation captures enum value "LocustworldPaymentReconciliation"
+	NotificationDomainLocustworldPaymentReconciliation string = "LocustworldPaymentReconciliation"
+	// NotificationDomainCouponInstanceExistingValue captures enum value "CouponInstanceExistingValue"
+	NotificationDomainCouponInstanceExistingValue string = "CouponInstanceExistingValue"
+	// NotificationDomainTaxLine captures enum value "TaxLine"
+	NotificationDomainTaxLine string = "TaxLine"
+	// NotificationDomainTaxationStrategy captures enum value "TaxationStrategy"
+	NotificationDomainTaxationStrategy string = "TaxationStrategy"
+	// NotificationDomainTaxationLink captures enum value "TaxationLink"
+	NotificationDomainTaxationLink string = "TaxationLink"
+	// NotificationDomainAddress captures enum value "Address"
+	NotificationDomainAddress string = "Address"
+	// NotificationDomainAmendmentPriceNTime captures enum value "AmendmentPriceNTime"
+	NotificationDomainAmendmentPriceNTime string = "AmendmentPriceNTime"
+	// NotificationDomainAuthority captures enum value "Authority"
+	NotificationDomainAuthority string = "Authority"
+	// NotificationDomainUnitOfMeasure captures enum value "UnitOfMeasure"
+	NotificationDomainUnitOfMeasure string = "UnitOfMeasure"
+	// NotificationDomainSearchResult captures enum value "SearchResult"
+	NotificationDomainSearchResult string = "SearchResult"
+	// NotificationDomainAmendment captures enum value "Amendment"
+	NotificationDomainAmendment string = "Amendment"
+	// NotificationDomainAuditLog captures enum value "AuditLog"
+	NotificationDomainAuditLog string = "AuditLog"
+	// NotificationDomainPassword captures enum value "Password"
+	NotificationDomainPassword string = "Password"
+	// NotificationDomainUsername captures enum value "Username"
+	NotificationDomainUsername string = "Username"
+	// NotificationDomainFixedTermDefinition captures enum value "FixedTermDefinition"
+	NotificationDomainFixedTermDefinition string = "FixedTermDefinition"
+	// NotificationDomainFixedTerm captures enum value "FixedTerm"
+	NotificationDomainFixedTerm string = "FixedTerm"
+	// NotificationDomainRefund captures enum value "Refund"
+	NotificationDomainRefund string = "Refund"
+	// NotificationDomainCreditNote captures enum value "CreditNote"
+	NotificationDomainCreditNote string = "CreditNote"
+	// NotificationDomainReceipt captures enum value "Receipt"
+	NotificationDomainReceipt string = "Receipt"
+	// NotificationDomainAmendmentCompoundConstituent captures enum value "AmendmentCompoundConstituent"
+	NotificationDomainAmendmentCompoundConstituent string = "AmendmentCompoundConstituent"
+	// NotificationDomainAPIConfiguration captures enum value "APIConfiguration"
+	NotificationDomainAPIConfiguration string = "APIConfiguration"
+	// NotificationDomainStripeToken captures enum value "StripeToken"
+	NotificationDomainStripeToken string = "StripeToken"
+	// NotificationDomainBraintreeToken captures enum value "BraintreeToken"
+	NotificationDomainBraintreeToken string = "BraintreeToken"
+	// NotificationDomainBalancedToken captures enum value "BalancedToken"
+	NotificationDomainBalancedToken string = "BalancedToken"
+	// NotificationDomainAuthorizeNetToken captures enum value "AuthorizeNetToken"
+	NotificationDomainAuthorizeNetToken string = "AuthorizeNetToken"
+	// NotificationDomainPaypalToken captures enum value "PaypalToken"
+	NotificationDomainPaypalToken string = "PaypalToken"
+	// NotificationDomainSpreedlyToken captures enum value "SpreedlyToken"
+	NotificationDomainSpreedlyToken string = "SpreedlyToken"
+	// NotificationDomainSagePayToken captures enum value "SagePayToken"
+	NotificationDomainSagePayToken string = "SagePayToken"
+	// NotificationDomainTrustCommerceToken captures enum value "TrustCommerceToken"
+	NotificationDomainTrustCommerceToken string = "TrustCommerceToken"
+	// NotificationDomainPayVisionToken captures enum value "PayVisionToken"
+	NotificationDomainPayVisionToken string = "PayVisionToken"
+	// NotificationDomainSagePayOutstandingTransaction captures enum value "SagePayOutstandingTransaction"
+	NotificationDomainSagePayOutstandingTransaction string = "SagePayOutstandingTransaction"
+	// NotificationDomainSagePayEnabledCardType captures enum value "SagePayEnabledCardType"
+	NotificationDomainSagePayEnabledCardType string = "SagePayEnabledCardType"
+	// NotificationDomainSagePayTransaction captures enum value "SagePayTransaction"
+	NotificationDomainSagePayTransaction string = "SagePayTransaction"
+	// NotificationDomainGatewayRevenue captures enum value "GatewayRevenue"
+	NotificationDomainGatewayRevenue string = "GatewayRevenue"
+	// NotificationDomainMigration captures enum value "Migration"
+	NotificationDomainMigration string = "Migration"
+	// NotificationDomainAdhocSubscription captures enum value "AdhocSubscription"
+	NotificationDomainAdhocSubscription string = "AdhocSubscription"
+	// NotificationDomainSubscriptionCharge captures enum value "SubscriptionCharge"
+	NotificationDomainSubscriptionCharge string = "SubscriptionCharge"
+	// NotificationDomainComponentChange captures enum value "ComponentChange"
+	NotificationDomainComponentChange string = "ComponentChange"
+	// NotificationDomainVerification captures enum value "Verification"
+	NotificationDomainVerification string = "Verification"
+	// NotificationDomainUsageRoundingStrategies captures enum value "UsageRoundingStrategies"
+	NotificationDomainUsageRoundingStrategies string = "UsageRoundingStrategies"
+	// NotificationDomainPricingComponentValueMigrationChargeAmendmentMapping captures enum value "PricingComponentValueMigrationChargeAmendmentMapping"
+	NotificationDomainPricingComponentValueMigrationChargeAmendmentMapping string = "PricingComponentValueMigrationChargeAmendmentMapping"
+	// NotificationDomainAmendmentDiscardAmendment captures enum value "AmendmentDiscardAmendment"
+	NotificationDomainAmendmentDiscardAmendment string = "AmendmentDiscardAmendment"
+	// NotificationDomainEntityTime captures enum value "EntityTime"
+	NotificationDomainEntityTime string = "EntityTime"
+	// NotificationDomainAggregatingComponent captures enum value "AggregatingComponent"
+	NotificationDomainAggregatingComponent string = "AggregatingComponent"
+	// NotificationDomainPricingComponentMigrationValue captures enum value "PricingComponentMigrationValue"
+	NotificationDomainPricingComponentMigrationValue string = "PricingComponentMigrationValue"
+	// NotificationDomainMetadataKeyValue captures enum value "MetadataKeyValue"
+	NotificationDomainMetadataKeyValue string = "MetadataKeyValue"
+	// NotificationDomainMetadata captures enum value "Metadata"
+	NotificationDomainMetadata string = "Metadata"
+	// NotificationDomainAggregationLink captures enum value "AggregationLink"
+	NotificationDomainAggregationLink string = "AggregationLink"
+	// NotificationDomainBFPermission captures enum value "BFPermission"
+	NotificationDomainBFPermission string = "BFPermission"
+	// NotificationDomainRole captures enum value "Role"
+	NotificationDomainRole string = "Role"
+	// NotificationDomainPermissionLink captures enum value "PermissionLink"
+	NotificationDomainPermissionLink string = "PermissionLink"
+	// NotificationDomainPayVisionTransaction captures enum value "PayVisionTransaction"
+	NotificationDomainPayVisionTransaction string = "PayVisionTransaction"
+	// NotificationDomainKashToken captures enum value "KashToken"
+	NotificationDomainKashToken string = "KashToken"
+	// NotificationDomainDataSynchronizationJob captures enum value "DataSynchronizationJob"
+	NotificationDomainDataSynchronizationJob string = "DataSynchronizationJob"
+	// NotificationDomainDataSynchronizationJobError captures enum value "DataSynchronizationJobError"
+	NotificationDomainDataSynchronizationJobError string = "DataSynchronizationJobError"
+	// NotificationDomainDataSynchronizationConfiguration captures enum value "DataSynchronizationConfiguration"
+	NotificationDomainDataSynchronizationConfiguration string = "DataSynchronizationConfiguration"
+	// NotificationDomainDataSynchronizationAppConfiguration captures enum value "DataSynchronizationAppConfiguration"
+	NotificationDomainDataSynchronizationAppConfiguration string = "DataSynchronizationAppConfiguration"
+	// NotificationDomainAggregationChildrenResponse captures enum value "AggregationChildrenResponse"
+	NotificationDomainAggregationChildrenResponse string = "AggregationChildrenResponse"
+	// NotificationDomainInvoiceLinePayment captures enum value "InvoiceLinePayment"
+	NotificationDomainInvoiceLinePayment string = "InvoiceLinePayment"
+	// NotificationDomainEmailSubscription captures enum value "EmailSubscription"
+	NotificationDomainEmailSubscription string = "EmailSubscription"
+	// NotificationDomainEmailProvider captures enum value "EmailProvider"
+	NotificationDomainEmailProvider string = "EmailProvider"
+	// NotificationDomainTimeResponse captures enum value "TimeResponse"
+	NotificationDomainTimeResponse string = "TimeResponse"
+	// NotificationDomainEmail captures enum value "Email"
+	NotificationDomainEmail string = "Email"
+	// NotificationDomainRevenueAttribution captures enum value "RevenueAttribution"
+	NotificationDomainRevenueAttribution string = "RevenueAttribution"
+	// NotificationDomainUnknown captures enum value "Unknown"
+	NotificationDomainUnknown string = "Unknown"
+)
+
 // prop value enum
 func (m *Notification) validateDomainEnum(path, location string, value string) error {
-	if notificationTypeDomainPropEnum == nil {
-		var res []string
-		if err := json.Unmarshal([]byte(`["Notification","Organization","OrganizationGateway","Product","User","Subscription","Profile","ProductRatePlan","Client","Invoice","PricingComponentValue","Account","PricingComponentValueChange","PricingComponentTier","PricingComponent","PricingCalculation","Coupon","CouponDiscount","CouponDefinition","CouponInstance","CouponModifier","CouponRule","CouponBookDefinition","CouponBook","InvoiceLine","Webhook","WebhookSubscription","SubscriptionCancellation","NotificationSnapshot","InvoicePayment","Payment","PaymentMethod","PaymentMethodSubscriptionLink","DunningLine","CybersourceToken","Card","Alias","PaypalSimplePaymentReconciliation","FreePaymentReconciliation","LocustworldPaymentReconciliation","CouponInstanceExistingValue","TaxLine","TaxationStrategy","TaxationLink","Address","AmendmentPriceNTime","Authority","UnitOfMeasure","SearchResult","Amendment","AuditLog","Password","Username","FixedTermDefinition","FixedTerm","Refund","CreditNote","Receipt","AmendmentCompoundConstituent","APIConfiguration","StripeToken","BraintreeToken","BalancedToken","AuthorizeNetToken","PaypalToken","SpreedlyToken","SagePayToken","TrustCommerceToken","PayVisionToken","SagePayOutstandingTransaction","SagePayEnabledCardType","SagePayTransaction","GatewayRevenue","Migration","AdhocSubscription","SubscriptionCharge","ComponentChange","Verification","UsageRoundingStrategies","PricingComponentValueMigrationChargeAmendmentMapping","AmendmentDiscardAmendment","EntityTime","AggregatingComponent","PricingComponentMigrationValue","MetadataKeyValue","Metadata","AggregationLink","BFPermission","Role","PermissionLink","PayVisionTransaction","KashToken","DataSynchronizationJob","DataSynchronizationJobError","DataSynchronizationConfiguration","DataSynchronizationAppConfiguration","AggregationChildrenResponse","InvoiceLinePayment","EmailSubscription","EmailProvider","TimeResponse","Email","RevenueAttribution","Unknown"]`), &res); err != nil {
-			return err
-		}
-		for _, v := range res {
-			notificationTypeDomainPropEnum = append(notificationTypeDomainPropEnum, v)
-		}
-	}
 	if err := validate.Enum(path, location, value, notificationTypeDomainPropEnum); err != nil {
 		return err
 	}
@@ -296,17 +529,25 @@ func (m *Notification) validateEntityID(formats strfmt.Registry) error {
 
 var notificationTypeFormatPropEnum []interface{}
 
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["JSON","XML"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		notificationTypeFormatPropEnum = append(notificationTypeFormatPropEnum, v)
+	}
+}
+
+const (
+	// NotificationFormatJSON captures enum value "JSON"
+	NotificationFormatJSON string = "JSON"
+	// NotificationFormatXML captures enum value "XML"
+	NotificationFormatXML string = "XML"
+)
+
 // prop value enum
 func (m *Notification) validateFormatEnum(path, location string, value string) error {
-	if notificationTypeFormatPropEnum == nil {
-		var res []string
-		if err := json.Unmarshal([]byte(`["JSON","XML"]`), &res); err != nil {
-			return err
-		}
-		for _, v := range res {
-			notificationTypeFormatPropEnum = append(notificationTypeFormatPropEnum, v)
-		}
-	}
 	if err := validate.Enum(path, location, value, notificationTypeFormatPropEnum); err != nil {
 		return err
 	}
@@ -338,17 +579,27 @@ func (m *Notification) validateOrganizationID(formats strfmt.Registry) error {
 
 var notificationTypeStatePropEnum []interface{}
 
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Unsent","Sending","Sent"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		notificationTypeStatePropEnum = append(notificationTypeStatePropEnum, v)
+	}
+}
+
+const (
+	// NotificationStateUnsent captures enum value "Unsent"
+	NotificationStateUnsent string = "Unsent"
+	// NotificationStateSending captures enum value "Sending"
+	NotificationStateSending string = "Sending"
+	// NotificationStateSent captures enum value "Sent"
+	NotificationStateSent string = "Sent"
+)
+
 // prop value enum
 func (m *Notification) validateStateEnum(path, location string, value string) error {
-	if notificationTypeStatePropEnum == nil {
-		var res []string
-		if err := json.Unmarshal([]byte(`["Unsent","Sending","Sent"]`), &res); err != nil {
-			return err
-		}
-		for _, v := range res {
-			notificationTypeStatePropEnum = append(notificationTypeStatePropEnum, v)
-		}
-	}
 	if err := validate.Enum(path, location, value, notificationTypeStatePropEnum); err != nil {
 		return err
 	}

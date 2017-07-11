@@ -10,84 +10,61 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-/*Address Address
-
-swagger:model Address
-*/
+// Address Address
+// swagger:model Address
 type Address struct {
 
-	/* { "description" : "", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	AddressLine1 *string `json:"addressLine1"`
 
-	/* { "description" : "", "verbs":["POST","PUT","GET"] }
-	 */
+	// { "description" : "", "verbs":["POST","PUT","GET"] }
 	AddressLine2 string `json:"addressLine2,omitempty"`
 
-	/* { "description" : "", "verbs":["POST","PUT","GET"] }
-	 */
+	// { "description" : "", "verbs":["POST","PUT","GET"] }
 	AddressLine3 string `json:"addressLine3,omitempty"`
 
-	/* { "description" : "ID of the user who last updated the entity.", "verbs":[] }
-	 */
+	// { "description" : "ID of the user who last updated the entity.", "verbs":[] }
 	ChangedBy string `json:"changedBy,omitempty"`
 
-	/* { "description" : "", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	City *string `json:"city"`
 
-	/* { "description" : "", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	Country *string `json:"country"`
 
-	/* { "description" : "The UTC DateTime when the object was created.", "verbs":[] }
-	 */
+	// { "description" : "The UTC DateTime when the object was created.", "verbs":[] }
 	Created strfmt.DateTime `json:"created,omitempty"`
 
-	/* { "description" : "", "verbs":["GET"] }
-	 */
+	// { "description" : "", "verbs":["GET"] }
 	Deleted *bool `json:"deleted,omitempty"`
 
-	/* { "description" : "", "verbs":["PUT","GET"] }
-	 */
+	// { "description" : "", "verbs":["PUT","GET"] }
 	ID string `json:"id,omitempty"`
 
-	/* { "description" : "Phone number", "verbs":["POST","PUT","GET"] }
-	 */
+	// { "description" : "Phone number", "verbs":["POST","PUT","GET"] }
 	Landline string `json:"landline,omitempty"`
 
-	/* { "description" : "", "verbs":[] }
-	 */
+	// { "description" : "", "verbs":[] }
 	OrganizationID string `json:"organizationID,omitempty"`
 
-	/* { "description" : "ZIP code or postcode.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "ZIP code or postcode.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	Postcode *string `json:"postcode"`
 
-	/* { "description" : "Is this the primary, default, address for the associated profile?", "verbs":["POST","PUT","GET"] }
-	 */
+	// { "description" : "Is this the primary, default, address for the associated profile?", "verbs":["POST","PUT","GET"] }
 	PrimaryAddress *bool `json:"primaryAddress,omitempty"`
 
-	/* { "description" : "", "verbs":["GET"] }
-	 */
+	// { "description" : "", "verbs":["GET"] }
 	ProfileID string `json:"profileID,omitempty"`
 
-	/* { "description" : "", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	Province *string `json:"province"`
 
-	/* { "description" : "The UTC DateTime when the object was last updated.", "verbs":[] }
-	 */
+	// { "description" : "The UTC DateTime when the object was last updated.", "verbs":[] }
 	Updated strfmt.DateTime `json:"updated,omitempty"`
 }
 

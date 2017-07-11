@@ -5,6 +5,7 @@ package models
 
 import (
 	"bytes"
+	"encoding/json"
 	"io"
 	"io/ioutil"
 
@@ -13,69 +14,56 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-/*AuthCaptureRequest [Note: this request can be built automatically by our client-side card capture library, <a href="https://github.com/billforward/billforward-js">BillForward.js</a>; you should not need to interact with this API manually unless you have particularly bespoke requirements] This entity is used for requesting that BillForward produce a PaymentMethod, linked to a funding instrument you have vaulted in some payment gateway. The BillForward PaymentMethod will be associated with a BillForward Account of your choosing (or a newly-created Account, if preferred).
-
-swagger:discriminator AuthCaptureRequest @type
-*/
+// AuthCaptureRequest [Note: this request can be built automatically by our client-side card capture library, <a href="https://github.com/billforward/billforward-js">BillForward.js</a>; you should not need to interact with this API manually unless you have particularly bespoke requirements] This entity is used for requesting that BillForward produce a PaymentMethod, linked to a funding instrument you have vaulted in some payment gateway. The BillForward PaymentMethod will be associated with a BillForward Account of your choosing (or a newly-created Account, if preferred).
+// swagger:discriminator AuthCaptureRequest @type
 type AuthCaptureRequest interface {
 	runtime.Validatable
 
-	/* at type
-
-	Required: true
-	*/
+	// at type
+	// Required: true
 	AtType() string
 	SetAtType(string)
 
-	/* {"description":"ID of the BillForward Account with which you would like to associate the created payment method.<br>If omitted, BillForward will associate the created PaymentMethod with a newly-created Account, whose Profile details will be populated using billing information from the funding instrument.","verbs":["POST"]}
-	 */
+	// {"description":"ID of the BillForward Account with which you would like to associate the created payment method.<br>If omitted, BillForward will associate the created PaymentMethod with a newly-created Account, whose Profile details will be populated using billing information from the funding instrument.","verbs":["POST"]}
 	AccountID() string
 	SetAccountID(string)
 
-	/* {"description":"The name of the company of the customer from whose card a PaymentMethod is being produced. If provided: this metadata will be used to populate a Profile &mdash; should a BillForward Account be created by this request.","verbs":["POST"]}
-	 */
+	// {"description":"The name of the company of the customer from whose card a PaymentMethod is being produced. If provided: this metadata will be used to populate a Profile &mdash; should a BillForward Account be created by this request.","verbs":["POST"]}
 	CompanyName() string
 	SetCompanyName(string)
 
-	/* {"default":false,"description":"Whether the PaymentMethod produced by this request should be elected as the 'default' payment method for the concerned BillForward Account. Whichever PaymentMethod is elected as an Account's default payment method, will be consulted whenever payment is demanded of that Account (i.e. upon the execution of any of the Account's invoices).","verbs":["POST"]}
-	 */
+	// {"default":false,"description":"Whether the PaymentMethod produced by this request should be elected as the 'default' payment method for the concerned BillForward Account. Whichever PaymentMethod is elected as an Account's default payment method, will be consulted whenever payment is demanded of that Account (i.e. upon the execution of any of the Account's invoices).","verbs":["POST"]}
 	DefaultPaymentMethod() *bool
 	SetDefaultPaymentMethod(*bool)
 
-	/* {"description":"The email address of the customer from whose card a PaymentMethod is being produced. If provided: this metadata will be used to populate a Profile &mdash; should a BillForward Account be created by this request.","verbs":["POST"]}
-	 */
+	// {"description":"The email address of the customer from whose card a PaymentMethod is being produced. If provided: this metadata will be used to populate a Profile &mdash; should a BillForward Account be created by this request.","verbs":["POST"]}
 	Email() string
 	SetEmail(string)
 
-	/* {"description":"The first name of the customer from whose card a PaymentMethod is being produced. If provided: this metadata will be used to populate a Profile &mdash; should a BillForward Account be created by this request.","verbs":["POST"]}
-	 */
+	// {"description":"The first name of the customer from whose card a PaymentMethod is being produced. If provided: this metadata will be used to populate a Profile &mdash; should a BillForward Account be created by this request.","verbs":["POST"]}
 	FirstName() string
 	SetFirstName(string)
 
-	/* {"description":"The gateway with which your funding instrument has been vaulted.","verbs":["POST"]}
-	 */
+	// {"description":"The gateway with which your funding instrument has been vaulted.","verbs":["POST"]}
 	Gateway() string
 	SetGateway(string)
 
-	/* {"description":"The last name of the customer from whose card a PaymentMethod is being produced. If provided: this metadata will be used to populate a Profile &mdash; should a BillForward Account be created by this request.","verbs":["POST"]}
-	 */
+	// {"description":"The last name of the customer from whose card a PaymentMethod is being produced. If provided: this metadata will be used to populate a Profile &mdash; should a BillForward Account be created by this request.","verbs":["POST"]}
 	LastName() string
 	SetLastName(string)
 
-	/* {"description":"The mobile phone number of the customer from whose card a PaymentMethod is being produced. If provided: this metadata will be used to populate a Profile &mdash; should a BillForward Account be created by this request.","verbs":["POST"]}
-	 */
+	// {"description":"The mobile phone number of the customer from whose card a PaymentMethod is being produced. If provided: this metadata will be used to populate a Profile &mdash; should a BillForward Account be created by this request.","verbs":["POST"]}
 	Mobile() string
 	SetMobile(string)
 
-	/* {"description":"ID of the BillForward Organization within which the requested PaymentMethod should be created. If omitted, this will be auto-populated using your authentication credentials.","verbs":["POST"]}
-	 */
+	// {"description":"ID of the BillForward Organization within which the requested PaymentMethod should be created. If omitted, this will be auto-populated using your authentication credentials.","verbs":["POST"]}
 	OrganizationID() string
 	SetOrganizationID(string)
 }
 
 // UnmarshalAuthCaptureRequestSlice unmarshals polymorphic slices of AuthCaptureRequest
 func UnmarshalAuthCaptureRequestSlice(reader io.Reader, consumer runtime.Consumer) ([]AuthCaptureRequest, error) {
-	var elements [][]byte
+	var elements []json.RawMessage
 	if err := consumer.Consume(reader, &elements); err != nil {
 		return nil, err
 	}

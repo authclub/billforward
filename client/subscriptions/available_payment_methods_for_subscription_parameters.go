@@ -4,8 +4,14 @@ package subscriptions
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"net/http"
+	"time"
+
+	"golang.org/x/net/context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
+	cr "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/swag"
 
 	strfmt "github.com/go-openapi/strfmt"
@@ -15,16 +21,74 @@ import (
 // with the default values initialized.
 func NewAvailablePaymentMethodsForSubscriptionParams() *AvailablePaymentMethodsForSubscriptionParams {
 	var (
-		offsetDefault  int32  = int32(0)
-		orderDefault   string = string("DESC")
-		orderByDefault string = string("id")
-		recordsDefault int32  = int32(10)
+		offsetDefault  = int32(0)
+		orderDefault   = string("DESC")
+		orderByDefault = string("id")
+		recordsDefault = int32(10)
 	)
 	return &AvailablePaymentMethodsForSubscriptionParams{
 		Offset:  &offsetDefault,
 		Order:   &orderDefault,
 		OrderBy: &orderByDefault,
 		Records: &recordsDefault,
+
+		timeout: cr.DefaultTimeout,
+	}
+}
+
+// NewAvailablePaymentMethodsForSubscriptionParamsWithTimeout creates a new AvailablePaymentMethodsForSubscriptionParams object
+// with the default values initialized, and the ability to set a timeout on a request
+func NewAvailablePaymentMethodsForSubscriptionParamsWithTimeout(timeout time.Duration) *AvailablePaymentMethodsForSubscriptionParams {
+	var (
+		offsetDefault  = int32(0)
+		orderDefault   = string("DESC")
+		orderByDefault = string("id")
+		recordsDefault = int32(10)
+	)
+	return &AvailablePaymentMethodsForSubscriptionParams{
+		Offset:  &offsetDefault,
+		Order:   &orderDefault,
+		OrderBy: &orderByDefault,
+		Records: &recordsDefault,
+
+		timeout: timeout,
+	}
+}
+
+// NewAvailablePaymentMethodsForSubscriptionParamsWithContext creates a new AvailablePaymentMethodsForSubscriptionParams object
+// with the default values initialized, and the ability to set a context for a request
+func NewAvailablePaymentMethodsForSubscriptionParamsWithContext(ctx context.Context) *AvailablePaymentMethodsForSubscriptionParams {
+	var (
+		offsetDefault  = int32(0)
+		orderDefault   = string("DESC")
+		orderByDefault = string("id")
+		recordsDefault = int32(10)
+	)
+	return &AvailablePaymentMethodsForSubscriptionParams{
+		Offset:  &offsetDefault,
+		Order:   &orderDefault,
+		OrderBy: &orderByDefault,
+		Records: &recordsDefault,
+
+		Context: ctx,
+	}
+}
+
+// NewAvailablePaymentMethodsForSubscriptionParamsWithHTTPClient creates a new AvailablePaymentMethodsForSubscriptionParams object
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
+func NewAvailablePaymentMethodsForSubscriptionParamsWithHTTPClient(client *http.Client) *AvailablePaymentMethodsForSubscriptionParams {
+	var (
+		offsetDefault  = int32(0)
+		orderDefault   = string("DESC")
+		orderByDefault = string("id")
+		recordsDefault = int32(10)
+	)
+	return &AvailablePaymentMethodsForSubscriptionParams{
+		Offset:     &offsetDefault,
+		Order:      &orderDefault,
+		OrderBy:    &orderByDefault,
+		Records:    &recordsDefault,
+		HTTPClient: client,
 	}
 }
 
@@ -60,47 +124,117 @@ type AvailablePaymentMethodsForSubscriptionParams struct {
 	Records *int32
 	/*SubscriptionID*/
 	SubscriptionID string
+
+	timeout    time.Duration
+	Context    context.Context
+	HTTPClient *http.Client
+}
+
+// WithTimeout adds the timeout to the available payment methods for subscription params
+func (o *AvailablePaymentMethodsForSubscriptionParams) WithTimeout(timeout time.Duration) *AvailablePaymentMethodsForSubscriptionParams {
+	o.SetTimeout(timeout)
+	return o
+}
+
+// SetTimeout adds the timeout to the available payment methods for subscription params
+func (o *AvailablePaymentMethodsForSubscriptionParams) SetTimeout(timeout time.Duration) {
+	o.timeout = timeout
+}
+
+// WithContext adds the context to the available payment methods for subscription params
+func (o *AvailablePaymentMethodsForSubscriptionParams) WithContext(ctx context.Context) *AvailablePaymentMethodsForSubscriptionParams {
+	o.SetContext(ctx)
+	return o
+}
+
+// SetContext adds the context to the available payment methods for subscription params
+func (o *AvailablePaymentMethodsForSubscriptionParams) SetContext(ctx context.Context) {
+	o.Context = ctx
+}
+
+// WithHTTPClient adds the HTTPClient to the available payment methods for subscription params
+func (o *AvailablePaymentMethodsForSubscriptionParams) WithHTTPClient(client *http.Client) *AvailablePaymentMethodsForSubscriptionParams {
+	o.SetHTTPClient(client)
+	return o
+}
+
+// SetHTTPClient adds the HTTPClient to the available payment methods for subscription params
+func (o *AvailablePaymentMethodsForSubscriptionParams) SetHTTPClient(client *http.Client) {
+	o.HTTPClient = client
 }
 
 // WithOffset adds the offset to the available payment methods for subscription params
-func (o *AvailablePaymentMethodsForSubscriptionParams) WithOffset(Offset *int32) *AvailablePaymentMethodsForSubscriptionParams {
-	o.Offset = Offset
+func (o *AvailablePaymentMethodsForSubscriptionParams) WithOffset(offset *int32) *AvailablePaymentMethodsForSubscriptionParams {
+	o.SetOffset(offset)
 	return o
+}
+
+// SetOffset adds the offset to the available payment methods for subscription params
+func (o *AvailablePaymentMethodsForSubscriptionParams) SetOffset(offset *int32) {
+	o.Offset = offset
 }
 
 // WithOrder adds the order to the available payment methods for subscription params
-func (o *AvailablePaymentMethodsForSubscriptionParams) WithOrder(Order *string) *AvailablePaymentMethodsForSubscriptionParams {
-	o.Order = Order
+func (o *AvailablePaymentMethodsForSubscriptionParams) WithOrder(order *string) *AvailablePaymentMethodsForSubscriptionParams {
+	o.SetOrder(order)
 	return o
+}
+
+// SetOrder adds the order to the available payment methods for subscription params
+func (o *AvailablePaymentMethodsForSubscriptionParams) SetOrder(order *string) {
+	o.Order = order
 }
 
 // WithOrderBy adds the orderBy to the available payment methods for subscription params
-func (o *AvailablePaymentMethodsForSubscriptionParams) WithOrderBy(OrderBy *string) *AvailablePaymentMethodsForSubscriptionParams {
-	o.OrderBy = OrderBy
+func (o *AvailablePaymentMethodsForSubscriptionParams) WithOrderBy(orderBy *string) *AvailablePaymentMethodsForSubscriptionParams {
+	o.SetOrderBy(orderBy)
 	return o
+}
+
+// SetOrderBy adds the orderBy to the available payment methods for subscription params
+func (o *AvailablePaymentMethodsForSubscriptionParams) SetOrderBy(orderBy *string) {
+	o.OrderBy = orderBy
 }
 
 // WithOrganizations adds the organizations to the available payment methods for subscription params
-func (o *AvailablePaymentMethodsForSubscriptionParams) WithOrganizations(Organizations []string) *AvailablePaymentMethodsForSubscriptionParams {
-	o.Organizations = Organizations
+func (o *AvailablePaymentMethodsForSubscriptionParams) WithOrganizations(organizations []string) *AvailablePaymentMethodsForSubscriptionParams {
+	o.SetOrganizations(organizations)
 	return o
+}
+
+// SetOrganizations adds the organizations to the available payment methods for subscription params
+func (o *AvailablePaymentMethodsForSubscriptionParams) SetOrganizations(organizations []string) {
+	o.Organizations = organizations
 }
 
 // WithRecords adds the records to the available payment methods for subscription params
-func (o *AvailablePaymentMethodsForSubscriptionParams) WithRecords(Records *int32) *AvailablePaymentMethodsForSubscriptionParams {
-	o.Records = Records
+func (o *AvailablePaymentMethodsForSubscriptionParams) WithRecords(records *int32) *AvailablePaymentMethodsForSubscriptionParams {
+	o.SetRecords(records)
 	return o
 }
 
-// WithSubscriptionID adds the subscriptionId to the available payment methods for subscription params
-func (o *AvailablePaymentMethodsForSubscriptionParams) WithSubscriptionID(SubscriptionID string) *AvailablePaymentMethodsForSubscriptionParams {
-	o.SubscriptionID = SubscriptionID
+// SetRecords adds the records to the available payment methods for subscription params
+func (o *AvailablePaymentMethodsForSubscriptionParams) SetRecords(records *int32) {
+	o.Records = records
+}
+
+// WithSubscriptionID adds the subscriptionID to the available payment methods for subscription params
+func (o *AvailablePaymentMethodsForSubscriptionParams) WithSubscriptionID(subscriptionID string) *AvailablePaymentMethodsForSubscriptionParams {
+	o.SetSubscriptionID(subscriptionID)
 	return o
+}
+
+// SetSubscriptionID adds the subscriptionId to the available payment methods for subscription params
+func (o *AvailablePaymentMethodsForSubscriptionParams) SetSubscriptionID(subscriptionID string) {
+	o.SubscriptionID = subscriptionID
 }
 
 // WriteToRequest writes these params to a swagger request
 func (o *AvailablePaymentMethodsForSubscriptionParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
+	if err := r.SetTimeout(o.timeout); err != nil {
+		return err
+	}
 	var res []error
 
 	if o.Offset != nil {

@@ -42,11 +42,14 @@ func (a *Client) CreateWebhook(params *CreateWebhookParams) (*CreateWebhookOK, e
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &CreateWebhookReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*CreateWebhookOK), nil
+
 }
 
 /*
@@ -69,11 +72,14 @@ func (a *Client) CreateWebhookV2(params *CreateWebhookV2Params) (*CreateWebhookV
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &CreateWebhookV2Reader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*CreateWebhookV2OK), nil
+
 }
 
 /*
@@ -96,11 +102,14 @@ func (a *Client) GetAllWebhooks(params *GetAllWebhooksParams) (*GetAllWebhooksOK
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &GetAllWebhooksReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*GetAllWebhooksOK), nil
+
 }
 
 /*
@@ -123,11 +132,14 @@ func (a *Client) GetWebhookByID(params *GetWebhookByIDParams) (*GetWebhookByIDOK
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &GetWebhookByIDReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*GetWebhookByIDOK), nil
+
 }
 
 /*
@@ -150,11 +162,14 @@ func (a *Client) RetireWebhook(params *RetireWebhookParams) (*RetireWebhookOK, e
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &RetireWebhookReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*RetireWebhookOK), nil
+
 }
 
 // SetTransport changes the transport on the client

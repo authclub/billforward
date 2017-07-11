@@ -4,8 +4,14 @@ package subscriptions
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"net/http"
+	"time"
+
+	"golang.org/x/net/context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
+	cr "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/swag"
 
 	strfmt "github.com/go-openapi/strfmt"
@@ -15,10 +21,50 @@ import (
 // with the default values initialized.
 func NewGetSubscriptionByIDParams() *GetSubscriptionByIDParams {
 	var (
-		includeRetiredDefault bool = bool(false)
+		includeRetiredDefault = bool(false)
 	)
 	return &GetSubscriptionByIDParams{
 		IncludeRetired: &includeRetiredDefault,
+
+		timeout: cr.DefaultTimeout,
+	}
+}
+
+// NewGetSubscriptionByIDParamsWithTimeout creates a new GetSubscriptionByIDParams object
+// with the default values initialized, and the ability to set a timeout on a request
+func NewGetSubscriptionByIDParamsWithTimeout(timeout time.Duration) *GetSubscriptionByIDParams {
+	var (
+		includeRetiredDefault = bool(false)
+	)
+	return &GetSubscriptionByIDParams{
+		IncludeRetired: &includeRetiredDefault,
+
+		timeout: timeout,
+	}
+}
+
+// NewGetSubscriptionByIDParamsWithContext creates a new GetSubscriptionByIDParams object
+// with the default values initialized, and the ability to set a context for a request
+func NewGetSubscriptionByIDParamsWithContext(ctx context.Context) *GetSubscriptionByIDParams {
+	var (
+		includeRetiredDefault = bool(false)
+	)
+	return &GetSubscriptionByIDParams{
+		IncludeRetired: &includeRetiredDefault,
+
+		Context: ctx,
+	}
+}
+
+// NewGetSubscriptionByIDParamsWithHTTPClient creates a new GetSubscriptionByIDParams object
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
+func NewGetSubscriptionByIDParamsWithHTTPClient(client *http.Client) *GetSubscriptionByIDParams {
+	var (
+		includeRetiredDefault = bool(false)
+	)
+	return &GetSubscriptionByIDParams{
+		IncludeRetired: &includeRetiredDefault,
+		HTTPClient:     client,
 	}
 }
 
@@ -39,29 +85,84 @@ type GetSubscriptionByIDParams struct {
 	Organizations []string
 	/*SubscriptionID*/
 	SubscriptionID string
+
+	timeout    time.Duration
+	Context    context.Context
+	HTTPClient *http.Client
+}
+
+// WithTimeout adds the timeout to the get subscription by ID params
+func (o *GetSubscriptionByIDParams) WithTimeout(timeout time.Duration) *GetSubscriptionByIDParams {
+	o.SetTimeout(timeout)
+	return o
+}
+
+// SetTimeout adds the timeout to the get subscription by ID params
+func (o *GetSubscriptionByIDParams) SetTimeout(timeout time.Duration) {
+	o.timeout = timeout
+}
+
+// WithContext adds the context to the get subscription by ID params
+func (o *GetSubscriptionByIDParams) WithContext(ctx context.Context) *GetSubscriptionByIDParams {
+	o.SetContext(ctx)
+	return o
+}
+
+// SetContext adds the context to the get subscription by ID params
+func (o *GetSubscriptionByIDParams) SetContext(ctx context.Context) {
+	o.Context = ctx
+}
+
+// WithHTTPClient adds the HTTPClient to the get subscription by ID params
+func (o *GetSubscriptionByIDParams) WithHTTPClient(client *http.Client) *GetSubscriptionByIDParams {
+	o.SetHTTPClient(client)
+	return o
+}
+
+// SetHTTPClient adds the HTTPClient to the get subscription by ID params
+func (o *GetSubscriptionByIDParams) SetHTTPClient(client *http.Client) {
+	o.HTTPClient = client
 }
 
 // WithIncludeRetired adds the includeRetired to the get subscription by ID params
-func (o *GetSubscriptionByIDParams) WithIncludeRetired(IncludeRetired *bool) *GetSubscriptionByIDParams {
-	o.IncludeRetired = IncludeRetired
+func (o *GetSubscriptionByIDParams) WithIncludeRetired(includeRetired *bool) *GetSubscriptionByIDParams {
+	o.SetIncludeRetired(includeRetired)
 	return o
+}
+
+// SetIncludeRetired adds the includeRetired to the get subscription by ID params
+func (o *GetSubscriptionByIDParams) SetIncludeRetired(includeRetired *bool) {
+	o.IncludeRetired = includeRetired
 }
 
 // WithOrganizations adds the organizations to the get subscription by ID params
-func (o *GetSubscriptionByIDParams) WithOrganizations(Organizations []string) *GetSubscriptionByIDParams {
-	o.Organizations = Organizations
+func (o *GetSubscriptionByIDParams) WithOrganizations(organizations []string) *GetSubscriptionByIDParams {
+	o.SetOrganizations(organizations)
 	return o
 }
 
-// WithSubscriptionID adds the subscriptionId to the get subscription by ID params
-func (o *GetSubscriptionByIDParams) WithSubscriptionID(SubscriptionID string) *GetSubscriptionByIDParams {
-	o.SubscriptionID = SubscriptionID
+// SetOrganizations adds the organizations to the get subscription by ID params
+func (o *GetSubscriptionByIDParams) SetOrganizations(organizations []string) {
+	o.Organizations = organizations
+}
+
+// WithSubscriptionID adds the subscriptionID to the get subscription by ID params
+func (o *GetSubscriptionByIDParams) WithSubscriptionID(subscriptionID string) *GetSubscriptionByIDParams {
+	o.SetSubscriptionID(subscriptionID)
 	return o
+}
+
+// SetSubscriptionID adds the subscriptionId to the get subscription by ID params
+func (o *GetSubscriptionByIDParams) SetSubscriptionID(subscriptionID string) {
+	o.SubscriptionID = subscriptionID
 }
 
 // WriteToRequest writes these params to a swagger request
 func (o *GetSubscriptionByIDParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
+	if err := r.SetTimeout(o.timeout); err != nil {
+		return err
+	}
 	var res []error
 
 	if o.IncludeRetired != nil {

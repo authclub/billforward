@@ -4,8 +4,14 @@ package product_rate_plans
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"net/http"
+	"time"
+
+	"golang.org/x/net/context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
+	cr "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/swag"
 
 	strfmt "github.com/go-openapi/strfmt"
@@ -15,7 +21,39 @@ import (
 // with the default values initialized.
 func NewGetMetadataForRatePlanParams() *GetMetadataForRatePlanParams {
 	var ()
-	return &GetMetadataForRatePlanParams{}
+	return &GetMetadataForRatePlanParams{
+
+		timeout: cr.DefaultTimeout,
+	}
+}
+
+// NewGetMetadataForRatePlanParamsWithTimeout creates a new GetMetadataForRatePlanParams object
+// with the default values initialized, and the ability to set a timeout on a request
+func NewGetMetadataForRatePlanParamsWithTimeout(timeout time.Duration) *GetMetadataForRatePlanParams {
+	var ()
+	return &GetMetadataForRatePlanParams{
+
+		timeout: timeout,
+	}
+}
+
+// NewGetMetadataForRatePlanParamsWithContext creates a new GetMetadataForRatePlanParams object
+// with the default values initialized, and the ability to set a context for a request
+func NewGetMetadataForRatePlanParamsWithContext(ctx context.Context) *GetMetadataForRatePlanParams {
+	var ()
+	return &GetMetadataForRatePlanParams{
+
+		Context: ctx,
+	}
+}
+
+// NewGetMetadataForRatePlanParamsWithHTTPClient creates a new GetMetadataForRatePlanParams object
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
+func NewGetMetadataForRatePlanParamsWithHTTPClient(client *http.Client) *GetMetadataForRatePlanParams {
+	var ()
+	return &GetMetadataForRatePlanParams{
+		HTTPClient: client,
+	}
 }
 
 /*GetMetadataForRatePlanParams contains all the parameters to send to the API endpoint
@@ -30,23 +68,73 @@ type GetMetadataForRatePlanParams struct {
 	Organizations []string
 	/*ProductRatePlanID*/
 	ProductRatePlanID string
+
+	timeout    time.Duration
+	Context    context.Context
+	HTTPClient *http.Client
+}
+
+// WithTimeout adds the timeout to the get metadata for rate plan params
+func (o *GetMetadataForRatePlanParams) WithTimeout(timeout time.Duration) *GetMetadataForRatePlanParams {
+	o.SetTimeout(timeout)
+	return o
+}
+
+// SetTimeout adds the timeout to the get metadata for rate plan params
+func (o *GetMetadataForRatePlanParams) SetTimeout(timeout time.Duration) {
+	o.timeout = timeout
+}
+
+// WithContext adds the context to the get metadata for rate plan params
+func (o *GetMetadataForRatePlanParams) WithContext(ctx context.Context) *GetMetadataForRatePlanParams {
+	o.SetContext(ctx)
+	return o
+}
+
+// SetContext adds the context to the get metadata for rate plan params
+func (o *GetMetadataForRatePlanParams) SetContext(ctx context.Context) {
+	o.Context = ctx
+}
+
+// WithHTTPClient adds the HTTPClient to the get metadata for rate plan params
+func (o *GetMetadataForRatePlanParams) WithHTTPClient(client *http.Client) *GetMetadataForRatePlanParams {
+	o.SetHTTPClient(client)
+	return o
+}
+
+// SetHTTPClient adds the HTTPClient to the get metadata for rate plan params
+func (o *GetMetadataForRatePlanParams) SetHTTPClient(client *http.Client) {
+	o.HTTPClient = client
 }
 
 // WithOrganizations adds the organizations to the get metadata for rate plan params
-func (o *GetMetadataForRatePlanParams) WithOrganizations(Organizations []string) *GetMetadataForRatePlanParams {
-	o.Organizations = Organizations
+func (o *GetMetadataForRatePlanParams) WithOrganizations(organizations []string) *GetMetadataForRatePlanParams {
+	o.SetOrganizations(organizations)
 	return o
 }
 
-// WithProductRatePlanID adds the productRatePlanId to the get metadata for rate plan params
-func (o *GetMetadataForRatePlanParams) WithProductRatePlanID(ProductRatePlanID string) *GetMetadataForRatePlanParams {
-	o.ProductRatePlanID = ProductRatePlanID
+// SetOrganizations adds the organizations to the get metadata for rate plan params
+func (o *GetMetadataForRatePlanParams) SetOrganizations(organizations []string) {
+	o.Organizations = organizations
+}
+
+// WithProductRatePlanID adds the productRatePlanID to the get metadata for rate plan params
+func (o *GetMetadataForRatePlanParams) WithProductRatePlanID(productRatePlanID string) *GetMetadataForRatePlanParams {
+	o.SetProductRatePlanID(productRatePlanID)
 	return o
+}
+
+// SetProductRatePlanID adds the productRatePlanId to the get metadata for rate plan params
+func (o *GetMetadataForRatePlanParams) SetProductRatePlanID(productRatePlanID string) {
+	o.ProductRatePlanID = productRatePlanID
 }
 
 // WriteToRequest writes these params to a swagger request
 func (o *GetMetadataForRatePlanParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
+	if err := r.SetTimeout(o.timeout); err != nil {
+		return err
+	}
 	var res []error
 
 	valuesOrganizations := o.Organizations

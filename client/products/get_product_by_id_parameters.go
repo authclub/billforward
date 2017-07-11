@@ -4,8 +4,14 @@ package products
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"net/http"
+	"time"
+
+	"golang.org/x/net/context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
+	cr "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/swag"
 
 	strfmt "github.com/go-openapi/strfmt"
@@ -15,11 +21,11 @@ import (
 // with the default values initialized.
 func NewGetProductByIDParams() *GetProductByIDParams {
 	var (
-		includeRetiredDefault bool   = bool(true)
-		offsetDefault         int32  = int32(0)
-		orderDefault          string = string("DESC")
-		orderByDefault        string = string("created")
-		recordsDefault        int32  = int32(10)
+		includeRetiredDefault = bool(true)
+		offsetDefault         = int32(0)
+		orderDefault          = string("DESC")
+		orderByDefault        = string("created")
+		recordsDefault        = int32(10)
 	)
 	return &GetProductByIDParams{
 		IncludeRetired: &includeRetiredDefault,
@@ -27,6 +33,70 @@ func NewGetProductByIDParams() *GetProductByIDParams {
 		Order:          &orderDefault,
 		OrderBy:        &orderByDefault,
 		Records:        &recordsDefault,
+
+		timeout: cr.DefaultTimeout,
+	}
+}
+
+// NewGetProductByIDParamsWithTimeout creates a new GetProductByIDParams object
+// with the default values initialized, and the ability to set a timeout on a request
+func NewGetProductByIDParamsWithTimeout(timeout time.Duration) *GetProductByIDParams {
+	var (
+		includeRetiredDefault = bool(true)
+		offsetDefault         = int32(0)
+		orderDefault          = string("DESC")
+		orderByDefault        = string("created")
+		recordsDefault        = int32(10)
+	)
+	return &GetProductByIDParams{
+		IncludeRetired: &includeRetiredDefault,
+		Offset:         &offsetDefault,
+		Order:          &orderDefault,
+		OrderBy:        &orderByDefault,
+		Records:        &recordsDefault,
+
+		timeout: timeout,
+	}
+}
+
+// NewGetProductByIDParamsWithContext creates a new GetProductByIDParams object
+// with the default values initialized, and the ability to set a context for a request
+func NewGetProductByIDParamsWithContext(ctx context.Context) *GetProductByIDParams {
+	var (
+		includeRetiredDefault = bool(true)
+		offsetDefault         = int32(0)
+		orderDefault          = string("DESC")
+		orderByDefault        = string("created")
+		recordsDefault        = int32(10)
+	)
+	return &GetProductByIDParams{
+		IncludeRetired: &includeRetiredDefault,
+		Offset:         &offsetDefault,
+		Order:          &orderDefault,
+		OrderBy:        &orderByDefault,
+		Records:        &recordsDefault,
+
+		Context: ctx,
+	}
+}
+
+// NewGetProductByIDParamsWithHTTPClient creates a new GetProductByIDParams object
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
+func NewGetProductByIDParamsWithHTTPClient(client *http.Client) *GetProductByIDParams {
+	var (
+		includeRetiredDefault = bool(true)
+		offsetDefault         = int32(0)
+		orderDefault          = string("DESC")
+		orderByDefault        = string("created")
+		recordsDefault        = int32(10)
+	)
+	return &GetProductByIDParams{
+		IncludeRetired: &includeRetiredDefault,
+		Offset:         &offsetDefault,
+		Order:          &orderDefault,
+		OrderBy:        &orderByDefault,
+		Records:        &recordsDefault,
+		HTTPClient:     client,
 	}
 }
 
@@ -70,53 +140,128 @@ type GetProductByIDParams struct {
 
 	*/
 	Records *int32
+
+	timeout    time.Duration
+	Context    context.Context
+	HTTPClient *http.Client
+}
+
+// WithTimeout adds the timeout to the get product by ID params
+func (o *GetProductByIDParams) WithTimeout(timeout time.Duration) *GetProductByIDParams {
+	o.SetTimeout(timeout)
+	return o
+}
+
+// SetTimeout adds the timeout to the get product by ID params
+func (o *GetProductByIDParams) SetTimeout(timeout time.Duration) {
+	o.timeout = timeout
+}
+
+// WithContext adds the context to the get product by ID params
+func (o *GetProductByIDParams) WithContext(ctx context.Context) *GetProductByIDParams {
+	o.SetContext(ctx)
+	return o
+}
+
+// SetContext adds the context to the get product by ID params
+func (o *GetProductByIDParams) SetContext(ctx context.Context) {
+	o.Context = ctx
+}
+
+// WithHTTPClient adds the HTTPClient to the get product by ID params
+func (o *GetProductByIDParams) WithHTTPClient(client *http.Client) *GetProductByIDParams {
+	o.SetHTTPClient(client)
+	return o
+}
+
+// SetHTTPClient adds the HTTPClient to the get product by ID params
+func (o *GetProductByIDParams) SetHTTPClient(client *http.Client) {
+	o.HTTPClient = client
 }
 
 // WithIncludeRetired adds the includeRetired to the get product by ID params
-func (o *GetProductByIDParams) WithIncludeRetired(IncludeRetired *bool) *GetProductByIDParams {
-	o.IncludeRetired = IncludeRetired
+func (o *GetProductByIDParams) WithIncludeRetired(includeRetired *bool) *GetProductByIDParams {
+	o.SetIncludeRetired(includeRetired)
 	return o
+}
+
+// SetIncludeRetired adds the includeRetired to the get product by ID params
+func (o *GetProductByIDParams) SetIncludeRetired(includeRetired *bool) {
+	o.IncludeRetired = includeRetired
 }
 
 // WithOffset adds the offset to the get product by ID params
-func (o *GetProductByIDParams) WithOffset(Offset *int32) *GetProductByIDParams {
-	o.Offset = Offset
+func (o *GetProductByIDParams) WithOffset(offset *int32) *GetProductByIDParams {
+	o.SetOffset(offset)
 	return o
+}
+
+// SetOffset adds the offset to the get product by ID params
+func (o *GetProductByIDParams) SetOffset(offset *int32) {
+	o.Offset = offset
 }
 
 // WithOrder adds the order to the get product by ID params
-func (o *GetProductByIDParams) WithOrder(Order *string) *GetProductByIDParams {
-	o.Order = Order
+func (o *GetProductByIDParams) WithOrder(order *string) *GetProductByIDParams {
+	o.SetOrder(order)
 	return o
+}
+
+// SetOrder adds the order to the get product by ID params
+func (o *GetProductByIDParams) SetOrder(order *string) {
+	o.Order = order
 }
 
 // WithOrderBy adds the orderBy to the get product by ID params
-func (o *GetProductByIDParams) WithOrderBy(OrderBy *string) *GetProductByIDParams {
-	o.OrderBy = OrderBy
+func (o *GetProductByIDParams) WithOrderBy(orderBy *string) *GetProductByIDParams {
+	o.SetOrderBy(orderBy)
 	return o
+}
+
+// SetOrderBy adds the orderBy to the get product by ID params
+func (o *GetProductByIDParams) SetOrderBy(orderBy *string) {
+	o.OrderBy = orderBy
 }
 
 // WithOrganizations adds the organizations to the get product by ID params
-func (o *GetProductByIDParams) WithOrganizations(Organizations []string) *GetProductByIDParams {
-	o.Organizations = Organizations
+func (o *GetProductByIDParams) WithOrganizations(organizations []string) *GetProductByIDParams {
+	o.SetOrganizations(organizations)
 	return o
 }
 
-// WithProductID adds the productId to the get product by ID params
-func (o *GetProductByIDParams) WithProductID(ProductID string) *GetProductByIDParams {
-	o.ProductID = ProductID
+// SetOrganizations adds the organizations to the get product by ID params
+func (o *GetProductByIDParams) SetOrganizations(organizations []string) {
+	o.Organizations = organizations
+}
+
+// WithProductID adds the productID to the get product by ID params
+func (o *GetProductByIDParams) WithProductID(productID string) *GetProductByIDParams {
+	o.SetProductID(productID)
 	return o
+}
+
+// SetProductID adds the productId to the get product by ID params
+func (o *GetProductByIDParams) SetProductID(productID string) {
+	o.ProductID = productID
 }
 
 // WithRecords adds the records to the get product by ID params
-func (o *GetProductByIDParams) WithRecords(Records *int32) *GetProductByIDParams {
-	o.Records = Records
+func (o *GetProductByIDParams) WithRecords(records *int32) *GetProductByIDParams {
+	o.SetRecords(records)
 	return o
+}
+
+// SetRecords adds the records to the get product by ID params
+func (o *GetProductByIDParams) SetRecords(records *int32) {
+	o.Records = records
 }
 
 // WriteToRequest writes these params to a swagger request
 func (o *GetProductByIDParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
+	if err := r.SetTimeout(o.timeout); err != nil {
+		return err
+	}
 	var res []error
 
 	if o.IncludeRetired != nil {

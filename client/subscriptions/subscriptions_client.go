@@ -42,11 +42,14 @@ func (a *Client) AddPaymentMethodToSubscription(params *AddPaymentMethodToSubscr
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &AddPaymentMethodToSubscriptionReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*AddPaymentMethodToSubscriptionOK), nil
+
 }
 
 /*
@@ -69,11 +72,14 @@ func (a *Client) AdvanceSubscription(params *AdvanceSubscriptionParams) (*Advanc
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &AdvanceSubscriptionReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*AdvanceSubscriptionOK), nil
+
 }
 
 /*
@@ -96,11 +102,14 @@ func (a *Client) AvailablePaymentMethodsForSubscription(params *AvailablePayment
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &AvailablePaymentMethodsForSubscriptionReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*AvailablePaymentMethodsForSubscriptionOK), nil
+
 }
 
 /*
@@ -123,11 +132,14 @@ func (a *Client) BatchCreateSubscriptions(params *BatchCreateSubscriptionsParams
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &BatchCreateSubscriptionsReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*BatchCreateSubscriptionsOK), nil
+
 }
 
 /*
@@ -150,11 +162,14 @@ func (a *Client) CancelSubscription(params *CancelSubscriptionParams) (*CancelSu
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &CancelSubscriptionReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*CancelSubscriptionOK), nil
+
 }
 
 /*
@@ -177,11 +192,14 @@ func (a *Client) CreateAggregatingSubscription(params *CreateAggregatingSubscrip
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &CreateAggregatingSubscriptionReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*CreateAggregatingSubscriptionOK), nil
+
 }
 
 /*
@@ -204,11 +222,14 @@ func (a *Client) CreateSubscription(params *CreateSubscriptionParams) (*CreateSu
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &CreateSubscriptionReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*CreateSubscriptionOK), nil
+
 }
 
 /*
@@ -231,11 +252,14 @@ func (a *Client) CreateSubscriptionV2(params *CreateSubscriptionV2Params) (*Crea
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &CreateSubscriptionV2Reader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*CreateSubscriptionV2OK), nil
+
 }
 
 /*
@@ -258,11 +282,14 @@ func (a *Client) DeleteMetadataForSubscription(params *DeleteMetadataForSubscrip
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &DeleteMetadataForSubscriptionReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*DeleteMetadataForSubscriptionOK), nil
+
 }
 
 /*
@@ -285,11 +312,14 @@ func (a *Client) GetAllSubscriptions(params *GetAllSubscriptionsParams) (*GetAll
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &GetAllSubscriptionsReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*GetAllSubscriptionsOK), nil
+
 }
 
 /*
@@ -312,11 +342,14 @@ func (a *Client) GetMetadataForSubscription(params *GetMetadataForSubscriptionPa
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &GetMetadataForSubscriptionReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*GetMetadataForSubscriptionOK), nil
+
 }
 
 /*
@@ -339,11 +372,14 @@ func (a *Client) GetSubscriptionByAccountID(params *GetSubscriptionByAccountIDPa
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &GetSubscriptionByAccountIDReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*GetSubscriptionByAccountIDOK), nil
+
 }
 
 /*
@@ -366,11 +402,14 @@ func (a *Client) GetSubscriptionByID(params *GetSubscriptionByIDParams) (*GetSub
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &GetSubscriptionByIDReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*GetSubscriptionByIDOK), nil
+
 }
 
 /*
@@ -393,11 +432,14 @@ func (a *Client) RemovePaymentMethodFromSubscription(params *RemovePaymentMethod
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &RemovePaymentMethodFromSubscriptionReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*RemovePaymentMethodFromSubscriptionOK), nil
+
 }
 
 /*
@@ -420,11 +462,14 @@ func (a *Client) ReviveSubscription(params *ReviveSubscriptionParams) (*ReviveSu
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &ReviveSubscriptionReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*ReviveSubscriptionOK), nil
+
 }
 
 /*
@@ -447,11 +492,14 @@ func (a *Client) SetMetadataForSubscription(params *SetMetadataForSubscriptionPa
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &SetMetadataForSubscriptionReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*SetMetadataForSubscriptionOK), nil
+
 }
 
 /*
@@ -474,11 +522,14 @@ func (a *Client) UpdateSubscriptionV2(params *UpdateSubscriptionV2Params) (*Upda
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &UpdateSubscriptionV2Reader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*UpdateSubscriptionV2OK), nil
+
 }
 
 /*
@@ -501,11 +552,14 @@ func (a *Client) UpsertMetadataForSubscription(params *UpsertMetadataForSubscrip
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &UpsertMetadataForSubscriptionReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*UpsertMetadataForSubscriptionOK), nil
+
 }
 
 // SetTransport changes the transport on the client

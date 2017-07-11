@@ -12,102 +12,71 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-/*Payment Payment
-
-swagger:model Payment
-*/
+// Payment Payment
+// swagger:model Payment
 type Payment struct {
 
-	/* { "description" : "Actual monetary value of the payment. This is real value of the payment amount, thus the amount of currency received for this payment. A coupon has a real value of zero, even though the nominal amount it pays may be greater than zero.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "Actual monetary value of the payment. This is real value of the payment amount, thus the amount of currency received for this payment. A coupon has a real value of zero, even though the nominal amount it pays may be greater than zero.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	ActualValue *float64 `json:"actualValue"`
 
-	/* { "description" : "ID of the user who last updated the entity.", "verbs":[] }
-	 */
+	// { "description" : "ID of the user who last updated the entity.", "verbs":[] }
 	ChangedBy string `json:"changedBy,omitempty"`
 
-	/* { "description" : "The UTC DateTime when the object was created.", "verbs":[] }
-	 */
+	// { "description" : "The UTC DateTime when the object was created.", "verbs":[] }
 	Created strfmt.DateTime `json:"created,omitempty"`
 
-	/* { "description" : "CRM ID of the invoice.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "CRM ID of the invoice.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	CrmID *string `json:"crmID"`
 
-	/* { "description" : "The currency of the payment specified by a three character ISO 4217 currency code.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "The currency of the payment specified by a three character ISO 4217 currency code.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	Currency *string `json:"currency"`
 
-	/* { "description" : "Payment gateway associated with the payment", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "Payment gateway associated with the payment", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	Gateway *string `json:"gateway"`
 
-	/* { "description" : "ID of the payment.", "verbs":["POST","PUT","GET"] }
-	 */
+	// { "description" : "ID of the payment.", "verbs":["POST","PUT","GET"] }
 	ID string `json:"id,omitempty"`
 
-	/* { "description" : "ID of the invoice associated with the payment. This may be null when a payment is not explicitly associated with an invoice. Payments may be used across multiple invoices.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "ID of the invoice associated with the payment. This may be null when a payment is not explicitly associated with an invoice. Payments may be used across multiple invoices.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	InvoiceID *string `json:"invoiceID"`
 
-	/* { "description" : "Nominal value of the payment. This is the theoretical value of the payment, thus the value this payment can pay off an invoice. For example a coupon has a nominal value of the discount, and the actual value is zero.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "Nominal value of the payment. This is the theoretical value of the payment, thus the value this payment can pay off an invoice. For example a coupon has a nominal value of the discount, and the actual value is zero.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	NominalValue *float64 `json:"nominalValue"`
 
-	/* { "description" : "ID of the organization associated with the payment.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "ID of the organization associated with the payment.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	OrganizationID *string `json:"organizationID"`
 
-	/* { "description" : "ID of the payment method associated with the payment.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "ID of the payment method associated with the payment.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	PaymentMethodID *string `json:"paymentMethodID"`
 
-	/* { "description" : "UTC DateTime specifying when payment was received for the invoice.", "verbs":["POST","PUT","GET"] }
-	 */
+	// { "description" : "UTC DateTime specifying when payment was received for the invoice.", "verbs":["POST","PUT","GET"] }
 	PaymentReceived strfmt.DateTime `json:"paymentReceived,omitempty"`
 
-	/* { "description" : "ID of the refund associated with the payment.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "ID of the refund associated with the payment.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	RefundID *string `json:"refundID"`
 
-	/* { "description" : "Refunded nominal value of the payment.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "Refunded nominal value of the payment.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	RefundedValue *float64 `json:"refundedValue"`
 
-	/* { "description" : "Remaining nominal value of the payment not used. In the case when a payment is used across a range of invoices a payment may be used multiple times, each use reducing the available blance of the payment.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "Remaining nominal value of the payment not used. In the case when a payment is used across a range of invoices a payment may be used multiple times, each use reducing the available blance of the payment.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	RemainingNominalValue *float64 `json:"remainingNominalValue"`
 
-	/* { "description" : "Type of payment.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "Type of payment.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	Type *string `json:"type"`
 
-	/* { "description" : "The UTC DateTime when the object was last updated.", "verbs":[] }
-	 */
+	// { "description" : "The UTC DateTime when the object was last updated.", "verbs":[] }
 	Updated strfmt.DateTime `json:"updated,omitempty"`
 }
 
@@ -210,17 +179,63 @@ func (m *Payment) validateCurrency(formats strfmt.Registry) error {
 
 var paymentTypeGatewayPropEnum []interface{}
 
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["cybersource_token","card_vault","paypal_simple","locustworld","free","coupon","credit_note","stripe","braintree","balanced","paypal","billforward_test","offline","trial","stripeACH","authorizeNet","spreedly","sagePay","trustCommerce","payvision","kash"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		paymentTypeGatewayPropEnum = append(paymentTypeGatewayPropEnum, v)
+	}
+}
+
+const (
+	// PaymentGatewayCybersourceToken captures enum value "cybersource_token"
+	PaymentGatewayCybersourceToken string = "cybersource_token"
+	// PaymentGatewayCardVault captures enum value "card_vault"
+	PaymentGatewayCardVault string = "card_vault"
+	// PaymentGatewayPaypalSimple captures enum value "paypal_simple"
+	PaymentGatewayPaypalSimple string = "paypal_simple"
+	// PaymentGatewayLocustworld captures enum value "locustworld"
+	PaymentGatewayLocustworld string = "locustworld"
+	// PaymentGatewayFree captures enum value "free"
+	PaymentGatewayFree string = "free"
+	// PaymentGatewayCoupon captures enum value "coupon"
+	PaymentGatewayCoupon string = "coupon"
+	// PaymentGatewayCreditNote captures enum value "credit_note"
+	PaymentGatewayCreditNote string = "credit_note"
+	// PaymentGatewayStripe captures enum value "stripe"
+	PaymentGatewayStripe string = "stripe"
+	// PaymentGatewayBraintree captures enum value "braintree"
+	PaymentGatewayBraintree string = "braintree"
+	// PaymentGatewayBalanced captures enum value "balanced"
+	PaymentGatewayBalanced string = "balanced"
+	// PaymentGatewayPaypal captures enum value "paypal"
+	PaymentGatewayPaypal string = "paypal"
+	// PaymentGatewayBillforwardTest captures enum value "billforward_test"
+	PaymentGatewayBillforwardTest string = "billforward_test"
+	// PaymentGatewayOffline captures enum value "offline"
+	PaymentGatewayOffline string = "offline"
+	// PaymentGatewayTrial captures enum value "trial"
+	PaymentGatewayTrial string = "trial"
+	// PaymentGatewayStripeACH captures enum value "stripeACH"
+	PaymentGatewayStripeACH string = "stripeACH"
+	// PaymentGatewayAuthorizeNet captures enum value "authorizeNet"
+	PaymentGatewayAuthorizeNet string = "authorizeNet"
+	// PaymentGatewaySpreedly captures enum value "spreedly"
+	PaymentGatewaySpreedly string = "spreedly"
+	// PaymentGatewaySagePay captures enum value "sagePay"
+	PaymentGatewaySagePay string = "sagePay"
+	// PaymentGatewayTrustCommerce captures enum value "trustCommerce"
+	PaymentGatewayTrustCommerce string = "trustCommerce"
+	// PaymentGatewayPayvision captures enum value "payvision"
+	PaymentGatewayPayvision string = "payvision"
+	// PaymentGatewayKash captures enum value "kash"
+	PaymentGatewayKash string = "kash"
+)
+
 // prop value enum
 func (m *Payment) validateGatewayEnum(path, location string, value string) error {
-	if paymentTypeGatewayPropEnum == nil {
-		var res []string
-		if err := json.Unmarshal([]byte(`["cybersource_token","card_vault","paypal_simple","locustworld","free","coupon","credit_note","stripe","braintree","balanced","paypal","billforward_test","offline","trial","stripeACH","authorizeNet","spreedly","sagePay","trustCommerce","payvision","kash"]`), &res); err != nil {
-			return err
-		}
-		for _, v := range res {
-			paymentTypeGatewayPropEnum = append(paymentTypeGatewayPropEnum, v)
-		}
-	}
 	if err := validate.Enum(path, location, value, paymentTypeGatewayPropEnum); err != nil {
 		return err
 	}
@@ -306,17 +321,25 @@ func (m *Payment) validateRemainingNominalValue(formats strfmt.Registry) error {
 
 var paymentTypeTypePropEnum []interface{}
 
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["credit","debit"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		paymentTypeTypePropEnum = append(paymentTypeTypePropEnum, v)
+	}
+}
+
+const (
+	// PaymentTypeCredit captures enum value "credit"
+	PaymentTypeCredit string = "credit"
+	// PaymentTypeDebit captures enum value "debit"
+	PaymentTypeDebit string = "debit"
+)
+
 // prop value enum
 func (m *Payment) validateTypeEnum(path, location string, value string) error {
-	if paymentTypeTypePropEnum == nil {
-		var res []string
-		if err := json.Unmarshal([]byte(`["credit","debit"]`), &res); err != nil {
-			return err
-		}
-		for _, v := range res {
-			paymentTypeTypePropEnum = append(paymentTypeTypePropEnum, v)
-		}
-	}
 	if err := validate.Enum(path, location, value, paymentTypeTypePropEnum); err != nil {
 		return err
 	}

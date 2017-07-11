@@ -4,8 +4,14 @@ package profiles
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"net/http"
+	"time"
+
+	"golang.org/x/net/context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
+	cr "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/swag"
 
 	strfmt "github.com/go-openapi/strfmt"
@@ -15,16 +21,74 @@ import (
 // with the default values initialized.
 func NewGetProfileByAccountIDParams() *GetProfileByAccountIDParams {
 	var (
-		offsetDefault  int32  = int32(0)
-		orderDefault   string = string("DESC")
-		orderByDefault string = string("created")
-		recordsDefault int32  = int32(10)
+		offsetDefault  = int32(0)
+		orderDefault   = string("DESC")
+		orderByDefault = string("created")
+		recordsDefault = int32(10)
 	)
 	return &GetProfileByAccountIDParams{
 		Offset:  &offsetDefault,
 		Order:   &orderDefault,
 		OrderBy: &orderByDefault,
 		Records: &recordsDefault,
+
+		timeout: cr.DefaultTimeout,
+	}
+}
+
+// NewGetProfileByAccountIDParamsWithTimeout creates a new GetProfileByAccountIDParams object
+// with the default values initialized, and the ability to set a timeout on a request
+func NewGetProfileByAccountIDParamsWithTimeout(timeout time.Duration) *GetProfileByAccountIDParams {
+	var (
+		offsetDefault  = int32(0)
+		orderDefault   = string("DESC")
+		orderByDefault = string("created")
+		recordsDefault = int32(10)
+	)
+	return &GetProfileByAccountIDParams{
+		Offset:  &offsetDefault,
+		Order:   &orderDefault,
+		OrderBy: &orderByDefault,
+		Records: &recordsDefault,
+
+		timeout: timeout,
+	}
+}
+
+// NewGetProfileByAccountIDParamsWithContext creates a new GetProfileByAccountIDParams object
+// with the default values initialized, and the ability to set a context for a request
+func NewGetProfileByAccountIDParamsWithContext(ctx context.Context) *GetProfileByAccountIDParams {
+	var (
+		offsetDefault  = int32(0)
+		orderDefault   = string("DESC")
+		orderByDefault = string("created")
+		recordsDefault = int32(10)
+	)
+	return &GetProfileByAccountIDParams{
+		Offset:  &offsetDefault,
+		Order:   &orderDefault,
+		OrderBy: &orderByDefault,
+		Records: &recordsDefault,
+
+		Context: ctx,
+	}
+}
+
+// NewGetProfileByAccountIDParamsWithHTTPClient creates a new GetProfileByAccountIDParams object
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
+func NewGetProfileByAccountIDParamsWithHTTPClient(client *http.Client) *GetProfileByAccountIDParams {
+	var (
+		offsetDefault  = int32(0)
+		orderDefault   = string("DESC")
+		orderByDefault = string("created")
+		recordsDefault = int32(10)
+	)
+	return &GetProfileByAccountIDParams{
+		Offset:     &offsetDefault,
+		Order:      &orderDefault,
+		OrderBy:    &orderByDefault,
+		Records:    &recordsDefault,
+		HTTPClient: client,
 	}
 }
 
@@ -63,47 +127,117 @@ type GetProfileByAccountIDParams struct {
 
 	*/
 	Records *int32
+
+	timeout    time.Duration
+	Context    context.Context
+	HTTPClient *http.Client
 }
 
-// WithAccountID adds the accountId to the get profile by account ID params
-func (o *GetProfileByAccountIDParams) WithAccountID(AccountID string) *GetProfileByAccountIDParams {
-	o.AccountID = AccountID
+// WithTimeout adds the timeout to the get profile by account ID params
+func (o *GetProfileByAccountIDParams) WithTimeout(timeout time.Duration) *GetProfileByAccountIDParams {
+	o.SetTimeout(timeout)
 	return o
+}
+
+// SetTimeout adds the timeout to the get profile by account ID params
+func (o *GetProfileByAccountIDParams) SetTimeout(timeout time.Duration) {
+	o.timeout = timeout
+}
+
+// WithContext adds the context to the get profile by account ID params
+func (o *GetProfileByAccountIDParams) WithContext(ctx context.Context) *GetProfileByAccountIDParams {
+	o.SetContext(ctx)
+	return o
+}
+
+// SetContext adds the context to the get profile by account ID params
+func (o *GetProfileByAccountIDParams) SetContext(ctx context.Context) {
+	o.Context = ctx
+}
+
+// WithHTTPClient adds the HTTPClient to the get profile by account ID params
+func (o *GetProfileByAccountIDParams) WithHTTPClient(client *http.Client) *GetProfileByAccountIDParams {
+	o.SetHTTPClient(client)
+	return o
+}
+
+// SetHTTPClient adds the HTTPClient to the get profile by account ID params
+func (o *GetProfileByAccountIDParams) SetHTTPClient(client *http.Client) {
+	o.HTTPClient = client
+}
+
+// WithAccountID adds the accountID to the get profile by account ID params
+func (o *GetProfileByAccountIDParams) WithAccountID(accountID string) *GetProfileByAccountIDParams {
+	o.SetAccountID(accountID)
+	return o
+}
+
+// SetAccountID adds the accountId to the get profile by account ID params
+func (o *GetProfileByAccountIDParams) SetAccountID(accountID string) {
+	o.AccountID = accountID
 }
 
 // WithOffset adds the offset to the get profile by account ID params
-func (o *GetProfileByAccountIDParams) WithOffset(Offset *int32) *GetProfileByAccountIDParams {
-	o.Offset = Offset
+func (o *GetProfileByAccountIDParams) WithOffset(offset *int32) *GetProfileByAccountIDParams {
+	o.SetOffset(offset)
 	return o
+}
+
+// SetOffset adds the offset to the get profile by account ID params
+func (o *GetProfileByAccountIDParams) SetOffset(offset *int32) {
+	o.Offset = offset
 }
 
 // WithOrder adds the order to the get profile by account ID params
-func (o *GetProfileByAccountIDParams) WithOrder(Order *string) *GetProfileByAccountIDParams {
-	o.Order = Order
+func (o *GetProfileByAccountIDParams) WithOrder(order *string) *GetProfileByAccountIDParams {
+	o.SetOrder(order)
 	return o
+}
+
+// SetOrder adds the order to the get profile by account ID params
+func (o *GetProfileByAccountIDParams) SetOrder(order *string) {
+	o.Order = order
 }
 
 // WithOrderBy adds the orderBy to the get profile by account ID params
-func (o *GetProfileByAccountIDParams) WithOrderBy(OrderBy *string) *GetProfileByAccountIDParams {
-	o.OrderBy = OrderBy
+func (o *GetProfileByAccountIDParams) WithOrderBy(orderBy *string) *GetProfileByAccountIDParams {
+	o.SetOrderBy(orderBy)
 	return o
+}
+
+// SetOrderBy adds the orderBy to the get profile by account ID params
+func (o *GetProfileByAccountIDParams) SetOrderBy(orderBy *string) {
+	o.OrderBy = orderBy
 }
 
 // WithOrganizations adds the organizations to the get profile by account ID params
-func (o *GetProfileByAccountIDParams) WithOrganizations(Organizations []string) *GetProfileByAccountIDParams {
-	o.Organizations = Organizations
+func (o *GetProfileByAccountIDParams) WithOrganizations(organizations []string) *GetProfileByAccountIDParams {
+	o.SetOrganizations(organizations)
 	return o
 }
 
+// SetOrganizations adds the organizations to the get profile by account ID params
+func (o *GetProfileByAccountIDParams) SetOrganizations(organizations []string) {
+	o.Organizations = organizations
+}
+
 // WithRecords adds the records to the get profile by account ID params
-func (o *GetProfileByAccountIDParams) WithRecords(Records *int32) *GetProfileByAccountIDParams {
-	o.Records = Records
+func (o *GetProfileByAccountIDParams) WithRecords(records *int32) *GetProfileByAccountIDParams {
+	o.SetRecords(records)
 	return o
+}
+
+// SetRecords adds the records to the get profile by account ID params
+func (o *GetProfileByAccountIDParams) SetRecords(records *int32) {
+	o.Records = records
 }
 
 // WriteToRequest writes these params to a swagger request
 func (o *GetProfileByAccountIDParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
+	if err := r.SetTimeout(o.timeout); err != nil {
+		return err
+	}
 	var res []error
 
 	// path param account-ID

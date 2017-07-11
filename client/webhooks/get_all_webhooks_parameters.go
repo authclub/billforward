@@ -4,8 +4,14 @@ package webhooks
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"net/http"
+	"time"
+
+	"golang.org/x/net/context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
+	cr "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/swag"
 
 	strfmt "github.com/go-openapi/strfmt"
@@ -15,11 +21,11 @@ import (
 // with the default values initialized.
 func NewGetAllWebhooksParams() *GetAllWebhooksParams {
 	var (
-		includeRetiredDefault bool   = bool(true)
-		offsetDefault         int32  = int32(0)
-		orderDefault          string = string("DESC")
-		orderByDefault        string = string("created")
-		recordsDefault        int32  = int32(10)
+		includeRetiredDefault = bool(true)
+		offsetDefault         = int32(0)
+		orderDefault          = string("DESC")
+		orderByDefault        = string("created")
+		recordsDefault        = int32(10)
 	)
 	return &GetAllWebhooksParams{
 		IncludeRetired: &includeRetiredDefault,
@@ -27,6 +33,70 @@ func NewGetAllWebhooksParams() *GetAllWebhooksParams {
 		Order:          &orderDefault,
 		OrderBy:        &orderByDefault,
 		Records:        &recordsDefault,
+
+		timeout: cr.DefaultTimeout,
+	}
+}
+
+// NewGetAllWebhooksParamsWithTimeout creates a new GetAllWebhooksParams object
+// with the default values initialized, and the ability to set a timeout on a request
+func NewGetAllWebhooksParamsWithTimeout(timeout time.Duration) *GetAllWebhooksParams {
+	var (
+		includeRetiredDefault = bool(true)
+		offsetDefault         = int32(0)
+		orderDefault          = string("DESC")
+		orderByDefault        = string("created")
+		recordsDefault        = int32(10)
+	)
+	return &GetAllWebhooksParams{
+		IncludeRetired: &includeRetiredDefault,
+		Offset:         &offsetDefault,
+		Order:          &orderDefault,
+		OrderBy:        &orderByDefault,
+		Records:        &recordsDefault,
+
+		timeout: timeout,
+	}
+}
+
+// NewGetAllWebhooksParamsWithContext creates a new GetAllWebhooksParams object
+// with the default values initialized, and the ability to set a context for a request
+func NewGetAllWebhooksParamsWithContext(ctx context.Context) *GetAllWebhooksParams {
+	var (
+		includeRetiredDefault = bool(true)
+		offsetDefault         = int32(0)
+		orderDefault          = string("DESC")
+		orderByDefault        = string("created")
+		recordsDefault        = int32(10)
+	)
+	return &GetAllWebhooksParams{
+		IncludeRetired: &includeRetiredDefault,
+		Offset:         &offsetDefault,
+		Order:          &orderDefault,
+		OrderBy:        &orderByDefault,
+		Records:        &recordsDefault,
+
+		Context: ctx,
+	}
+}
+
+// NewGetAllWebhooksParamsWithHTTPClient creates a new GetAllWebhooksParams object
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
+func NewGetAllWebhooksParamsWithHTTPClient(client *http.Client) *GetAllWebhooksParams {
+	var (
+		includeRetiredDefault = bool(true)
+		offsetDefault         = int32(0)
+		orderDefault          = string("DESC")
+		orderByDefault        = string("created")
+		recordsDefault        = int32(10)
+	)
+	return &GetAllWebhooksParams{
+		IncludeRetired: &includeRetiredDefault,
+		Offset:         &offsetDefault,
+		Order:          &orderDefault,
+		OrderBy:        &orderByDefault,
+		Records:        &recordsDefault,
+		HTTPClient:     client,
 	}
 }
 
@@ -65,47 +135,117 @@ type GetAllWebhooksParams struct {
 
 	*/
 	Records *int32
+
+	timeout    time.Duration
+	Context    context.Context
+	HTTPClient *http.Client
+}
+
+// WithTimeout adds the timeout to the get all webhooks params
+func (o *GetAllWebhooksParams) WithTimeout(timeout time.Duration) *GetAllWebhooksParams {
+	o.SetTimeout(timeout)
+	return o
+}
+
+// SetTimeout adds the timeout to the get all webhooks params
+func (o *GetAllWebhooksParams) SetTimeout(timeout time.Duration) {
+	o.timeout = timeout
+}
+
+// WithContext adds the context to the get all webhooks params
+func (o *GetAllWebhooksParams) WithContext(ctx context.Context) *GetAllWebhooksParams {
+	o.SetContext(ctx)
+	return o
+}
+
+// SetContext adds the context to the get all webhooks params
+func (o *GetAllWebhooksParams) SetContext(ctx context.Context) {
+	o.Context = ctx
+}
+
+// WithHTTPClient adds the HTTPClient to the get all webhooks params
+func (o *GetAllWebhooksParams) WithHTTPClient(client *http.Client) *GetAllWebhooksParams {
+	o.SetHTTPClient(client)
+	return o
+}
+
+// SetHTTPClient adds the HTTPClient to the get all webhooks params
+func (o *GetAllWebhooksParams) SetHTTPClient(client *http.Client) {
+	o.HTTPClient = client
 }
 
 // WithIncludeRetired adds the includeRetired to the get all webhooks params
-func (o *GetAllWebhooksParams) WithIncludeRetired(IncludeRetired *bool) *GetAllWebhooksParams {
-	o.IncludeRetired = IncludeRetired
+func (o *GetAllWebhooksParams) WithIncludeRetired(includeRetired *bool) *GetAllWebhooksParams {
+	o.SetIncludeRetired(includeRetired)
 	return o
+}
+
+// SetIncludeRetired adds the includeRetired to the get all webhooks params
+func (o *GetAllWebhooksParams) SetIncludeRetired(includeRetired *bool) {
+	o.IncludeRetired = includeRetired
 }
 
 // WithOffset adds the offset to the get all webhooks params
-func (o *GetAllWebhooksParams) WithOffset(Offset *int32) *GetAllWebhooksParams {
-	o.Offset = Offset
+func (o *GetAllWebhooksParams) WithOffset(offset *int32) *GetAllWebhooksParams {
+	o.SetOffset(offset)
 	return o
+}
+
+// SetOffset adds the offset to the get all webhooks params
+func (o *GetAllWebhooksParams) SetOffset(offset *int32) {
+	o.Offset = offset
 }
 
 // WithOrder adds the order to the get all webhooks params
-func (o *GetAllWebhooksParams) WithOrder(Order *string) *GetAllWebhooksParams {
-	o.Order = Order
+func (o *GetAllWebhooksParams) WithOrder(order *string) *GetAllWebhooksParams {
+	o.SetOrder(order)
 	return o
+}
+
+// SetOrder adds the order to the get all webhooks params
+func (o *GetAllWebhooksParams) SetOrder(order *string) {
+	o.Order = order
 }
 
 // WithOrderBy adds the orderBy to the get all webhooks params
-func (o *GetAllWebhooksParams) WithOrderBy(OrderBy *string) *GetAllWebhooksParams {
-	o.OrderBy = OrderBy
+func (o *GetAllWebhooksParams) WithOrderBy(orderBy *string) *GetAllWebhooksParams {
+	o.SetOrderBy(orderBy)
 	return o
+}
+
+// SetOrderBy adds the orderBy to the get all webhooks params
+func (o *GetAllWebhooksParams) SetOrderBy(orderBy *string) {
+	o.OrderBy = orderBy
 }
 
 // WithOrganizations adds the organizations to the get all webhooks params
-func (o *GetAllWebhooksParams) WithOrganizations(Organizations []string) *GetAllWebhooksParams {
-	o.Organizations = Organizations
+func (o *GetAllWebhooksParams) WithOrganizations(organizations []string) *GetAllWebhooksParams {
+	o.SetOrganizations(organizations)
 	return o
 }
 
+// SetOrganizations adds the organizations to the get all webhooks params
+func (o *GetAllWebhooksParams) SetOrganizations(organizations []string) {
+	o.Organizations = organizations
+}
+
 // WithRecords adds the records to the get all webhooks params
-func (o *GetAllWebhooksParams) WithRecords(Records *int32) *GetAllWebhooksParams {
-	o.Records = Records
+func (o *GetAllWebhooksParams) WithRecords(records *int32) *GetAllWebhooksParams {
+	o.SetRecords(records)
 	return o
+}
+
+// SetRecords adds the records to the get all webhooks params
+func (o *GetAllWebhooksParams) SetRecords(records *int32) {
+	o.Records = records
 }
 
 // WriteToRequest writes these params to a swagger request
 func (o *GetAllWebhooksParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
+	if err := r.SetTimeout(o.timeout); err != nil {
+		return err
+	}
 	var res []error
 
 	if o.IncludeRetired != nil {

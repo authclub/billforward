@@ -4,58 +4,45 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"strconv"
+
 	strfmt "github.com/go-openapi/strfmt"
 
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
 
-/*ProfilePagedMetadata profile paged metadata
-
-swagger:model ProfilePagedMetadata
-*/
+// ProfilePagedMetadata profile paged metadata
+// swagger:model ProfilePagedMetadata
 type ProfilePagedMetadata struct {
 
-	/* {"description":"Paging parameter. 0-indexed. Describes your current location within a pageable list of query results.","verbs":["GET","PUT","POST"]}
-
-	Required: true
-	*/
+	// {"description":"Paging parameter. 0-indexed. Describes your current location within a pageable list of query results.","verbs":["GET","PUT","POST"]}
+	// Required: true
 	CurrentOffset *int32 `json:"currentOffset"`
 
-	/* {"description":"Paging parameter. 0-indexed. Describes which page (given a page size of `recordsRequested`) of the result set you are viewing.","verbs":["GET","PUT","POST"]}
-
-	Required: true
-	*/
+	// {"description":"Paging parameter. 0-indexed. Describes which page (given a page size of `recordsRequested`) of the result set you are viewing.","verbs":["GET","PUT","POST"]}
+	// Required: true
 	CurrentPage *int32 `json:"currentPage"`
 
-	/* {"description":"Number of milliseconds taken by API to calculate response.","verbs":["GET","PUT","POST"]}
-
-	Required: true
-	*/
+	// {"description":"Number of milliseconds taken by API to calculate response.","verbs":["GET","PUT","POST"]}
+	// Required: true
 	ExecutionTime *int64 `json:"executionTime"`
 
-	/* {"description":"Paging parameter. URL fragment that can be used to fetch next page of results.","verbs":["GET","PUT","POST"]}
-
-	Required: true
-	*/
+	// {"description":"Paging parameter. URL fragment that can be used to fetch next page of results.","verbs":["GET","PUT","POST"]}
+	// Required: true
 	NextPage *string `json:"nextPage"`
 
-	/* {"default":10,"description":"Paging parameter. Describes how many records you requested.","verbs":["GET","PUT","POST"]}
-
-	Required: true
-	*/
+	// {"default":10,"description":"Paging parameter. Describes how many records you requested.","verbs":["GET","PUT","POST"]}
+	// Required: true
 	RecordsRequested *int32 `json:"recordsRequested"`
 
-	/* {"description":"Describes how many records were returned by your query.","verbs":["GET","PUT","POST"]}
-
-	Required: true
-	*/
+	// {"description":"Describes how many records were returned by your query.","verbs":["GET","PUT","POST"]}
+	// Required: true
 	RecordsReturned *int32 `json:"recordsReturned"`
 
-	/* {"description":"The results returned by your query.","verbs":["GET","PUT","POST"]}
-
-	Required: true
-	*/
+	// {"description":"The results returned by your query.","verbs":["GET","PUT","POST"]}
+	// Required: true
 	Results []*Profile `json:"results"`
 }
 
@@ -162,6 +149,24 @@ func (m *ProfilePagedMetadata) validateResults(formats strfmt.Registry) error {
 
 	if err := validate.Required("results", "body", m.Results); err != nil {
 		return err
+	}
+
+	for i := 0; i < len(m.Results); i++ {
+
+		if swag.IsZero(m.Results[i]) { // not required
+			continue
+		}
+
+		if m.Results[i] != nil {
+
+			if err := m.Results[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("results" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil

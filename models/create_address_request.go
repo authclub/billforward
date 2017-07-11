@@ -10,62 +10,44 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-/*CreateAddressRequest CreateAddressRequest
-
-swagger:model CreateAddressRequest
-*/
+// CreateAddressRequest CreateAddressRequest
+// swagger:model CreateAddressRequest
 type CreateAddressRequest struct {
 
-	/* { "description" : "", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	AddressLine1 *string `json:"addressLine1"`
 
-	/* { "description" : "", "verbs":["POST","PUT","GET"] }
-	 */
+	// { "description" : "", "verbs":["POST","PUT","GET"] }
 	AddressLine2 string `json:"addressLine2,omitempty"`
 
-	/* { "description" : "", "verbs":["POST","PUT","GET"] }
-	 */
+	// { "description" : "", "verbs":["POST","PUT","GET"] }
 	AddressLine3 string `json:"addressLine3,omitempty"`
 
-	/* { "description" : "", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	City *string `json:"city"`
 
-	/* { "description" : "", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	Country *string `json:"country"`
 
-	/* { "description" : "Phone number", "verbs":["POST","PUT","GET"] }
-	 */
+	// { "description" : "Phone number", "verbs":["POST","PUT","GET"] }
 	Landline string `json:"landline,omitempty"`
 
-	/* { "description" : "ZIP code or postcode.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "ZIP code or postcode.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	Postcode *string `json:"postcode"`
 
-	/* { "description" : "Is this the primary, default, address for the associated profile?", "verbs":["POST","PUT","GET"] }
-	 */
+	// { "description" : "Is this the primary, default, address for the associated profile?", "verbs":["POST","PUT","GET"] }
 	PrimaryAddress *bool `json:"primaryAddress,omitempty"`
 
-	/* { "description" : "", "verbs":["GET"] }
-
-	Required: true
-	*/
+	// { "description" : "", "verbs":["GET"] }
+	// Required: true
 	ProfileID *string `json:"profileID"`
 
-	/* { "description" : "", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	Province *string `json:"province"`
 }
 

@@ -4,8 +4,14 @@ package subscriptions
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"net/http"
+	"time"
+
+	"golang.org/x/net/context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
+	cr "github.com/go-openapi/runtime/client"
 
 	strfmt "github.com/go-openapi/strfmt"
 
@@ -16,7 +22,39 @@ import (
 // with the default values initialized.
 func NewBatchCreateSubscriptionsParams() *BatchCreateSubscriptionsParams {
 	var ()
-	return &BatchCreateSubscriptionsParams{}
+	return &BatchCreateSubscriptionsParams{
+
+		timeout: cr.DefaultTimeout,
+	}
+}
+
+// NewBatchCreateSubscriptionsParamsWithTimeout creates a new BatchCreateSubscriptionsParams object
+// with the default values initialized, and the ability to set a timeout on a request
+func NewBatchCreateSubscriptionsParamsWithTimeout(timeout time.Duration) *BatchCreateSubscriptionsParams {
+	var ()
+	return &BatchCreateSubscriptionsParams{
+
+		timeout: timeout,
+	}
+}
+
+// NewBatchCreateSubscriptionsParamsWithContext creates a new BatchCreateSubscriptionsParams object
+// with the default values initialized, and the ability to set a context for a request
+func NewBatchCreateSubscriptionsParamsWithContext(ctx context.Context) *BatchCreateSubscriptionsParams {
+	var ()
+	return &BatchCreateSubscriptionsParams{
+
+		Context: ctx,
+	}
+}
+
+// NewBatchCreateSubscriptionsParamsWithHTTPClient creates a new BatchCreateSubscriptionsParams object
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
+func NewBatchCreateSubscriptionsParamsWithHTTPClient(client *http.Client) *BatchCreateSubscriptionsParams {
+	var ()
+	return &BatchCreateSubscriptionsParams{
+		HTTPClient: client,
+	}
 }
 
 /*BatchCreateSubscriptionsParams contains all the parameters to send to the API endpoint
@@ -26,17 +64,62 @@ type BatchCreateSubscriptionsParams struct {
 
 	/*Request*/
 	Request *models.CreateSubscriptionBatchRequest
+
+	timeout    time.Duration
+	Context    context.Context
+	HTTPClient *http.Client
+}
+
+// WithTimeout adds the timeout to the batch create subscriptions params
+func (o *BatchCreateSubscriptionsParams) WithTimeout(timeout time.Duration) *BatchCreateSubscriptionsParams {
+	o.SetTimeout(timeout)
+	return o
+}
+
+// SetTimeout adds the timeout to the batch create subscriptions params
+func (o *BatchCreateSubscriptionsParams) SetTimeout(timeout time.Duration) {
+	o.timeout = timeout
+}
+
+// WithContext adds the context to the batch create subscriptions params
+func (o *BatchCreateSubscriptionsParams) WithContext(ctx context.Context) *BatchCreateSubscriptionsParams {
+	o.SetContext(ctx)
+	return o
+}
+
+// SetContext adds the context to the batch create subscriptions params
+func (o *BatchCreateSubscriptionsParams) SetContext(ctx context.Context) {
+	o.Context = ctx
+}
+
+// WithHTTPClient adds the HTTPClient to the batch create subscriptions params
+func (o *BatchCreateSubscriptionsParams) WithHTTPClient(client *http.Client) *BatchCreateSubscriptionsParams {
+	o.SetHTTPClient(client)
+	return o
+}
+
+// SetHTTPClient adds the HTTPClient to the batch create subscriptions params
+func (o *BatchCreateSubscriptionsParams) SetHTTPClient(client *http.Client) {
+	o.HTTPClient = client
 }
 
 // WithRequest adds the request to the batch create subscriptions params
-func (o *BatchCreateSubscriptionsParams) WithRequest(Request *models.CreateSubscriptionBatchRequest) *BatchCreateSubscriptionsParams {
-	o.Request = Request
+func (o *BatchCreateSubscriptionsParams) WithRequest(request *models.CreateSubscriptionBatchRequest) *BatchCreateSubscriptionsParams {
+	o.SetRequest(request)
 	return o
+}
+
+// SetRequest adds the request to the batch create subscriptions params
+func (o *BatchCreateSubscriptionsParams) SetRequest(request *models.CreateSubscriptionBatchRequest) {
+	o.Request = request
 }
 
 // WriteToRequest writes these params to a swagger request
 func (o *BatchCreateSubscriptionsParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
+	if err := r.SetTimeout(o.timeout); err != nil {
+		return err
+	}
 	var res []error
 
 	if o.Request == nil {

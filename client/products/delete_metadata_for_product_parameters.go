@@ -4,8 +4,14 @@ package products
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"net/http"
+	"time"
+
+	"golang.org/x/net/context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
+	cr "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/swag"
 
 	strfmt "github.com/go-openapi/strfmt"
@@ -15,7 +21,39 @@ import (
 // with the default values initialized.
 func NewDeleteMetadataForProductParams() *DeleteMetadataForProductParams {
 	var ()
-	return &DeleteMetadataForProductParams{}
+	return &DeleteMetadataForProductParams{
+
+		timeout: cr.DefaultTimeout,
+	}
+}
+
+// NewDeleteMetadataForProductParamsWithTimeout creates a new DeleteMetadataForProductParams object
+// with the default values initialized, and the ability to set a timeout on a request
+func NewDeleteMetadataForProductParamsWithTimeout(timeout time.Duration) *DeleteMetadataForProductParams {
+	var ()
+	return &DeleteMetadataForProductParams{
+
+		timeout: timeout,
+	}
+}
+
+// NewDeleteMetadataForProductParamsWithContext creates a new DeleteMetadataForProductParams object
+// with the default values initialized, and the ability to set a context for a request
+func NewDeleteMetadataForProductParamsWithContext(ctx context.Context) *DeleteMetadataForProductParams {
+	var ()
+	return &DeleteMetadataForProductParams{
+
+		Context: ctx,
+	}
+}
+
+// NewDeleteMetadataForProductParamsWithHTTPClient creates a new DeleteMetadataForProductParams object
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
+func NewDeleteMetadataForProductParamsWithHTTPClient(client *http.Client) *DeleteMetadataForProductParams {
+	var ()
+	return &DeleteMetadataForProductParams{
+		HTTPClient: client,
+	}
 }
 
 /*DeleteMetadataForProductParams contains all the parameters to send to the API endpoint
@@ -30,23 +68,73 @@ type DeleteMetadataForProductParams struct {
 	Organizations []string
 	/*ProductID*/
 	ProductID string
+
+	timeout    time.Duration
+	Context    context.Context
+	HTTPClient *http.Client
+}
+
+// WithTimeout adds the timeout to the delete metadata for product params
+func (o *DeleteMetadataForProductParams) WithTimeout(timeout time.Duration) *DeleteMetadataForProductParams {
+	o.SetTimeout(timeout)
+	return o
+}
+
+// SetTimeout adds the timeout to the delete metadata for product params
+func (o *DeleteMetadataForProductParams) SetTimeout(timeout time.Duration) {
+	o.timeout = timeout
+}
+
+// WithContext adds the context to the delete metadata for product params
+func (o *DeleteMetadataForProductParams) WithContext(ctx context.Context) *DeleteMetadataForProductParams {
+	o.SetContext(ctx)
+	return o
+}
+
+// SetContext adds the context to the delete metadata for product params
+func (o *DeleteMetadataForProductParams) SetContext(ctx context.Context) {
+	o.Context = ctx
+}
+
+// WithHTTPClient adds the HTTPClient to the delete metadata for product params
+func (o *DeleteMetadataForProductParams) WithHTTPClient(client *http.Client) *DeleteMetadataForProductParams {
+	o.SetHTTPClient(client)
+	return o
+}
+
+// SetHTTPClient adds the HTTPClient to the delete metadata for product params
+func (o *DeleteMetadataForProductParams) SetHTTPClient(client *http.Client) {
+	o.HTTPClient = client
 }
 
 // WithOrganizations adds the organizations to the delete metadata for product params
-func (o *DeleteMetadataForProductParams) WithOrganizations(Organizations []string) *DeleteMetadataForProductParams {
-	o.Organizations = Organizations
+func (o *DeleteMetadataForProductParams) WithOrganizations(organizations []string) *DeleteMetadataForProductParams {
+	o.SetOrganizations(organizations)
 	return o
 }
 
-// WithProductID adds the productId to the delete metadata for product params
-func (o *DeleteMetadataForProductParams) WithProductID(ProductID string) *DeleteMetadataForProductParams {
-	o.ProductID = ProductID
+// SetOrganizations adds the organizations to the delete metadata for product params
+func (o *DeleteMetadataForProductParams) SetOrganizations(organizations []string) {
+	o.Organizations = organizations
+}
+
+// WithProductID adds the productID to the delete metadata for product params
+func (o *DeleteMetadataForProductParams) WithProductID(productID string) *DeleteMetadataForProductParams {
+	o.SetProductID(productID)
 	return o
+}
+
+// SetProductID adds the productId to the delete metadata for product params
+func (o *DeleteMetadataForProductParams) SetProductID(productID string) {
+	o.ProductID = productID
 }
 
 // WriteToRequest writes these params to a swagger request
 func (o *DeleteMetadataForProductParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
+	if err := r.SetTimeout(o.timeout); err != nil {
+		return err
+	}
 	var res []error
 
 	valuesOrganizations := o.Organizations

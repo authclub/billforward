@@ -5,6 +5,7 @@ package models
 
 import (
 	"bytes"
+	"encoding/json"
 	"io"
 	"io/ioutil"
 
@@ -15,164 +16,126 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-/*PricingComponent pricing component
-
-swagger:discriminator PricingComponent @type
-*/
+// PricingComponent pricing component
+// swagger:discriminator PricingComponent @type
 type PricingComponent interface {
 	runtime.Validatable
 
-	/* { "description" : "", "default" : "", "verbs":["POST","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "", "default" : "", "verbs":["POST","GET"] }
+	// Required: true
 	AtType() string
 	SetAtType(string)
 
-	/* { "description" : "ID of the user who last updated the entity.", "verbs":[] }
-	 */
+	// { "description" : "ID of the user who last updated the entity.", "verbs":[] }
 	ChangedBy() string
 	SetChangedBy(string)
 
-	/* { "description" : "The charge model of the pricing-component.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "The charge model of the pricing-component.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	ChargeModel() *string
 	SetChargeModel(*string)
 
-	/* { "description" : "The charge type of the pricing-component.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "The charge type of the pricing-component.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	ChargeType() *string
 	SetChargeType(*string)
 
-	/* { "description" : "The UTC DateTime when the object was created.", "verbs":[] }
-	 */
+	// { "description" : "The UTC DateTime when the object was created.", "verbs":[] }
 	Created() strfmt.DateTime
 	SetCreated(strfmt.DateTime)
 
-	/* { "description" : "", "verbs":["POST","PUT","GET"] }
-	 */
+	// { "description" : "", "verbs":["POST","PUT","GET"] }
 	CrmID() string
 	SetCrmID(string)
 
-	/* { "description" : "The default quantity of the pricing-component. If no value is supplied on a subscription this value will be used. This is useful for setting an expected purchase level of for introducing new pricing components to existing subscriptions and not having to back-fill values", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "The default quantity of the pricing-component. If no value is supplied on a subscription this value will be used. This is useful for setting an expected purchase level of for introducing new pricing components to existing subscriptions and not having to back-fill values", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	DefaultQuantity() *int32
 	SetDefaultQuantity(*int32)
 
-	/* { "description" : "", "verbs":["POST","PUT","GET"] }
-	 */
+	// { "description" : "", "verbs":["POST","PUT","GET"] }
 	Description() string
 	SetDescription(string)
 
-	/* {"default":"<span class=\"label label-default\">delayed</span>","description":"Default behaviour when a value is downgraded using this pricing component, this behaviour can be overridden when changing the value.<br><span class=\"label label-default\">immediate</span> &mdash; Downgrade will apply at the time the request is made.<br><span class=\"label label-default\">delayed</span> &mdash; Downgrade will apply at the end of the current billing cycle.","verbs":["POST","GET"]}
-	 */
+	// {"default":"<span class=\"label label-default\">delayed</span>","description":"Default behaviour when a value is downgraded using this pricing component, this behaviour can be overridden when changing the value.<br><span class=\"label label-default\">immediate</span> &mdash; Downgrade will apply at the time the request is made.<br><span class=\"label label-default\">delayed</span> &mdash; Downgrade will apply at the end of the current billing cycle.","verbs":["POST","GET"]}
 	DowngradeMode() string
 	SetDowngradeMode(string)
 
-	/* { "description" : "", "verbs":["GET"] } When associating a pricing component with a product rate plan, this ID should be used.
-
-	Required: true
-	*/
+	// { "description" : "", "verbs":["GET"] } When associating a pricing component with a product rate plan, this ID should be used.
+	// Required: true
 	ID() *string
 	SetID(*string)
 
-	/* { "default" : "Aggregated",  "description" : "For <span class=\"label label-default\">setup</span> pricing components <span class=\"label label-default\">Immediate</span> invoicing will result in an invoice being issued on subscription being set to the AwaitingPayment state, irrespective of the subscription start date. <span class=\"label label-default\">Aggregated</span> invoicing will add a charge to the first invoice of the subscription.", "verbs":["POST","PUT","GET"] }
-	 */
+	// { "default" : "Aggregated",  "description" : "For <span class=\"label label-default\">setup</span> pricing components <span class=\"label label-default\">Immediate</span> invoicing will result in an invoice being issued on subscription being set to the AwaitingPayment state, irrespective of the subscription start date. <span class=\"label label-default\">Aggregated</span> invoicing will add a charge to the first invoice of the subscription.", "verbs":["POST","PUT","GET"] }
 	InvoicingType() string
 	SetInvoicingType(string)
 
-	/* { "description" : "The maximum quantity of the pricing-component.", "verbs":[] }
-	 */
+	// { "description" : "The maximum quantity of the pricing-component.", "verbs":[] }
 	MaxQuantity() int32
 	SetMaxQuantity(int32)
 
-	/* { "default" : "0", "description" : "The minimum quantity of the pricing-component.", "verbs":[] }
-	 */
+	// { "default" : "0", "description" : "The minimum quantity of the pricing-component.", "verbs":[] }
 	MinQuantity() int32
 	SetMinQuantity(int32)
 
-	/* { "description" : "", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	Name() *string
 	SetName(*string)
 
-	/* { "description" : "", "verbs":[] }
-
-	Required: true
-	*/
+	// { "description" : "", "verbs":[] }
+	// Required: true
 	OrganizationID() *string
 	SetOrganizationID(*string)
 
-	/* { "description" : "", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	ProductRatePlanID() *string
 	SetProductRatePlanID(*string)
 
-	/* {"description":"A friendly non-unique name used to identify this pricing-component","verbs":["POST","PUT","GET"]}
-	 */
+	// {"description":"A friendly non-unique name used to identify this pricing-component","verbs":["POST","PUT","GET"]}
 	PublicName() string
 	SetPublicName(string)
 
-	/* {  "default" : "[]", "description" : "The pricing-component-tiers associated with the pricing-component.", "verbs":["POST","PUT","GET"] }
-	 */
+	// {  "default" : "[]", "description" : "The pricing-component-tiers associated with the pricing-component.", "verbs":["POST","PUT","GET"] }
 	Tiers() []*PricingComponentTier
 	SetTiers([]*PricingComponentTier)
 
-	/* { "description" : "The unit-of-measure associated with the pricing-component.", "verbs":["POST","PUT","GET"] }
-	 */
+	// { "description" : "The unit-of-measure associated with the pricing-component.", "verbs":["POST","PUT","GET"] }
 	UnitOfMeasure() *UnitOfMeasure
 	SetUnitOfMeasure(*UnitOfMeasure)
 
-	/* { "description" : "", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	UnitOfMeasureID() *string
 	SetUnitOfMeasureID(*string)
 
-	/* { "description" : "The UTC DateTime when the object was last updated.", "verbs":[] }
-	 */
+	// { "description" : "The UTC DateTime when the object was last updated.", "verbs":[] }
 	Updated() strfmt.DateTime
 	SetUpdated(strfmt.DateTime)
 
-	/* {"default":"<span class=\"label label-default\">immediate</span>","description":"Default behaviour when a value is upgraded using this pricing component, this behaviour can be overridden when changing the value.<br><span class=\"label label-default\">immediate</span> &mdash; Upgrade will apply at the time the request is made.<br><span class=\"label label-default\">delayed</span> &mdash; Upgrade will apply at the end of the current billing cycle.","verbs":["POST","GET"]}
-	 */
+	// {"default":"<span class=\"label label-default\">immediate</span>","description":"Default behaviour when a value is upgraded using this pricing component, this behaviour can be overridden when changing the value.<br><span class=\"label label-default\">immediate</span> &mdash; Upgrade will apply at the time the request is made.<br><span class=\"label label-default\">delayed</span> &mdash; Upgrade will apply at the end of the current billing cycle.","verbs":["POST","GET"]}
 	UpgradeMode() string
 	SetUpgradeMode(string)
 
-	/* { "default" : "current time", "description" : "The DateTime specifying when the pricing-component is valid from.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "default" : "current time", "description" : "The DateTime specifying when the pricing-component is valid from.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	ValidFrom() *strfmt.DateTime
 	SetValidFrom(*strfmt.DateTime)
 
-	/* {  "default" : "null", "description" : "The UTC DateTime specifying when the pricing-component is valid till.", "verbs":["POST","PUT","GET"] }
-	 */
+	// {  "default" : "null", "description" : "The UTC DateTime specifying when the pricing-component is valid till.", "verbs":["POST","PUT","GET"] }
 	ValidTill() *strfmt.DateTime
 	SetValidTill(*strfmt.DateTime)
 
-	/* { "description" : "", "verbs":["GET"] }
-
-	Required: true
-	*/
+	// { "description" : "", "verbs":["GET"] }
+	// Required: true
 	VersionID() *string
 	SetVersionID(*string)
 }
 
 // UnmarshalPricingComponentSlice unmarshals polymorphic slices of PricingComponent
 func UnmarshalPricingComponentSlice(reader io.Reader, consumer runtime.Consumer) ([]PricingComponent, error) {
-	var elements [][]byte
+	var elements []json.RawMessage
 	if err := consumer.Consume(reader, &elements); err != nil {
 		return nil, err
 	}

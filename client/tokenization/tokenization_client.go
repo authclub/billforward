@@ -42,11 +42,14 @@ func (a *Client) AuthCapture(params *AuthCaptureParams) (*AuthCaptureOK, error) 
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &AuthCaptureReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*AuthCaptureOK), nil
+
 }
 
 // SetTransport changes the transport on the client

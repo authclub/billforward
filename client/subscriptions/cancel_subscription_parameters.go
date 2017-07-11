@@ -4,8 +4,14 @@ package subscriptions
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"net/http"
+	"time"
+
+	"golang.org/x/net/context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
+	cr "github.com/go-openapi/runtime/client"
 
 	strfmt "github.com/go-openapi/strfmt"
 
@@ -16,7 +22,39 @@ import (
 // with the default values initialized.
 func NewCancelSubscriptionParams() *CancelSubscriptionParams {
 	var ()
-	return &CancelSubscriptionParams{}
+	return &CancelSubscriptionParams{
+
+		timeout: cr.DefaultTimeout,
+	}
+}
+
+// NewCancelSubscriptionParamsWithTimeout creates a new CancelSubscriptionParams object
+// with the default values initialized, and the ability to set a timeout on a request
+func NewCancelSubscriptionParamsWithTimeout(timeout time.Duration) *CancelSubscriptionParams {
+	var ()
+	return &CancelSubscriptionParams{
+
+		timeout: timeout,
+	}
+}
+
+// NewCancelSubscriptionParamsWithContext creates a new CancelSubscriptionParams object
+// with the default values initialized, and the ability to set a context for a request
+func NewCancelSubscriptionParamsWithContext(ctx context.Context) *CancelSubscriptionParams {
+	var ()
+	return &CancelSubscriptionParams{
+
+		Context: ctx,
+	}
+}
+
+// NewCancelSubscriptionParamsWithHTTPClient creates a new CancelSubscriptionParams object
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
+func NewCancelSubscriptionParamsWithHTTPClient(client *http.Client) *CancelSubscriptionParams {
+	var ()
+	return &CancelSubscriptionParams{
+		HTTPClient: client,
+	}
 }
 
 /*CancelSubscriptionParams contains all the parameters to send to the API endpoint
@@ -31,23 +69,73 @@ type CancelSubscriptionParams struct {
 
 	*/
 	SubscriptionCancellation *models.CancelSubscriptionRequest
+
+	timeout    time.Duration
+	Context    context.Context
+	HTTPClient *http.Client
 }
 
-// WithSubscriptionID adds the subscriptionId to the cancel subscription params
-func (o *CancelSubscriptionParams) WithSubscriptionID(SubscriptionID string) *CancelSubscriptionParams {
-	o.SubscriptionID = SubscriptionID
+// WithTimeout adds the timeout to the cancel subscription params
+func (o *CancelSubscriptionParams) WithTimeout(timeout time.Duration) *CancelSubscriptionParams {
+	o.SetTimeout(timeout)
 	return o
+}
+
+// SetTimeout adds the timeout to the cancel subscription params
+func (o *CancelSubscriptionParams) SetTimeout(timeout time.Duration) {
+	o.timeout = timeout
+}
+
+// WithContext adds the context to the cancel subscription params
+func (o *CancelSubscriptionParams) WithContext(ctx context.Context) *CancelSubscriptionParams {
+	o.SetContext(ctx)
+	return o
+}
+
+// SetContext adds the context to the cancel subscription params
+func (o *CancelSubscriptionParams) SetContext(ctx context.Context) {
+	o.Context = ctx
+}
+
+// WithHTTPClient adds the HTTPClient to the cancel subscription params
+func (o *CancelSubscriptionParams) WithHTTPClient(client *http.Client) *CancelSubscriptionParams {
+	o.SetHTTPClient(client)
+	return o
+}
+
+// SetHTTPClient adds the HTTPClient to the cancel subscription params
+func (o *CancelSubscriptionParams) SetHTTPClient(client *http.Client) {
+	o.HTTPClient = client
+}
+
+// WithSubscriptionID adds the subscriptionID to the cancel subscription params
+func (o *CancelSubscriptionParams) WithSubscriptionID(subscriptionID string) *CancelSubscriptionParams {
+	o.SetSubscriptionID(subscriptionID)
+	return o
+}
+
+// SetSubscriptionID adds the subscriptionId to the cancel subscription params
+func (o *CancelSubscriptionParams) SetSubscriptionID(subscriptionID string) {
+	o.SubscriptionID = subscriptionID
 }
 
 // WithSubscriptionCancellation adds the subscriptionCancellation to the cancel subscription params
-func (o *CancelSubscriptionParams) WithSubscriptionCancellation(SubscriptionCancellation *models.CancelSubscriptionRequest) *CancelSubscriptionParams {
-	o.SubscriptionCancellation = SubscriptionCancellation
+func (o *CancelSubscriptionParams) WithSubscriptionCancellation(subscriptionCancellation *models.CancelSubscriptionRequest) *CancelSubscriptionParams {
+	o.SetSubscriptionCancellation(subscriptionCancellation)
 	return o
+}
+
+// SetSubscriptionCancellation adds the subscriptionCancellation to the cancel subscription params
+func (o *CancelSubscriptionParams) SetSubscriptionCancellation(subscriptionCancellation *models.CancelSubscriptionRequest) {
+	o.SubscriptionCancellation = subscriptionCancellation
 }
 
 // WriteToRequest writes these params to a swagger request
 func (o *CancelSubscriptionParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
+	if err := r.SetTimeout(o.timeout); err != nil {
+		return err
+	}
 	var res []error
 
 	// path param subscription-ID

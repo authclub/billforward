@@ -4,8 +4,14 @@ package subscriptions
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"net/http"
+	"time"
+
+	"golang.org/x/net/context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
+	cr "github.com/go-openapi/runtime/client"
 
 	strfmt "github.com/go-openapi/strfmt"
 
@@ -16,7 +22,39 @@ import (
 // with the default values initialized.
 func NewReviveSubscriptionParams() *ReviveSubscriptionParams {
 	var ()
-	return &ReviveSubscriptionParams{}
+	return &ReviveSubscriptionParams{
+
+		timeout: cr.DefaultTimeout,
+	}
+}
+
+// NewReviveSubscriptionParamsWithTimeout creates a new ReviveSubscriptionParams object
+// with the default values initialized, and the ability to set a timeout on a request
+func NewReviveSubscriptionParamsWithTimeout(timeout time.Duration) *ReviveSubscriptionParams {
+	var ()
+	return &ReviveSubscriptionParams{
+
+		timeout: timeout,
+	}
+}
+
+// NewReviveSubscriptionParamsWithContext creates a new ReviveSubscriptionParams object
+// with the default values initialized, and the ability to set a context for a request
+func NewReviveSubscriptionParamsWithContext(ctx context.Context) *ReviveSubscriptionParams {
+	var ()
+	return &ReviveSubscriptionParams{
+
+		Context: ctx,
+	}
+}
+
+// NewReviveSubscriptionParamsWithHTTPClient creates a new ReviveSubscriptionParams object
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
+func NewReviveSubscriptionParamsWithHTTPClient(client *http.Client) *ReviveSubscriptionParams {
+	var ()
+	return &ReviveSubscriptionParams{
+		HTTPClient: client,
+	}
 }
 
 /*ReviveSubscriptionParams contains all the parameters to send to the API endpoint
@@ -31,23 +69,73 @@ type ReviveSubscriptionParams struct {
 	Request *models.ReviveSubscriptionRequest
 	/*SubscriptionID*/
 	SubscriptionID string
+
+	timeout    time.Duration
+	Context    context.Context
+	HTTPClient *http.Client
+}
+
+// WithTimeout adds the timeout to the revive subscription params
+func (o *ReviveSubscriptionParams) WithTimeout(timeout time.Duration) *ReviveSubscriptionParams {
+	o.SetTimeout(timeout)
+	return o
+}
+
+// SetTimeout adds the timeout to the revive subscription params
+func (o *ReviveSubscriptionParams) SetTimeout(timeout time.Duration) {
+	o.timeout = timeout
+}
+
+// WithContext adds the context to the revive subscription params
+func (o *ReviveSubscriptionParams) WithContext(ctx context.Context) *ReviveSubscriptionParams {
+	o.SetContext(ctx)
+	return o
+}
+
+// SetContext adds the context to the revive subscription params
+func (o *ReviveSubscriptionParams) SetContext(ctx context.Context) {
+	o.Context = ctx
+}
+
+// WithHTTPClient adds the HTTPClient to the revive subscription params
+func (o *ReviveSubscriptionParams) WithHTTPClient(client *http.Client) *ReviveSubscriptionParams {
+	o.SetHTTPClient(client)
+	return o
+}
+
+// SetHTTPClient adds the HTTPClient to the revive subscription params
+func (o *ReviveSubscriptionParams) SetHTTPClient(client *http.Client) {
+	o.HTTPClient = client
 }
 
 // WithRequest adds the request to the revive subscription params
-func (o *ReviveSubscriptionParams) WithRequest(Request *models.ReviveSubscriptionRequest) *ReviveSubscriptionParams {
-	o.Request = Request
+func (o *ReviveSubscriptionParams) WithRequest(request *models.ReviveSubscriptionRequest) *ReviveSubscriptionParams {
+	o.SetRequest(request)
 	return o
 }
 
-// WithSubscriptionID adds the subscriptionId to the revive subscription params
-func (o *ReviveSubscriptionParams) WithSubscriptionID(SubscriptionID string) *ReviveSubscriptionParams {
-	o.SubscriptionID = SubscriptionID
+// SetRequest adds the request to the revive subscription params
+func (o *ReviveSubscriptionParams) SetRequest(request *models.ReviveSubscriptionRequest) {
+	o.Request = request
+}
+
+// WithSubscriptionID adds the subscriptionID to the revive subscription params
+func (o *ReviveSubscriptionParams) WithSubscriptionID(subscriptionID string) *ReviveSubscriptionParams {
+	o.SetSubscriptionID(subscriptionID)
 	return o
+}
+
+// SetSubscriptionID adds the subscriptionId to the revive subscription params
+func (o *ReviveSubscriptionParams) SetSubscriptionID(subscriptionID string) {
+	o.SubscriptionID = subscriptionID
 }
 
 // WriteToRequest writes these params to a swagger request
 func (o *ReviveSubscriptionParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
+	if err := r.SetTimeout(o.timeout); err != nil {
+		return err
+	}
 	var res []error
 
 	if o.Request == nil {

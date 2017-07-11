@@ -4,8 +4,14 @@ package invoices
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"net/http"
+	"time"
+
+	"golang.org/x/net/context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
+	cr "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/swag"
 
 	strfmt "github.com/go-openapi/strfmt"
@@ -15,12 +21,12 @@ import (
 // with the default values initialized.
 func NewGetInvoiceByIDParams() *GetInvoiceByIDParams {
 	var (
-		excludeChildrenDefault bool   = bool(true)
-		includeRetiredDefault  bool   = bool(false)
-		offsetDefault          int32  = int32(0)
-		orderDefault           string = string("DESC")
-		orderByDefault         string = string("created")
-		recordsDefault         int32  = int32(10)
+		excludeChildrenDefault = bool(true)
+		includeRetiredDefault  = bool(false)
+		offsetDefault          = int32(0)
+		orderDefault           = string("DESC")
+		orderByDefault         = string("created")
+		recordsDefault         = int32(10)
 	)
 	return &GetInvoiceByIDParams{
 		ExcludeChildren: &excludeChildrenDefault,
@@ -29,6 +35,76 @@ func NewGetInvoiceByIDParams() *GetInvoiceByIDParams {
 		Order:           &orderDefault,
 		OrderBy:         &orderByDefault,
 		Records:         &recordsDefault,
+
+		timeout: cr.DefaultTimeout,
+	}
+}
+
+// NewGetInvoiceByIDParamsWithTimeout creates a new GetInvoiceByIDParams object
+// with the default values initialized, and the ability to set a timeout on a request
+func NewGetInvoiceByIDParamsWithTimeout(timeout time.Duration) *GetInvoiceByIDParams {
+	var (
+		excludeChildrenDefault = bool(true)
+		includeRetiredDefault  = bool(false)
+		offsetDefault          = int32(0)
+		orderDefault           = string("DESC")
+		orderByDefault         = string("created")
+		recordsDefault         = int32(10)
+	)
+	return &GetInvoiceByIDParams{
+		ExcludeChildren: &excludeChildrenDefault,
+		IncludeRetired:  &includeRetiredDefault,
+		Offset:          &offsetDefault,
+		Order:           &orderDefault,
+		OrderBy:         &orderByDefault,
+		Records:         &recordsDefault,
+
+		timeout: timeout,
+	}
+}
+
+// NewGetInvoiceByIDParamsWithContext creates a new GetInvoiceByIDParams object
+// with the default values initialized, and the ability to set a context for a request
+func NewGetInvoiceByIDParamsWithContext(ctx context.Context) *GetInvoiceByIDParams {
+	var (
+		excludeChildrenDefault = bool(true)
+		includeRetiredDefault  = bool(false)
+		offsetDefault          = int32(0)
+		orderDefault           = string("DESC")
+		orderByDefault         = string("created")
+		recordsDefault         = int32(10)
+	)
+	return &GetInvoiceByIDParams{
+		ExcludeChildren: &excludeChildrenDefault,
+		IncludeRetired:  &includeRetiredDefault,
+		Offset:          &offsetDefault,
+		Order:           &orderDefault,
+		OrderBy:         &orderByDefault,
+		Records:         &recordsDefault,
+
+		Context: ctx,
+	}
+}
+
+// NewGetInvoiceByIDParamsWithHTTPClient creates a new GetInvoiceByIDParams object
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
+func NewGetInvoiceByIDParamsWithHTTPClient(client *http.Client) *GetInvoiceByIDParams {
+	var (
+		excludeChildrenDefault = bool(true)
+		includeRetiredDefault  = bool(false)
+		offsetDefault          = int32(0)
+		orderDefault           = string("DESC")
+		orderByDefault         = string("created")
+		recordsDefault         = int32(10)
+	)
+	return &GetInvoiceByIDParams{
+		ExcludeChildren: &excludeChildrenDefault,
+		IncludeRetired:  &includeRetiredDefault,
+		Offset:          &offsetDefault,
+		Order:           &orderDefault,
+		OrderBy:         &orderByDefault,
+		Records:         &recordsDefault,
+		HTTPClient:      client,
 	}
 }
 
@@ -77,59 +153,139 @@ type GetInvoiceByIDParams struct {
 
 	*/
 	Records *int32
+
+	timeout    time.Duration
+	Context    context.Context
+	HTTPClient *http.Client
+}
+
+// WithTimeout adds the timeout to the get invoice by ID params
+func (o *GetInvoiceByIDParams) WithTimeout(timeout time.Duration) *GetInvoiceByIDParams {
+	o.SetTimeout(timeout)
+	return o
+}
+
+// SetTimeout adds the timeout to the get invoice by ID params
+func (o *GetInvoiceByIDParams) SetTimeout(timeout time.Duration) {
+	o.timeout = timeout
+}
+
+// WithContext adds the context to the get invoice by ID params
+func (o *GetInvoiceByIDParams) WithContext(ctx context.Context) *GetInvoiceByIDParams {
+	o.SetContext(ctx)
+	return o
+}
+
+// SetContext adds the context to the get invoice by ID params
+func (o *GetInvoiceByIDParams) SetContext(ctx context.Context) {
+	o.Context = ctx
+}
+
+// WithHTTPClient adds the HTTPClient to the get invoice by ID params
+func (o *GetInvoiceByIDParams) WithHTTPClient(client *http.Client) *GetInvoiceByIDParams {
+	o.SetHTTPClient(client)
+	return o
+}
+
+// SetHTTPClient adds the HTTPClient to the get invoice by ID params
+func (o *GetInvoiceByIDParams) SetHTTPClient(client *http.Client) {
+	o.HTTPClient = client
 }
 
 // WithExcludeChildren adds the excludeChildren to the get invoice by ID params
-func (o *GetInvoiceByIDParams) WithExcludeChildren(ExcludeChildren *bool) *GetInvoiceByIDParams {
-	o.ExcludeChildren = ExcludeChildren
+func (o *GetInvoiceByIDParams) WithExcludeChildren(excludeChildren *bool) *GetInvoiceByIDParams {
+	o.SetExcludeChildren(excludeChildren)
 	return o
+}
+
+// SetExcludeChildren adds the excludeChildren to the get invoice by ID params
+func (o *GetInvoiceByIDParams) SetExcludeChildren(excludeChildren *bool) {
+	o.ExcludeChildren = excludeChildren
 }
 
 // WithIncludeRetired adds the includeRetired to the get invoice by ID params
-func (o *GetInvoiceByIDParams) WithIncludeRetired(IncludeRetired *bool) *GetInvoiceByIDParams {
-	o.IncludeRetired = IncludeRetired
+func (o *GetInvoiceByIDParams) WithIncludeRetired(includeRetired *bool) *GetInvoiceByIDParams {
+	o.SetIncludeRetired(includeRetired)
 	return o
 }
 
-// WithInvoiceID adds the invoiceId to the get invoice by ID params
-func (o *GetInvoiceByIDParams) WithInvoiceID(InvoiceID string) *GetInvoiceByIDParams {
-	o.InvoiceID = InvoiceID
+// SetIncludeRetired adds the includeRetired to the get invoice by ID params
+func (o *GetInvoiceByIDParams) SetIncludeRetired(includeRetired *bool) {
+	o.IncludeRetired = includeRetired
+}
+
+// WithInvoiceID adds the invoiceID to the get invoice by ID params
+func (o *GetInvoiceByIDParams) WithInvoiceID(invoiceID string) *GetInvoiceByIDParams {
+	o.SetInvoiceID(invoiceID)
 	return o
+}
+
+// SetInvoiceID adds the invoiceId to the get invoice by ID params
+func (o *GetInvoiceByIDParams) SetInvoiceID(invoiceID string) {
+	o.InvoiceID = invoiceID
 }
 
 // WithOffset adds the offset to the get invoice by ID params
-func (o *GetInvoiceByIDParams) WithOffset(Offset *int32) *GetInvoiceByIDParams {
-	o.Offset = Offset
+func (o *GetInvoiceByIDParams) WithOffset(offset *int32) *GetInvoiceByIDParams {
+	o.SetOffset(offset)
 	return o
+}
+
+// SetOffset adds the offset to the get invoice by ID params
+func (o *GetInvoiceByIDParams) SetOffset(offset *int32) {
+	o.Offset = offset
 }
 
 // WithOrder adds the order to the get invoice by ID params
-func (o *GetInvoiceByIDParams) WithOrder(Order *string) *GetInvoiceByIDParams {
-	o.Order = Order
+func (o *GetInvoiceByIDParams) WithOrder(order *string) *GetInvoiceByIDParams {
+	o.SetOrder(order)
 	return o
+}
+
+// SetOrder adds the order to the get invoice by ID params
+func (o *GetInvoiceByIDParams) SetOrder(order *string) {
+	o.Order = order
 }
 
 // WithOrderBy adds the orderBy to the get invoice by ID params
-func (o *GetInvoiceByIDParams) WithOrderBy(OrderBy *string) *GetInvoiceByIDParams {
-	o.OrderBy = OrderBy
+func (o *GetInvoiceByIDParams) WithOrderBy(orderBy *string) *GetInvoiceByIDParams {
+	o.SetOrderBy(orderBy)
 	return o
+}
+
+// SetOrderBy adds the orderBy to the get invoice by ID params
+func (o *GetInvoiceByIDParams) SetOrderBy(orderBy *string) {
+	o.OrderBy = orderBy
 }
 
 // WithOrganizations adds the organizations to the get invoice by ID params
-func (o *GetInvoiceByIDParams) WithOrganizations(Organizations []string) *GetInvoiceByIDParams {
-	o.Organizations = Organizations
+func (o *GetInvoiceByIDParams) WithOrganizations(organizations []string) *GetInvoiceByIDParams {
+	o.SetOrganizations(organizations)
 	return o
 }
 
+// SetOrganizations adds the organizations to the get invoice by ID params
+func (o *GetInvoiceByIDParams) SetOrganizations(organizations []string) {
+	o.Organizations = organizations
+}
+
 // WithRecords adds the records to the get invoice by ID params
-func (o *GetInvoiceByIDParams) WithRecords(Records *int32) *GetInvoiceByIDParams {
-	o.Records = Records
+func (o *GetInvoiceByIDParams) WithRecords(records *int32) *GetInvoiceByIDParams {
+	o.SetRecords(records)
 	return o
+}
+
+// SetRecords adds the records to the get invoice by ID params
+func (o *GetInvoiceByIDParams) SetRecords(records *int32) {
+	o.Records = records
 }
 
 // WriteToRequest writes these params to a swagger request
 func (o *GetInvoiceByIDParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
+	if err := r.SetTimeout(o.timeout); err != nil {
+		return err
+	}
 	var res []error
 
 	if o.ExcludeChildren != nil {

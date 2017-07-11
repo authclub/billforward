@@ -42,11 +42,14 @@ func (a *Client) GetAllPayments(params *GetAllPaymentsParams) (*GetAllPaymentsOK
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &GetAllPaymentsReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*GetAllPaymentsOK), nil
+
 }
 
 /*
@@ -69,11 +72,14 @@ func (a *Client) GetPaymentByID(params *GetPaymentByIDParams) (*GetPaymentByIDOK
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &GetPaymentByIDReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*GetPaymentByIDOK), nil
+
 }
 
 /*
@@ -96,11 +102,14 @@ func (a *Client) GetPaymentByInvoiceID(params *GetPaymentByInvoiceIDParams) (*Ge
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &GetPaymentByInvoiceIDReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*GetPaymentByInvoiceIDOK), nil
+
 }
 
 // SetTransport changes the transport on the client

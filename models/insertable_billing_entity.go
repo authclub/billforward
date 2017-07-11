@@ -12,84 +12,59 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-/*InsertableBillingEntity Insertable entities are those entities that can be created.
-
-swagger:model InsertableBillingEntity
-*/
+// InsertableBillingEntity Insertable entities are those entities that can be created.
+// swagger:model InsertableBillingEntity
 type InsertableBillingEntity struct {
 
-	/* { "description" : "The UTC DateTime when the pricing-component-value-change was processed.", "verbs":["POST","PUT","GET"] }
-	 */
+	// { "description" : "The UTC DateTime when the pricing-component-value-change was processed.", "verbs":["POST","PUT","GET"] }
 	Applied strfmt.DateTime `json:"applied,omitempty"`
 
-	/* { "description" : "The UTC DateTime when the pricing-component-value-change was calculated.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "The UTC DateTime when the pricing-component-value-change was calculated.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	AsOf *strfmt.DateTime `json:"asOf"`
 
-	/* { "description" : "ID of the user who last updated the entity.", "verbs":[] }
-	 */
+	// { "description" : "ID of the user who last updated the entity.", "verbs":[] }
 	ChangedBy string `json:"changedBy,omitempty"`
 
-	/* { "description" : "The UTC DateTime when the object was created.", "verbs":[] }
-	 */
+	// { "description" : "The UTC DateTime when the object was created.", "verbs":[] }
 	Created strfmt.DateTime `json:"created,omitempty"`
 
-	/* { "description" : "ID of the pricing-component-value-change.", "verbs":["POST","PUT","GET"] }
-	 */
+	// { "description" : "ID of the pricing-component-value-change.", "verbs":["POST","PUT","GET"] }
 	ID string `json:"id,omitempty"`
 
-	/* { "description" : "ID of the invoice associated with the pricing-component-value-change.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "ID of the invoice associated with the pricing-component-value-change.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	InvoiceID *string `json:"invoiceID"`
 
-	/* { "description" : "The value change mode.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "The value change mode.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	Mode *string `json:"mode"`
 
-	/* { "description" : "The new value of the pricing-component.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "The new value of the pricing-component.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	NewValue *int32 `json:"newValue"`
 
-	/* { "description" : "The new value of the pricing-component.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "The new value of the pricing-component.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	OldValue *int32 `json:"oldValue"`
 
-	/* { "description" : "The organizationID.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "The organizationID.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	OrganizationID *string `json:"organizationID"`
 
-	/* { "description" : "ID of the pricing-component associated with the pricing-component-value-change.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "ID of the pricing-component associated with the pricing-component-value-change.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	PricingComponentID *string `json:"pricingComponentID"`
 
-	/* { "description" : "The value change state.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "The value change state.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	State *string `json:"state"`
 
-	/* { "description" : "ID of the subscription associated with the pricing-component-value-change.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "ID of the subscription associated with the pricing-component-value-change.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	SubscriptionID *string `json:"subscriptionID"`
 
-	/* { "description" : "ID of the unit-of-measure associated with the pricing-component-value-change.", "verbs":["POST","PUT","GET"] }
-	 */
+	// { "description" : "ID of the unit-of-measure associated with the pricing-component-value-change.", "verbs":["POST","PUT","GET"] }
 	UnitOfMeasureID string `json:"unitOfMeasureID,omitempty"`
 }
 
@@ -168,17 +143,25 @@ func (m *InsertableBillingEntity) validateInvoiceID(formats strfmt.Registry) err
 
 var insertableBillingEntityTypeModePropEnum []interface{}
 
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["immediate","delayed"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		insertableBillingEntityTypeModePropEnum = append(insertableBillingEntityTypeModePropEnum, v)
+	}
+}
+
+const (
+	// InsertableBillingEntityModeImmediate captures enum value "immediate"
+	InsertableBillingEntityModeImmediate string = "immediate"
+	// InsertableBillingEntityModeDelayed captures enum value "delayed"
+	InsertableBillingEntityModeDelayed string = "delayed"
+)
+
 // prop value enum
 func (m *InsertableBillingEntity) validateModeEnum(path, location string, value string) error {
-	if insertableBillingEntityTypeModePropEnum == nil {
-		var res []string
-		if err := json.Unmarshal([]byte(`["immediate","delayed"]`), &res); err != nil {
-			return err
-		}
-		for _, v := range res {
-			insertableBillingEntityTypeModePropEnum = append(insertableBillingEntityTypeModePropEnum, v)
-		}
-	}
 	if err := validate.Enum(path, location, value, insertableBillingEntityTypeModePropEnum); err != nil {
 		return err
 	}
@@ -237,17 +220,29 @@ func (m *InsertableBillingEntity) validatePricingComponentID(formats strfmt.Regi
 
 var insertableBillingEntityTypeStatePropEnum []interface{}
 
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["New","Accepted","Rejected","ChargeCreated"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		insertableBillingEntityTypeStatePropEnum = append(insertableBillingEntityTypeStatePropEnum, v)
+	}
+}
+
+const (
+	// InsertableBillingEntityStateNew captures enum value "New"
+	InsertableBillingEntityStateNew string = "New"
+	// InsertableBillingEntityStateAccepted captures enum value "Accepted"
+	InsertableBillingEntityStateAccepted string = "Accepted"
+	// InsertableBillingEntityStateRejected captures enum value "Rejected"
+	InsertableBillingEntityStateRejected string = "Rejected"
+	// InsertableBillingEntityStateChargeCreated captures enum value "ChargeCreated"
+	InsertableBillingEntityStateChargeCreated string = "ChargeCreated"
+)
+
 // prop value enum
 func (m *InsertableBillingEntity) validateStateEnum(path, location string, value string) error {
-	if insertableBillingEntityTypeStatePropEnum == nil {
-		var res []string
-		if err := json.Unmarshal([]byte(`["New","Accepted","Rejected","ChargeCreated"]`), &res); err != nil {
-			return err
-		}
-		for _, v := range res {
-			insertableBillingEntityTypeStatePropEnum = append(insertableBillingEntityTypeStatePropEnum, v)
-		}
-	}
 	if err := validate.Enum(path, location, value, insertableBillingEntityTypeStatePropEnum); err != nil {
 		return err
 	}

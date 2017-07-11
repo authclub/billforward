@@ -10,46 +10,33 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-/*Alias The alias used to encrypt card details
-
-swagger:model Alias
-*/
+// Alias The alias used to encrypt card details
+// swagger:model Alias
 type Alias struct {
 
-	/* { "description" : "A string representation of the alias.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "A string representation of the alias.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	Alias *string `json:"alias"`
 
-	/* { "description" : "ID of the user who last updated the entity.", "verbs":[] }
-	 */
+	// { "description" : "ID of the user who last updated the entity.", "verbs":[] }
 	ChangedBy string `json:"changedBy,omitempty"`
 
-	/* { "description" : "The UTC DateTime when the object was created.", "verbs":[] }
-	 */
+	// { "description" : "The UTC DateTime when the object was created.", "verbs":[] }
 	Created strfmt.DateTime `json:"created,omitempty"`
 
-	/* { "description" : "Has this alias been deleted?", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "Has this alias been deleted?", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	Deleted bool `json:"deleted"`
 
-	/* { "description" : "ID of the alias.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "ID of the alias.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	ID *string `json:"id"`
 
-	/* { "description" : "ID of the organization associated with the alias.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "ID of the organization associated with the alias.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	OrganizationID *string `json:"organizationID"`
 
-	/* { "description" : "The UTC DateTime when the object was last updated.", "verbs":[] }
-	 */
+	// { "description" : "The UTC DateTime when the object was last updated.", "verbs":[] }
 	Updated strfmt.DateTime `json:"updated,omitempty"`
 }
 

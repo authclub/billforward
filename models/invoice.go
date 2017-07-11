@@ -5,234 +5,172 @@ package models
 
 import (
 	"encoding/json"
+	"strconv"
 
 	strfmt "github.com/go-openapi/strfmt"
-	"github.com/go-openapi/swag"
 
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
 
-/*Invoice An invoice encapsulates the cumulative charges of a subscription's pricing-components and their respective pricing-component-values for a specific period of time.
-
-swagger:model Invoice
-*/
+// Invoice An invoice encapsulates the cumulative charges of a subscription's pricing-components and their respective pricing-component-values for a specific period of time.
+// swagger:model Invoice
 type Invoice struct {
 
-	/* { "description" : "", "verbs":["GET"] }
-
-	Required: true
-	*/
+	// { "description" : "", "verbs":["GET"] }
+	// Required: true
 	AccountID *string `json:"accountID"`
 
-	/* { "description" : "ID of the user who last updated the entity.", "verbs":[] }
-	 */
+	// { "description" : "ID of the user who last updated the entity.", "verbs":[] }
 	ChangedBy string `json:"changedBy,omitempty"`
 
-	/* charges
-	 */
-	Charges []*SubscriptionCharge `json:"charges,omitempty"`
+	// charges
+	Charges []*SubscriptionCharge `json:"charges"`
 
-	/* children
-	 */
-	Children []*Invoice `json:"children,omitempty"`
+	// children
+	Children []*Invoice `json:"children"`
 
-	/* { "description" : "Cost of the invoice exclusive of tax.", "verbs":["GET"] }
-
-	Required: true
-	*/
+	// { "description" : "Cost of the invoice exclusive of tax.", "verbs":["GET"] }
+	// Required: true
 	CostExcludingTax *float64 `json:"costExcludingTax"`
 
-	/* { "description" : "The UTC DateTime when the object was created.", "verbs":[] }
-	 */
+	// { "description" : "The UTC DateTime when the object was created.", "verbs":[] }
 	Created strfmt.DateTime `json:"created,omitempty"`
 
-	/* { "description" : "The amount of credit to be returned to the pool.", "verbs":["GET"] }
-
-	Required: true
-	*/
+	// { "description" : "The amount of credit to be returned to the pool.", "verbs":["GET"] }
+	// Required: true
 	CreditRolledOver *float64 `json:"creditRolledOver"`
 
-	/* { "description" : "The amount of credit to be returned to the pool excluding tax.", "verbs":["GET"] }
-	 */
+	// { "description" : "The amount of credit to be returned to the pool excluding tax.", "verbs":["GET"] }
 	CreditRolledOverExcludingTax float64 `json:"creditRolledOverExcludingTax,omitempty"`
 
-	/* { "description" : "CRM identifier of the invoice.", "verbs":["PUT","GET"] }
-	 */
+	// { "description" : "CRM identifier of the invoice.", "verbs":["PUT","GET"] }
 	CrmID string `json:"crmID,omitempty"`
 
-	/* { "description" : "Currency of the invoice specified by a three character ISO 4217 currency code.", "verbs":["GET"] }
-
-	Required: true
-	*/
+	// { "description" : "Currency of the invoice specified by a three character ISO 4217 currency code.", "verbs":["GET"] }
+	// Required: true
 	Currency *string `json:"currency"`
 
-	/* { "description" : "Indicates if an invoice has been retired. If an invoice has been retired it can still be retrieved using the appropriate flag on API requests. Generally invoices will not be retired.", "verbs":[] }
-
-	Required: true
-	*/
+	// { "description" : "Indicates if an invoice has been retired. If an invoice has been retired it can still be retrieved using the appropriate flag on API requests. Generally invoices will not be retired.", "verbs":[] }
+	// Required: true
 	Deleted bool `json:"deleted"`
 
-	/* { "description" : "The description of the invoice", "verbs":[] }
-	 */
+	// { "description" : "The description of the invoice", "verbs":[] }
 	Description string `json:"description,omitempty"`
 
-	/* { "description" : "The amount of discounts for the invoice.", "verbs":["GET"] }
-	 */
+	// { "description" : "The amount of discounts for the invoice.", "verbs":["GET"] }
 	DiscountAmount float64 `json:"discountAmount,omitempty"`
 
-	/* { "description" : "The amount of discounts for the invoice excluding tax.", "verbs":["GET"] }
-	 */
+	// { "description" : "The amount of discounts for the invoice excluding tax.", "verbs":["GET"] }
 	DiscountAmountExcludingTax float64 `json:"discountAmountExcludingTax,omitempty"`
 
-	/* { "description" : "Date this invoice is due, UTC DateTime.", "verbs":["GET"] }
-	 */
+	// { "description" : "Date this invoice is due, UTC DateTime.", "verbs":["GET"] }
 	Due strfmt.DateTime `json:"due,omitempty"`
 
-	/* { "description" : "UTC DateTime of the invoice's final execution attempt. The final execution attempt. This may be less than the next execution attempt if the next execution attempt never occurred.", "verbs":["GET"] }
-	 */
+	// { "description" : "UTC DateTime of the invoice's final execution attempt. The final execution attempt. This may be less than the next execution attempt if the next execution attempt never occurred.", "verbs":["GET"] }
 	FinalExecutionAttempt strfmt.DateTime `json:"finalExecutionAttempt,omitempty"`
 
-	/* { "description" : "Unique identifier for the invoice.", "verbs":["GET"] }
-	 */
+	// { "description" : "Unique identifier for the invoice.", "verbs":["GET"] }
 	ID string `json:"id,omitempty"`
 
-	/* { "description" : "Is this an initial invoice. An initial invoice is the first invoice generated for a subscription. Initial invoices will not have dunning applied to them and as such will only have a single payment attempt. For trial periods, the trial invoice is the initial invoice.", "verbs":["GET"] }
-
-	Required: true
-	*/
+	// { "description" : "Is this an initial invoice. An initial invoice is the first invoice generated for a subscription. Initial invoices will not have dunning applied to them and as such will only have a single payment attempt. For trial periods, the trial invoice is the initial invoice.", "verbs":["GET"] }
+	// Required: true
 	InitialInvoice bool `json:"initialInvoice"`
 
-	/* { "description" : "Cost of the invoice inclusive of tax.", "verbs":["GET"] }
-
-	Required: true
-	*/
+	// { "description" : "Cost of the invoice inclusive of tax.", "verbs":["GET"] }
+	// Required: true
 	InvoiceCost *float64 `json:"invoiceCost"`
 
-	/* { "description" : "Credit Notes associated with this invoice. Multiple credit notes may be associated with the invoice.", "verbs":["GET"] }
-	 */
-	InvoiceCreditNotes []*CreditNote `json:"invoiceCreditNotes,omitempty"`
+	// { "description" : "Credit Notes associated with this invoice. Multiple credit notes may be associated with the invoice.", "verbs":["GET"] }
+	InvoiceCreditNotes []*CreditNote `json:"invoiceCreditNotes"`
 
-	/* { "description" : "The collection of invoice-lines associated with the invoice.", "verbs":["GET"] }
-	 */
-	InvoiceLines []*InvoiceLine `json:"invoiceLines,omitempty"`
+	// { "description" : "The collection of invoice-lines associated with the invoice.", "verbs":["GET"] }
+	InvoiceLines []*InvoiceLine `json:"invoiceLines"`
 
-	/* { "description" : "Total amount of the invoice currently paid for. As the invoice may be paid by multiple payments, for example partly paid for by a voucher and then paid for by a card, this indicates the current paid amount of the invoice.", "verbs":["GET"] }
-	 */
+	// { "description" : "Total amount of the invoice currently paid for. As the invoice may be paid by multiple payments, for example partly paid for by a voucher and then paid for by a card, this indicates the current paid amount of the invoice.", "verbs":["GET"] }
 	InvoicePaid float64 `json:"invoicePaid,omitempty"`
 
-	/* { "description" : "Payments used for this invoice. Multiple payments may be associated with the invoice.", "verbs":["GET"] }
-	 */
-	InvoicePayments []*InvoicePayment `json:"invoicePayments,omitempty"`
+	// { "description" : "Payments used for this invoice. Multiple payments may be associated with the invoice.", "verbs":["GET"] }
+	InvoicePayments []*InvoicePayment `json:"invoicePayments"`
 
-	/* { "description" : "Total amount of the invoice refunded.", "verbs":["GET"] }
-	 */
+	// { "description" : "Total amount of the invoice refunded.", "verbs":["GET"] }
 	InvoiceRefunded float64 `json:"invoiceRefunded,omitempty"`
 
-	/* { "description" : "Refunds associated with this invoice. Multiple refunds may be associated with the invoice.", "verbs":["GET"] }
-	 */
-	InvoiceRefunds []*Refund `json:"invoiceRefunds,omitempty"`
+	// { "description" : "Refunds associated with this invoice. Multiple refunds may be associated with the invoice.", "verbs":["GET"] }
+	InvoiceRefunds []*Refund `json:"invoiceRefunds"`
 
-	/* { "description" : "The UTC DateTime when the invoice was first issued.", "verbs":["GET"] }
-	 */
+	// { "description" : "The UTC DateTime when the invoice was first issued.", "verbs":["GET"] }
 	Issued strfmt.DateTime `json:"issued,omitempty"`
 
-	/* { "description" : "UTC DateTime of the invoice's last execution attempt. This was the last time an attempt was made to take payment for this invoice.", "verbs":["GET"] }
-	 */
+	// { "description" : "UTC DateTime of the invoice's last execution attempt. This was the last time an attempt was made to take payment for this invoice.", "verbs":["GET"] }
 	LastExecutionAttempt strfmt.DateTime `json:"lastExecutionAttempt,omitempty"`
 
-	/* { "description" : "If the subscription is locked, it will not be processed by the system", "verbs":[] }
-	 */
+	// { "description" : "If the subscription is locked, it will not be processed by the system", "verbs":[] }
 	Locked string `json:"locked,omitempty"`
 
-	/* { "description" : "Which system is responsible for managing the subscription.", "verbs":[] }
-	 */
+	// { "description" : "Which system is responsible for managing the subscription.", "verbs":[] }
 	ManagedBy string `json:"managedBy,omitempty"`
 
-	/* { "description" : "The name of the invoice", "verbs":[] }
-	 */
+	// { "description" : "The name of the invoice", "verbs":[] }
 	Name string `json:"name,omitempty"`
 
-	/* { "description" : "UTC DateTime of the invoice's next execution attempt. If the next execution attempt is greater than the period end for this invoice, the invoice will not receive another automatic execution attempt.", "verbs":["GET"] }
-	 */
+	// { "description" : "UTC DateTime of the invoice's next execution attempt. If the next execution attempt is greater than the period end for this invoice, the invoice will not receive another automatic execution attempt.", "verbs":["GET"] }
 	NextExecutionAttempt strfmt.DateTime `json:"nextExecutionAttempt,omitempty"`
 
-	/* Cost of the invoice before discounts, inclusive of tax.
-
-	Required: true
-	*/
+	// Cost of the invoice before discounts, inclusive of tax.
+	// Required: true
 	NonDiscountedCost *float64 `json:"nonDiscountedCost"`
 
-	/* Cost of the invoice before discounts, inclusive of tax.
-
-	Required: true
-	*/
+	// Cost of the invoice before discounts, inclusive of tax.
+	// Required: true
 	NonDiscountedCostExcludingTax *float64 `json:"nonDiscountedCostExcludingTax"`
 
-	/* { "description" : "", "verbs":[] }
-
-	Required: true
-	*/
+	// { "description" : "", "verbs":[] }
+	// Required: true
 	OrganizationID *string `json:"organizationID"`
 
-	/* { "description" : "", "verbs":[] }
-	 */
+	// { "description" : "", "verbs":[] }
 	ParentInvoiceID string `json:"parentInvoiceID,omitempty"`
 
-	/* { "description" : "UTC DateTime specifying when payment was received for the invoice.", "verbs":["GET"] }
-	 */
+	// { "description" : "UTC DateTime specifying when payment was received for the invoice.", "verbs":["GET"] }
 	PaymentReceived strfmt.DateTime `json:"paymentReceived,omitempty"`
 
-	/* { "description" : "End of the period being billed by this invoice, UTC DateTime.", "verbs":["GET"] }
-	 */
+	// { "description" : "End of the period being billed by this invoice, UTC DateTime.", "verbs":["GET"] }
 	PeriodEnd strfmt.DateTime `json:"periodEnd,omitempty"`
 
-	/* { "description" : "Start of the period being billed by this invoice, UTC DateTime", "verbs":["GET"] }
-	 */
+	// { "description" : "Start of the period being billed by this invoice, UTC DateTime", "verbs":["GET"] }
 	PeriodStart strfmt.DateTime `json:"periodStart,omitempty"`
 
-	/* { "description" : "Initially an invoice is set as unpaid. Once payment for the full value of the invoice has been received it is marked as paid. An invoice may be paid from various sources including cards, coupons or manual payments.", "verbs":["GET"] }
-
-	Required: true
-	*/
+	// { "description" : "Initially an invoice is set as unpaid. Once payment for the full value of the invoice has been received it is marked as paid. An invoice may be paid from various sources including cards, coupons or manual payments.", "verbs":["GET"] }
+	// Required: true
 	State *string `json:"state"`
 
-	/* { "description" : "", "verbs":["GET"] }
-	 */
+	// { "description" : "", "verbs":["GET"] }
 	SubscriptionID string `json:"subscriptionID,omitempty"`
 
-	/* { "description" : "", "verbs":["GET"] }
-
-	Required: true
-	*/
+	// { "description" : "", "verbs":["GET"] }
+	// Required: true
 	SubscriptionVersionID *string `json:"subscriptionVersionID"`
 
-	/* tax lines
-	 */
-	TaxLines []*InsertableBillingEntity `json:"taxLines,omitempty"`
+	// tax lines
+	TaxLines []*InsertableBillingEntity `json:"taxLines"`
 
-	/* { "description" : "Number of payment attempts for this invoice. This includes any manual execution attempts.", "verbs":["GET"] }
-	 */
+	// { "description" : "Number of payment attempts for this invoice. This includes any manual execution attempts.", "verbs":["GET"] }
 	TotalExecutionAttempts int32 `json:"totalExecutionAttempts,omitempty"`
 
-	/* { "description" : "The type of the invoice. A subscription invoice is raised every time a subscription recurs. An amendment is created for intra-contract changes. An Adhoc invoice is created for payment that is taken out-of-band of a subscription. Finally the invoice generated for a trial period is marked as Trial.", "verbs":["GET"] }
-
-	Required: true
-	*/
+	// { "description" : "The type of the invoice. A subscription invoice is raised every time a subscription recurs. An amendment is created for intra-contract changes. An Adhoc invoice is created for payment that is taken out-of-band of a subscription. Finally the invoice generated for a trial period is marked as Trial.", "verbs":["GET"] }
+	// Required: true
 	Type *string `json:"type"`
 
-	/* { "description" : "The UTC DateTime when the object was last updated.", "verbs":[] }
-	 */
+	// { "description" : "The UTC DateTime when the object was last updated.", "verbs":[] }
 	Updated strfmt.DateTime `json:"updated,omitempty"`
 
-	/* { "description" : "Version identifier of the invoice.", "verbs":["GET"] }
-	 */
+	// { "description" : "Version identifier of the invoice.", "verbs":["GET"] }
 	VersionID string `json:"versionID,omitempty"`
 
-	/* { "description" : "The version number of the Invoice.  The first version of an Invoice is version number 1", "verbs":["GET"] }
-
-	Required: true
-	*/
+	// { "description" : "The version number of the Invoice.  The first version of an Invoice is version number 1", "verbs":["GET"] }
+	// Required: true
 	VersionNumber *int32 `json:"versionNumber"`
 }
 
@@ -371,6 +309,24 @@ func (m *Invoice) validateCharges(formats strfmt.Registry) error {
 		return nil
 	}
 
+	for i := 0; i < len(m.Charges); i++ {
+
+		if swag.IsZero(m.Charges[i]) { // not required
+			continue
+		}
+
+		if m.Charges[i] != nil {
+
+			if err := m.Charges[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("charges" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
 	return nil
 }
 
@@ -378,6 +334,24 @@ func (m *Invoice) validateChildren(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Children) { // not required
 		return nil
+	}
+
+	for i := 0; i < len(m.Children); i++ {
+
+		if swag.IsZero(m.Children[i]) { // not required
+			continue
+		}
+
+		if m.Children[i] != nil {
+
+			if err := m.Children[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("children" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil
@@ -443,6 +417,24 @@ func (m *Invoice) validateInvoiceCreditNotes(formats strfmt.Registry) error {
 		return nil
 	}
 
+	for i := 0; i < len(m.InvoiceCreditNotes); i++ {
+
+		if swag.IsZero(m.InvoiceCreditNotes[i]) { // not required
+			continue
+		}
+
+		if m.InvoiceCreditNotes[i] != nil {
+
+			if err := m.InvoiceCreditNotes[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("invoiceCreditNotes" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
 	return nil
 }
 
@@ -450,6 +442,24 @@ func (m *Invoice) validateInvoiceLines(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.InvoiceLines) { // not required
 		return nil
+	}
+
+	for i := 0; i < len(m.InvoiceLines); i++ {
+
+		if swag.IsZero(m.InvoiceLines[i]) { // not required
+			continue
+		}
+
+		if m.InvoiceLines[i] != nil {
+
+			if err := m.InvoiceLines[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("invoiceLines" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil
@@ -461,6 +471,24 @@ func (m *Invoice) validateInvoicePayments(formats strfmt.Registry) error {
 		return nil
 	}
 
+	for i := 0; i < len(m.InvoicePayments); i++ {
+
+		if swag.IsZero(m.InvoicePayments[i]) { // not required
+			continue
+		}
+
+		if m.InvoicePayments[i] != nil {
+
+			if err := m.InvoicePayments[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("invoicePayments" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
 	return nil
 }
 
@@ -470,22 +498,48 @@ func (m *Invoice) validateInvoiceRefunds(formats strfmt.Registry) error {
 		return nil
 	}
 
+	for i := 0; i < len(m.InvoiceRefunds); i++ {
+
+		if swag.IsZero(m.InvoiceRefunds[i]) { // not required
+			continue
+		}
+
+		if m.InvoiceRefunds[i] != nil {
+
+			if err := m.InvoiceRefunds[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("invoiceRefunds" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
 	return nil
 }
 
 var invoiceTypeManagedByPropEnum []interface{}
 
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["BillForward","Stripe"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		invoiceTypeManagedByPropEnum = append(invoiceTypeManagedByPropEnum, v)
+	}
+}
+
+const (
+	// InvoiceManagedByBillForward captures enum value "BillForward"
+	InvoiceManagedByBillForward string = "BillForward"
+	// InvoiceManagedByStripe captures enum value "Stripe"
+	InvoiceManagedByStripe string = "Stripe"
+)
+
 // prop value enum
 func (m *Invoice) validateManagedByEnum(path, location string, value string) error {
-	if invoiceTypeManagedByPropEnum == nil {
-		var res []string
-		if err := json.Unmarshal([]byte(`["BillForward","Stripe"]`), &res); err != nil {
-			return err
-		}
-		for _, v := range res {
-			invoiceTypeManagedByPropEnum = append(invoiceTypeManagedByPropEnum, v)
-		}
-	}
 	if err := validate.Enum(path, location, value, invoiceTypeManagedByPropEnum); err != nil {
 		return err
 	}
@@ -535,17 +589,29 @@ func (m *Invoice) validateOrganizationID(formats strfmt.Registry) error {
 
 var invoiceTypeStatePropEnum []interface{}
 
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Paid","Unpaid","Pending","Voided"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		invoiceTypeStatePropEnum = append(invoiceTypeStatePropEnum, v)
+	}
+}
+
+const (
+	// InvoiceStatePaid captures enum value "Paid"
+	InvoiceStatePaid string = "Paid"
+	// InvoiceStateUnpaid captures enum value "Unpaid"
+	InvoiceStateUnpaid string = "Unpaid"
+	// InvoiceStatePending captures enum value "Pending"
+	InvoiceStatePending string = "Pending"
+	// InvoiceStateVoided captures enum value "Voided"
+	InvoiceStateVoided string = "Voided"
+)
+
 // prop value enum
 func (m *Invoice) validateStateEnum(path, location string, value string) error {
-	if invoiceTypeStatePropEnum == nil {
-		var res []string
-		if err := json.Unmarshal([]byte(`["Paid","Unpaid","Pending","Voided"]`), &res); err != nil {
-			return err
-		}
-		for _, v := range res {
-			invoiceTypeStatePropEnum = append(invoiceTypeStatePropEnum, v)
-		}
-	}
 	if err := validate.Enum(path, location, value, invoiceTypeStatePropEnum); err != nil {
 		return err
 	}
@@ -581,22 +647,56 @@ func (m *Invoice) validateTaxLines(formats strfmt.Registry) error {
 		return nil
 	}
 
+	for i := 0; i < len(m.TaxLines); i++ {
+
+		if swag.IsZero(m.TaxLines[i]) { // not required
+			continue
+		}
+
+		if m.TaxLines[i] != nil {
+
+			if err := m.TaxLines[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("taxLines" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
 	return nil
 }
 
 var invoiceTypeTypePropEnum []interface{}
 
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Subscription","Trial","Charge","FinalArrears","Amendment","Aggregated"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		invoiceTypeTypePropEnum = append(invoiceTypeTypePropEnum, v)
+	}
+}
+
+const (
+	// InvoiceTypeSubscription captures enum value "Subscription"
+	InvoiceTypeSubscription string = "Subscription"
+	// InvoiceTypeTrial captures enum value "Trial"
+	InvoiceTypeTrial string = "Trial"
+	// InvoiceTypeCharge captures enum value "Charge"
+	InvoiceTypeCharge string = "Charge"
+	// InvoiceTypeFinalArrears captures enum value "FinalArrears"
+	InvoiceTypeFinalArrears string = "FinalArrears"
+	// InvoiceTypeAmendment captures enum value "Amendment"
+	InvoiceTypeAmendment string = "Amendment"
+	// InvoiceTypeAggregated captures enum value "Aggregated"
+	InvoiceTypeAggregated string = "Aggregated"
+)
+
 // prop value enum
 func (m *Invoice) validateTypeEnum(path, location string, value string) error {
-	if invoiceTypeTypePropEnum == nil {
-		var res []string
-		if err := json.Unmarshal([]byte(`["Subscription","Trial","Charge","FinalArrears","Amendment","Aggregated"]`), &res); err != nil {
-			return err
-		}
-		for _, v := range res {
-			invoiceTypeTypePropEnum = append(invoiceTypeTypePropEnum, v)
-		}
-	}
 	if err := validate.Enum(path, location, value, invoiceTypeTypePropEnum); err != nil {
 		return err
 	}

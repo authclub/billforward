@@ -4,8 +4,14 @@ package accounts
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"net/http"
+	"time"
+
+	"golang.org/x/net/context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
+	cr "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/swag"
 
 	strfmt "github.com/go-openapi/strfmt"
@@ -15,12 +21,12 @@ import (
 // with the default values initialized.
 func NewGetAllAccountsParams() *GetAllAccountsParams {
 	var (
-		includeRetiredDefault bool   = bool(true)
-		offsetDefault         int32  = int32(0)
-		orderDefault          string = string("DESC")
-		orderByDefault        string = string("created")
-		recordsDefault        int32  = int32(10)
-		usersOnlyDefault      bool   = bool(false)
+		includeRetiredDefault = bool(true)
+		offsetDefault         = int32(0)
+		orderDefault          = string("DESC")
+		orderByDefault        = string("created")
+		recordsDefault        = int32(10)
+		usersOnlyDefault      = bool(false)
 	)
 	return &GetAllAccountsParams{
 		IncludeRetired: &includeRetiredDefault,
@@ -29,6 +35,76 @@ func NewGetAllAccountsParams() *GetAllAccountsParams {
 		OrderBy:        &orderByDefault,
 		Records:        &recordsDefault,
 		UsersOnly:      &usersOnlyDefault,
+
+		timeout: cr.DefaultTimeout,
+	}
+}
+
+// NewGetAllAccountsParamsWithTimeout creates a new GetAllAccountsParams object
+// with the default values initialized, and the ability to set a timeout on a request
+func NewGetAllAccountsParamsWithTimeout(timeout time.Duration) *GetAllAccountsParams {
+	var (
+		includeRetiredDefault = bool(true)
+		offsetDefault         = int32(0)
+		orderDefault          = string("DESC")
+		orderByDefault        = string("created")
+		recordsDefault        = int32(10)
+		usersOnlyDefault      = bool(false)
+	)
+	return &GetAllAccountsParams{
+		IncludeRetired: &includeRetiredDefault,
+		Offset:         &offsetDefault,
+		Order:          &orderDefault,
+		OrderBy:        &orderByDefault,
+		Records:        &recordsDefault,
+		UsersOnly:      &usersOnlyDefault,
+
+		timeout: timeout,
+	}
+}
+
+// NewGetAllAccountsParamsWithContext creates a new GetAllAccountsParams object
+// with the default values initialized, and the ability to set a context for a request
+func NewGetAllAccountsParamsWithContext(ctx context.Context) *GetAllAccountsParams {
+	var (
+		includeRetiredDefault = bool(true)
+		offsetDefault         = int32(0)
+		orderDefault          = string("DESC")
+		orderByDefault        = string("created")
+		recordsDefault        = int32(10)
+		usersOnlyDefault      = bool(false)
+	)
+	return &GetAllAccountsParams{
+		IncludeRetired: &includeRetiredDefault,
+		Offset:         &offsetDefault,
+		Order:          &orderDefault,
+		OrderBy:        &orderByDefault,
+		Records:        &recordsDefault,
+		UsersOnly:      &usersOnlyDefault,
+
+		Context: ctx,
+	}
+}
+
+// NewGetAllAccountsParamsWithHTTPClient creates a new GetAllAccountsParams object
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
+func NewGetAllAccountsParamsWithHTTPClient(client *http.Client) *GetAllAccountsParams {
+	var (
+		includeRetiredDefault = bool(true)
+		offsetDefault         = int32(0)
+		orderDefault          = string("DESC")
+		orderByDefault        = string("created")
+		recordsDefault        = int32(10)
+		usersOnlyDefault      = bool(false)
+	)
+	return &GetAllAccountsParams{
+		IncludeRetired: &includeRetiredDefault,
+		Offset:         &offsetDefault,
+		Order:          &orderDefault,
+		OrderBy:        &orderByDefault,
+		Records:        &recordsDefault,
+		UsersOnly:      &usersOnlyDefault,
+		HTTPClient:     client,
 	}
 }
 
@@ -79,65 +155,150 @@ type GetAllAccountsParams struct {
 
 	*/
 	UsersOnly *bool
+
+	timeout    time.Duration
+	Context    context.Context
+	HTTPClient *http.Client
+}
+
+// WithTimeout adds the timeout to the get all accounts params
+func (o *GetAllAccountsParams) WithTimeout(timeout time.Duration) *GetAllAccountsParams {
+	o.SetTimeout(timeout)
+	return o
+}
+
+// SetTimeout adds the timeout to the get all accounts params
+func (o *GetAllAccountsParams) SetTimeout(timeout time.Duration) {
+	o.timeout = timeout
+}
+
+// WithContext adds the context to the get all accounts params
+func (o *GetAllAccountsParams) WithContext(ctx context.Context) *GetAllAccountsParams {
+	o.SetContext(ctx)
+	return o
+}
+
+// SetContext adds the context to the get all accounts params
+func (o *GetAllAccountsParams) SetContext(ctx context.Context) {
+	o.Context = ctx
+}
+
+// WithHTTPClient adds the HTTPClient to the get all accounts params
+func (o *GetAllAccountsParams) WithHTTPClient(client *http.Client) *GetAllAccountsParams {
+	o.SetHTTPClient(client)
+	return o
+}
+
+// SetHTTPClient adds the HTTPClient to the get all accounts params
+func (o *GetAllAccountsParams) SetHTTPClient(client *http.Client) {
+	o.HTTPClient = client
 }
 
 // WithID adds the id to the get all accounts params
-func (o *GetAllAccountsParams) WithID(ID []string) *GetAllAccountsParams {
-	o.ID = ID
+func (o *GetAllAccountsParams) WithID(id []string) *GetAllAccountsParams {
+	o.SetID(id)
 	return o
+}
+
+// SetID adds the id to the get all accounts params
+func (o *GetAllAccountsParams) SetID(id []string) {
+	o.ID = id
 }
 
 // WithIncludeRetired adds the includeRetired to the get all accounts params
-func (o *GetAllAccountsParams) WithIncludeRetired(IncludeRetired *bool) *GetAllAccountsParams {
-	o.IncludeRetired = IncludeRetired
+func (o *GetAllAccountsParams) WithIncludeRetired(includeRetired *bool) *GetAllAccountsParams {
+	o.SetIncludeRetired(includeRetired)
 	return o
+}
+
+// SetIncludeRetired adds the includeRetired to the get all accounts params
+func (o *GetAllAccountsParams) SetIncludeRetired(includeRetired *bool) {
+	o.IncludeRetired = includeRetired
 }
 
 // WithMetadata adds the metadata to the get all accounts params
-func (o *GetAllAccountsParams) WithMetadata(Metadata *string) *GetAllAccountsParams {
-	o.Metadata = Metadata
+func (o *GetAllAccountsParams) WithMetadata(metadata *string) *GetAllAccountsParams {
+	o.SetMetadata(metadata)
 	return o
+}
+
+// SetMetadata adds the metadata to the get all accounts params
+func (o *GetAllAccountsParams) SetMetadata(metadata *string) {
+	o.Metadata = metadata
 }
 
 // WithOffset adds the offset to the get all accounts params
-func (o *GetAllAccountsParams) WithOffset(Offset *int32) *GetAllAccountsParams {
-	o.Offset = Offset
+func (o *GetAllAccountsParams) WithOffset(offset *int32) *GetAllAccountsParams {
+	o.SetOffset(offset)
 	return o
+}
+
+// SetOffset adds the offset to the get all accounts params
+func (o *GetAllAccountsParams) SetOffset(offset *int32) {
+	o.Offset = offset
 }
 
 // WithOrder adds the order to the get all accounts params
-func (o *GetAllAccountsParams) WithOrder(Order *string) *GetAllAccountsParams {
-	o.Order = Order
+func (o *GetAllAccountsParams) WithOrder(order *string) *GetAllAccountsParams {
+	o.SetOrder(order)
 	return o
+}
+
+// SetOrder adds the order to the get all accounts params
+func (o *GetAllAccountsParams) SetOrder(order *string) {
+	o.Order = order
 }
 
 // WithOrderBy adds the orderBy to the get all accounts params
-func (o *GetAllAccountsParams) WithOrderBy(OrderBy *string) *GetAllAccountsParams {
-	o.OrderBy = OrderBy
+func (o *GetAllAccountsParams) WithOrderBy(orderBy *string) *GetAllAccountsParams {
+	o.SetOrderBy(orderBy)
 	return o
+}
+
+// SetOrderBy adds the orderBy to the get all accounts params
+func (o *GetAllAccountsParams) SetOrderBy(orderBy *string) {
+	o.OrderBy = orderBy
 }
 
 // WithOrganizations adds the organizations to the get all accounts params
-func (o *GetAllAccountsParams) WithOrganizations(Organizations []string) *GetAllAccountsParams {
-	o.Organizations = Organizations
+func (o *GetAllAccountsParams) WithOrganizations(organizations []string) *GetAllAccountsParams {
+	o.SetOrganizations(organizations)
 	return o
+}
+
+// SetOrganizations adds the organizations to the get all accounts params
+func (o *GetAllAccountsParams) SetOrganizations(organizations []string) {
+	o.Organizations = organizations
 }
 
 // WithRecords adds the records to the get all accounts params
-func (o *GetAllAccountsParams) WithRecords(Records *int32) *GetAllAccountsParams {
-	o.Records = Records
+func (o *GetAllAccountsParams) WithRecords(records *int32) *GetAllAccountsParams {
+	o.SetRecords(records)
 	return o
 }
 
+// SetRecords adds the records to the get all accounts params
+func (o *GetAllAccountsParams) SetRecords(records *int32) {
+	o.Records = records
+}
+
 // WithUsersOnly adds the usersOnly to the get all accounts params
-func (o *GetAllAccountsParams) WithUsersOnly(UsersOnly *bool) *GetAllAccountsParams {
-	o.UsersOnly = UsersOnly
+func (o *GetAllAccountsParams) WithUsersOnly(usersOnly *bool) *GetAllAccountsParams {
+	o.SetUsersOnly(usersOnly)
 	return o
+}
+
+// SetUsersOnly adds the usersOnly to the get all accounts params
+func (o *GetAllAccountsParams) SetUsersOnly(usersOnly *bool) {
+	o.UsersOnly = usersOnly
 }
 
 // WriteToRequest writes these params to a swagger request
 func (o *GetAllAccountsParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
+	if err := r.SetTimeout(o.timeout); err != nil {
+		return err
+	}
 	var res []error
 
 	valuesID := o.ID

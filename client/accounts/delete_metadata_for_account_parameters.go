@@ -4,8 +4,14 @@ package accounts
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"net/http"
+	"time"
+
+	"golang.org/x/net/context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
+	cr "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/swag"
 
 	strfmt "github.com/go-openapi/strfmt"
@@ -15,7 +21,39 @@ import (
 // with the default values initialized.
 func NewDeleteMetadataForAccountParams() *DeleteMetadataForAccountParams {
 	var ()
-	return &DeleteMetadataForAccountParams{}
+	return &DeleteMetadataForAccountParams{
+
+		timeout: cr.DefaultTimeout,
+	}
+}
+
+// NewDeleteMetadataForAccountParamsWithTimeout creates a new DeleteMetadataForAccountParams object
+// with the default values initialized, and the ability to set a timeout on a request
+func NewDeleteMetadataForAccountParamsWithTimeout(timeout time.Duration) *DeleteMetadataForAccountParams {
+	var ()
+	return &DeleteMetadataForAccountParams{
+
+		timeout: timeout,
+	}
+}
+
+// NewDeleteMetadataForAccountParamsWithContext creates a new DeleteMetadataForAccountParams object
+// with the default values initialized, and the ability to set a context for a request
+func NewDeleteMetadataForAccountParamsWithContext(ctx context.Context) *DeleteMetadataForAccountParams {
+	var ()
+	return &DeleteMetadataForAccountParams{
+
+		Context: ctx,
+	}
+}
+
+// NewDeleteMetadataForAccountParamsWithHTTPClient creates a new DeleteMetadataForAccountParams object
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
+func NewDeleteMetadataForAccountParamsWithHTTPClient(client *http.Client) *DeleteMetadataForAccountParams {
+	var ()
+	return &DeleteMetadataForAccountParams{
+		HTTPClient: client,
+	}
 }
 
 /*DeleteMetadataForAccountParams contains all the parameters to send to the API endpoint
@@ -30,23 +68,73 @@ type DeleteMetadataForAccountParams struct {
 
 	*/
 	Organizations []string
+
+	timeout    time.Duration
+	Context    context.Context
+	HTTPClient *http.Client
 }
 
-// WithAccountID adds the accountId to the delete metadata for account params
-func (o *DeleteMetadataForAccountParams) WithAccountID(AccountID string) *DeleteMetadataForAccountParams {
-	o.AccountID = AccountID
+// WithTimeout adds the timeout to the delete metadata for account params
+func (o *DeleteMetadataForAccountParams) WithTimeout(timeout time.Duration) *DeleteMetadataForAccountParams {
+	o.SetTimeout(timeout)
 	return o
+}
+
+// SetTimeout adds the timeout to the delete metadata for account params
+func (o *DeleteMetadataForAccountParams) SetTimeout(timeout time.Duration) {
+	o.timeout = timeout
+}
+
+// WithContext adds the context to the delete metadata for account params
+func (o *DeleteMetadataForAccountParams) WithContext(ctx context.Context) *DeleteMetadataForAccountParams {
+	o.SetContext(ctx)
+	return o
+}
+
+// SetContext adds the context to the delete metadata for account params
+func (o *DeleteMetadataForAccountParams) SetContext(ctx context.Context) {
+	o.Context = ctx
+}
+
+// WithHTTPClient adds the HTTPClient to the delete metadata for account params
+func (o *DeleteMetadataForAccountParams) WithHTTPClient(client *http.Client) *DeleteMetadataForAccountParams {
+	o.SetHTTPClient(client)
+	return o
+}
+
+// SetHTTPClient adds the HTTPClient to the delete metadata for account params
+func (o *DeleteMetadataForAccountParams) SetHTTPClient(client *http.Client) {
+	o.HTTPClient = client
+}
+
+// WithAccountID adds the accountID to the delete metadata for account params
+func (o *DeleteMetadataForAccountParams) WithAccountID(accountID string) *DeleteMetadataForAccountParams {
+	o.SetAccountID(accountID)
+	return o
+}
+
+// SetAccountID adds the accountId to the delete metadata for account params
+func (o *DeleteMetadataForAccountParams) SetAccountID(accountID string) {
+	o.AccountID = accountID
 }
 
 // WithOrganizations adds the organizations to the delete metadata for account params
-func (o *DeleteMetadataForAccountParams) WithOrganizations(Organizations []string) *DeleteMetadataForAccountParams {
-	o.Organizations = Organizations
+func (o *DeleteMetadataForAccountParams) WithOrganizations(organizations []string) *DeleteMetadataForAccountParams {
+	o.SetOrganizations(organizations)
 	return o
+}
+
+// SetOrganizations adds the organizations to the delete metadata for account params
+func (o *DeleteMetadataForAccountParams) SetOrganizations(organizations []string) {
+	o.Organizations = organizations
 }
 
 // WriteToRequest writes these params to a swagger request
 func (o *DeleteMetadataForAccountParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
+	if err := r.SetTimeout(o.timeout); err != nil {
+		return err
+	}
 	var res []error
 
 	// path param account-ID

@@ -4,8 +4,14 @@ package subscriptions
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"net/http"
+	"time"
+
+	"golang.org/x/net/context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
+	cr "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/swag"
 
 	strfmt "github.com/go-openapi/strfmt"
@@ -15,12 +21,12 @@ import (
 // with the default values initialized.
 func NewGetSubscriptionByAccountIDParams() *GetSubscriptionByAccountIDParams {
 	var (
-		excludeChildrenDefault bool   = bool(true)
-		includeRetiredDefault  bool   = bool(false)
-		offsetDefault          int32  = int32(0)
-		orderDefault           string = string("DESC")
-		orderByDefault         string = string("id")
-		recordsDefault         int32  = int32(10)
+		excludeChildrenDefault = bool(true)
+		includeRetiredDefault  = bool(false)
+		offsetDefault          = int32(0)
+		orderDefault           = string("DESC")
+		orderByDefault         = string("id")
+		recordsDefault         = int32(10)
 	)
 	return &GetSubscriptionByAccountIDParams{
 		ExcludeChildren: &excludeChildrenDefault,
@@ -29,6 +35,76 @@ func NewGetSubscriptionByAccountIDParams() *GetSubscriptionByAccountIDParams {
 		Order:           &orderDefault,
 		OrderBy:         &orderByDefault,
 		Records:         &recordsDefault,
+
+		timeout: cr.DefaultTimeout,
+	}
+}
+
+// NewGetSubscriptionByAccountIDParamsWithTimeout creates a new GetSubscriptionByAccountIDParams object
+// with the default values initialized, and the ability to set a timeout on a request
+func NewGetSubscriptionByAccountIDParamsWithTimeout(timeout time.Duration) *GetSubscriptionByAccountIDParams {
+	var (
+		excludeChildrenDefault = bool(true)
+		includeRetiredDefault  = bool(false)
+		offsetDefault          = int32(0)
+		orderDefault           = string("DESC")
+		orderByDefault         = string("id")
+		recordsDefault         = int32(10)
+	)
+	return &GetSubscriptionByAccountIDParams{
+		ExcludeChildren: &excludeChildrenDefault,
+		IncludeRetired:  &includeRetiredDefault,
+		Offset:          &offsetDefault,
+		Order:           &orderDefault,
+		OrderBy:         &orderByDefault,
+		Records:         &recordsDefault,
+
+		timeout: timeout,
+	}
+}
+
+// NewGetSubscriptionByAccountIDParamsWithContext creates a new GetSubscriptionByAccountIDParams object
+// with the default values initialized, and the ability to set a context for a request
+func NewGetSubscriptionByAccountIDParamsWithContext(ctx context.Context) *GetSubscriptionByAccountIDParams {
+	var (
+		excludeChildrenDefault = bool(true)
+		includeRetiredDefault  = bool(false)
+		offsetDefault          = int32(0)
+		orderDefault           = string("DESC")
+		orderByDefault         = string("id")
+		recordsDefault         = int32(10)
+	)
+	return &GetSubscriptionByAccountIDParams{
+		ExcludeChildren: &excludeChildrenDefault,
+		IncludeRetired:  &includeRetiredDefault,
+		Offset:          &offsetDefault,
+		Order:           &orderDefault,
+		OrderBy:         &orderByDefault,
+		Records:         &recordsDefault,
+
+		Context: ctx,
+	}
+}
+
+// NewGetSubscriptionByAccountIDParamsWithHTTPClient creates a new GetSubscriptionByAccountIDParams object
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
+func NewGetSubscriptionByAccountIDParamsWithHTTPClient(client *http.Client) *GetSubscriptionByAccountIDParams {
+	var (
+		excludeChildrenDefault = bool(true)
+		includeRetiredDefault  = bool(false)
+		offsetDefault          = int32(0)
+		orderDefault           = string("DESC")
+		orderByDefault         = string("id")
+		recordsDefault         = int32(10)
+	)
+	return &GetSubscriptionByAccountIDParams{
+		ExcludeChildren: &excludeChildrenDefault,
+		IncludeRetired:  &includeRetiredDefault,
+		Offset:          &offsetDefault,
+		Order:           &orderDefault,
+		OrderBy:         &orderByDefault,
+		Records:         &recordsDefault,
+		HTTPClient:      client,
 	}
 }
 
@@ -74,59 +150,139 @@ type GetSubscriptionByAccountIDParams struct {
 
 	*/
 	Records *int32
+
+	timeout    time.Duration
+	Context    context.Context
+	HTTPClient *http.Client
 }
 
-// WithAccountID adds the accountId to the get subscription by account ID params
-func (o *GetSubscriptionByAccountIDParams) WithAccountID(AccountID string) *GetSubscriptionByAccountIDParams {
-	o.AccountID = AccountID
+// WithTimeout adds the timeout to the get subscription by account ID params
+func (o *GetSubscriptionByAccountIDParams) WithTimeout(timeout time.Duration) *GetSubscriptionByAccountIDParams {
+	o.SetTimeout(timeout)
 	return o
+}
+
+// SetTimeout adds the timeout to the get subscription by account ID params
+func (o *GetSubscriptionByAccountIDParams) SetTimeout(timeout time.Duration) {
+	o.timeout = timeout
+}
+
+// WithContext adds the context to the get subscription by account ID params
+func (o *GetSubscriptionByAccountIDParams) WithContext(ctx context.Context) *GetSubscriptionByAccountIDParams {
+	o.SetContext(ctx)
+	return o
+}
+
+// SetContext adds the context to the get subscription by account ID params
+func (o *GetSubscriptionByAccountIDParams) SetContext(ctx context.Context) {
+	o.Context = ctx
+}
+
+// WithHTTPClient adds the HTTPClient to the get subscription by account ID params
+func (o *GetSubscriptionByAccountIDParams) WithHTTPClient(client *http.Client) *GetSubscriptionByAccountIDParams {
+	o.SetHTTPClient(client)
+	return o
+}
+
+// SetHTTPClient adds the HTTPClient to the get subscription by account ID params
+func (o *GetSubscriptionByAccountIDParams) SetHTTPClient(client *http.Client) {
+	o.HTTPClient = client
+}
+
+// WithAccountID adds the accountID to the get subscription by account ID params
+func (o *GetSubscriptionByAccountIDParams) WithAccountID(accountID string) *GetSubscriptionByAccountIDParams {
+	o.SetAccountID(accountID)
+	return o
+}
+
+// SetAccountID adds the accountId to the get subscription by account ID params
+func (o *GetSubscriptionByAccountIDParams) SetAccountID(accountID string) {
+	o.AccountID = accountID
 }
 
 // WithExcludeChildren adds the excludeChildren to the get subscription by account ID params
-func (o *GetSubscriptionByAccountIDParams) WithExcludeChildren(ExcludeChildren *bool) *GetSubscriptionByAccountIDParams {
-	o.ExcludeChildren = ExcludeChildren
+func (o *GetSubscriptionByAccountIDParams) WithExcludeChildren(excludeChildren *bool) *GetSubscriptionByAccountIDParams {
+	o.SetExcludeChildren(excludeChildren)
 	return o
+}
+
+// SetExcludeChildren adds the excludeChildren to the get subscription by account ID params
+func (o *GetSubscriptionByAccountIDParams) SetExcludeChildren(excludeChildren *bool) {
+	o.ExcludeChildren = excludeChildren
 }
 
 // WithIncludeRetired adds the includeRetired to the get subscription by account ID params
-func (o *GetSubscriptionByAccountIDParams) WithIncludeRetired(IncludeRetired *bool) *GetSubscriptionByAccountIDParams {
-	o.IncludeRetired = IncludeRetired
+func (o *GetSubscriptionByAccountIDParams) WithIncludeRetired(includeRetired *bool) *GetSubscriptionByAccountIDParams {
+	o.SetIncludeRetired(includeRetired)
 	return o
+}
+
+// SetIncludeRetired adds the includeRetired to the get subscription by account ID params
+func (o *GetSubscriptionByAccountIDParams) SetIncludeRetired(includeRetired *bool) {
+	o.IncludeRetired = includeRetired
 }
 
 // WithOffset adds the offset to the get subscription by account ID params
-func (o *GetSubscriptionByAccountIDParams) WithOffset(Offset *int32) *GetSubscriptionByAccountIDParams {
-	o.Offset = Offset
+func (o *GetSubscriptionByAccountIDParams) WithOffset(offset *int32) *GetSubscriptionByAccountIDParams {
+	o.SetOffset(offset)
 	return o
+}
+
+// SetOffset adds the offset to the get subscription by account ID params
+func (o *GetSubscriptionByAccountIDParams) SetOffset(offset *int32) {
+	o.Offset = offset
 }
 
 // WithOrder adds the order to the get subscription by account ID params
-func (o *GetSubscriptionByAccountIDParams) WithOrder(Order *string) *GetSubscriptionByAccountIDParams {
-	o.Order = Order
+func (o *GetSubscriptionByAccountIDParams) WithOrder(order *string) *GetSubscriptionByAccountIDParams {
+	o.SetOrder(order)
 	return o
+}
+
+// SetOrder adds the order to the get subscription by account ID params
+func (o *GetSubscriptionByAccountIDParams) SetOrder(order *string) {
+	o.Order = order
 }
 
 // WithOrderBy adds the orderBy to the get subscription by account ID params
-func (o *GetSubscriptionByAccountIDParams) WithOrderBy(OrderBy *string) *GetSubscriptionByAccountIDParams {
-	o.OrderBy = OrderBy
+func (o *GetSubscriptionByAccountIDParams) WithOrderBy(orderBy *string) *GetSubscriptionByAccountIDParams {
+	o.SetOrderBy(orderBy)
 	return o
+}
+
+// SetOrderBy adds the orderBy to the get subscription by account ID params
+func (o *GetSubscriptionByAccountIDParams) SetOrderBy(orderBy *string) {
+	o.OrderBy = orderBy
 }
 
 // WithOrganizations adds the organizations to the get subscription by account ID params
-func (o *GetSubscriptionByAccountIDParams) WithOrganizations(Organizations []string) *GetSubscriptionByAccountIDParams {
-	o.Organizations = Organizations
+func (o *GetSubscriptionByAccountIDParams) WithOrganizations(organizations []string) *GetSubscriptionByAccountIDParams {
+	o.SetOrganizations(organizations)
 	return o
 }
 
+// SetOrganizations adds the organizations to the get subscription by account ID params
+func (o *GetSubscriptionByAccountIDParams) SetOrganizations(organizations []string) {
+	o.Organizations = organizations
+}
+
 // WithRecords adds the records to the get subscription by account ID params
-func (o *GetSubscriptionByAccountIDParams) WithRecords(Records *int32) *GetSubscriptionByAccountIDParams {
-	o.Records = Records
+func (o *GetSubscriptionByAccountIDParams) WithRecords(records *int32) *GetSubscriptionByAccountIDParams {
+	o.SetRecords(records)
 	return o
+}
+
+// SetRecords adds the records to the get subscription by account ID params
+func (o *GetSubscriptionByAccountIDParams) SetRecords(records *int32) {
+	o.Records = records
 }
 
 // WriteToRequest writes these params to a swagger request
 func (o *GetSubscriptionByAccountIDParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
+	if err := r.SetTimeout(o.timeout); err != nil {
+		return err
+	}
 	var res []error
 
 	// path param account-ID

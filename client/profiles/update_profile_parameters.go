@@ -4,8 +4,14 @@ package profiles
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"net/http"
+	"time"
+
+	"golang.org/x/net/context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
+	cr "github.com/go-openapi/runtime/client"
 
 	strfmt "github.com/go-openapi/strfmt"
 
@@ -16,7 +22,39 @@ import (
 // with the default values initialized.
 func NewUpdateProfileParams() *UpdateProfileParams {
 	var ()
-	return &UpdateProfileParams{}
+	return &UpdateProfileParams{
+
+		timeout: cr.DefaultTimeout,
+	}
+}
+
+// NewUpdateProfileParamsWithTimeout creates a new UpdateProfileParams object
+// with the default values initialized, and the ability to set a timeout on a request
+func NewUpdateProfileParamsWithTimeout(timeout time.Duration) *UpdateProfileParams {
+	var ()
+	return &UpdateProfileParams{
+
+		timeout: timeout,
+	}
+}
+
+// NewUpdateProfileParamsWithContext creates a new UpdateProfileParams object
+// with the default values initialized, and the ability to set a context for a request
+func NewUpdateProfileParamsWithContext(ctx context.Context) *UpdateProfileParams {
+	var ()
+	return &UpdateProfileParams{
+
+		Context: ctx,
+	}
+}
+
+// NewUpdateProfileParamsWithHTTPClient creates a new UpdateProfileParams object
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
+func NewUpdateProfileParamsWithHTTPClient(client *http.Client) *UpdateProfileParams {
+	var ()
+	return &UpdateProfileParams{
+		HTTPClient: client,
+	}
 }
 
 /*UpdateProfileParams contains all the parameters to send to the API endpoint
@@ -29,17 +67,62 @@ type UpdateProfileParams struct {
 
 	*/
 	Request *models.UpdateProfileRequest
+
+	timeout    time.Duration
+	Context    context.Context
+	HTTPClient *http.Client
+}
+
+// WithTimeout adds the timeout to the update profile params
+func (o *UpdateProfileParams) WithTimeout(timeout time.Duration) *UpdateProfileParams {
+	o.SetTimeout(timeout)
+	return o
+}
+
+// SetTimeout adds the timeout to the update profile params
+func (o *UpdateProfileParams) SetTimeout(timeout time.Duration) {
+	o.timeout = timeout
+}
+
+// WithContext adds the context to the update profile params
+func (o *UpdateProfileParams) WithContext(ctx context.Context) *UpdateProfileParams {
+	o.SetContext(ctx)
+	return o
+}
+
+// SetContext adds the context to the update profile params
+func (o *UpdateProfileParams) SetContext(ctx context.Context) {
+	o.Context = ctx
+}
+
+// WithHTTPClient adds the HTTPClient to the update profile params
+func (o *UpdateProfileParams) WithHTTPClient(client *http.Client) *UpdateProfileParams {
+	o.SetHTTPClient(client)
+	return o
+}
+
+// SetHTTPClient adds the HTTPClient to the update profile params
+func (o *UpdateProfileParams) SetHTTPClient(client *http.Client) {
+	o.HTTPClient = client
 }
 
 // WithRequest adds the request to the update profile params
-func (o *UpdateProfileParams) WithRequest(Request *models.UpdateProfileRequest) *UpdateProfileParams {
-	o.Request = Request
+func (o *UpdateProfileParams) WithRequest(request *models.UpdateProfileRequest) *UpdateProfileParams {
+	o.SetRequest(request)
 	return o
+}
+
+// SetRequest adds the request to the update profile params
+func (o *UpdateProfileParams) SetRequest(request *models.UpdateProfileRequest) {
+	o.Request = request
 }
 
 // WriteToRequest writes these params to a swagger request
 func (o *UpdateProfileParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
+	if err := r.SetTimeout(o.timeout); err != nil {
+		return err
+	}
 	var res []error
 
 	if o.Request == nil {

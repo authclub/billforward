@@ -5,64 +5,52 @@ package models
 
 import (
 	"encoding/json"
+	"strconv"
 
 	strfmt "github.com/go-openapi/strfmt"
-	"github.com/go-openapi/swag"
 
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
 
-/*TimeResponse Response object returned upon advancing a subscription's flow through time.
-
-swagger:model TimeResponse
-*/
+// TimeResponse Response object returned upon advancing a subscription's flow through time.
+// swagger:model TimeResponse
 type TimeResponse struct {
 
-	/* {"default":true,"description":"When advancing onto an instant in time:<br><span class=\"label label-default\">true</span> &mdash; Action the events scheduled for your destination time. Amendments scheduled at your destined time will be actioned during this time travel. Advancing to a period boundary will promote your subscription to the period on the future side of that boundary.<br><span class=\"label label-default\">false</span> &mdash; Do not action events scheduled for your destination time. Amendments scheduled at your destined time will not be actioned during this time travel. Advancing to a period boundary will result in your subscription's remaining within the period on the past side of that boundary.","verbs":["POST","GET"]}
-	 */
+	// {"default":true,"description":"When advancing onto an instant in time:<br><span class=\"label label-default\">true</span> &mdash; Action the events scheduled for your destination time. Amendments scheduled at your destined time will be actioned during this time travel. Advancing to a period boundary will promote your subscription to the period on the future side of that boundary.<br><span class=\"label label-default\">false</span> &mdash; Do not action events scheduled for your destination time. Amendments scheduled at your destined time will not be actioned during this time travel. Advancing to a period boundary will result in your subscription's remaining within the period on the past side of that boundary.","verbs":["POST","GET"]}
 	AdvanceInclusively *bool `json:"advanceInclusively,omitempty"`
 
-	/* { "description" : "The UTC DateTime when the object was created.", "verbs":[] }
-	 */
+	// { "description" : "The UTC DateTime when the object was created.", "verbs":[] }
 	Created strfmt.DateTime `json:"created,omitempty"`
 
-	/* {"default":false,"description":"Changes described in the response:<br><span class=\"label label-default\">true</span> &mdash; Are not actually performed; your subscription remains unchanged, no billing events run, and no invoices are executed.<br><span class=\"label label-default\">false</span> &mdash; Are actually performed and committed.","verbs":["POST","GET"]}
-	 */
+	// {"default":false,"description":"Changes described in the response:<br><span class=\"label label-default\">true</span> &mdash; Are not actually performed; your subscription remains unchanged, no billing events run, and no invoices are executed.<br><span class=\"label label-default\">false</span> &mdash; Are actually performed and committed.","verbs":["POST","GET"]}
 	DryRun *bool `json:"dryRun,omitempty"`
 
-	/* {"default":"<span class=\"label label-default\">SingleAttempt</span>","description":"What strategy to use when executing any invoices raised as time advances:<br><span class=\"label label-default\">SingleAttempt</span> &mdash; Execute any invoice just once.<br><span class=\"label label-default\">FollowDunning</span> &mdash; Apply the existing dunning strategy when executing invoices.<br><span class=\"label label-default\">None</span>: Do not execute invoices.","verbs":["POST","GET"]}
-	 */
+	// {"default":"<span class=\"label label-default\">SingleAttempt</span>","description":"What strategy to use when executing any invoices raised as time advances:<br><span class=\"label label-default\">SingleAttempt</span> &mdash; Execute any invoice just once.<br><span class=\"label label-default\">FollowDunning</span> &mdash; Apply the existing dunning strategy when executing invoices.<br><span class=\"label label-default\">None</span>: Do not execute invoices.","verbs":["POST","GET"]}
 	ExecutionStrategy string `json:"executionStrategy,omitempty"`
 
-	/* {"default":false,"description":"Once the subscription is advanced through time:<br><span class=\"label label-default\">true</span> &mdash; Freeze the subscription.<br><span class=\"label label-default\">false</span> &mdash; Do not freeze the subscription.","verbs":["POST","GET"]}
-	 */
+	// {"default":false,"description":"Once the subscription is advanced through time:<br><span class=\"label label-default\">true</span> &mdash; Freeze the subscription.<br><span class=\"label label-default\">false</span> &mdash; Do not freeze the subscription.","verbs":["POST","GET"]}
 	FreezeOnCompletion *bool `json:"freezeOnCompletion,omitempty"`
 
-	/* {"default":true,"description":"As time scrubs forward:<br><span class=\"label label-default\">true</span> &mdash; Run any amendments that were scheduled to action.<br><span class=\"label label-default\">false</span> &mdash; Do not run any amendments that were scheduled to action.","verbs":["POST","GET"]}
-	 */
+	// {"default":true,"description":"As time scrubs forward:<br><span class=\"label label-default\">true</span> &mdash; Run any amendments that were scheduled to action.<br><span class=\"label label-default\">false</span> &mdash; Do not run any amendments that were scheduled to action.","verbs":["POST","GET"]}
 	HandleAmendments *bool `json:"handleAmendments,omitempty"`
 
-	/* invoices
-	 */
-	Invoices []*Invoice `json:"invoices,omitempty"`
+	// invoices
+	Invoices []*Invoice `json:"invoices"`
 
-	/* {"description":"(Required: one of [`periods`, `to`])<br>The number of period boundaries up to which the subscription should advance.
-	A 1-value advances the subscription to the end of its current service period.
-	Higher values advance the subscription to subsequent period boundaries."verbs":["POST","GET"]}
-	*/
+	// {"description":"(Required: one of [`periods`, `to`])<br>The number of period boundaries up to which the subscription should advance.
+	// A 1-value advances the subscription to the end of its current service period.
+	// Higher values advance the subscription to subsequent period boundaries."verbs":["POST","GET"]}
 	Periods int32 `json:"periods,omitempty"`
 
-	/* {"default":false,"description":"As time scrubs forward:<br><span class=\"label label-default\">true</span> &mdash; Raise no invoice upon advancing over a period boundary.<br><span class=\"label label-default\">false</span> &mdash; Raise invoices for any period that is entered.","verbs":["POST","GET"]}
-	 */
+	// {"default":false,"description":"As time scrubs forward:<br><span class=\"label label-default\">true</span> &mdash; Raise no invoice upon advancing over a period boundary.<br><span class=\"label label-default\">false</span> &mdash; Raise invoices for any period that is entered.","verbs":["POST","GET"]}
 	SkipIntermediatePeriods *bool `json:"skipIntermediatePeriods,omitempty"`
 
-	/* subscriptions
-	 */
-	Subscriptions []*Subscription `json:"subscriptions,omitempty"`
+	// subscriptions
+	Subscriptions []*Subscription `json:"subscriptions"`
 
-	/* {"description":"(Required: one of [`periods`, `to`])<br>The time up until which the subscription should be fast-forwarded.","verbs":["POST","GET"]}
-	 */
+	// {"description":"(Required: one of [`periods`, `to`])<br>The time up until which the subscription should be fast-forwarded.","verbs":["POST","GET"]}
 	To strfmt.DateTime `json:"to,omitempty"`
 }
 
@@ -93,17 +81,27 @@ func (m *TimeResponse) Validate(formats strfmt.Registry) error {
 
 var timeResponseTypeExecutionStrategyPropEnum []interface{}
 
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["SingleAttempt","FollowDunning","None"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		timeResponseTypeExecutionStrategyPropEnum = append(timeResponseTypeExecutionStrategyPropEnum, v)
+	}
+}
+
+const (
+	// TimeResponseExecutionStrategySingleAttempt captures enum value "SingleAttempt"
+	TimeResponseExecutionStrategySingleAttempt string = "SingleAttempt"
+	// TimeResponseExecutionStrategyFollowDunning captures enum value "FollowDunning"
+	TimeResponseExecutionStrategyFollowDunning string = "FollowDunning"
+	// TimeResponseExecutionStrategyNone captures enum value "None"
+	TimeResponseExecutionStrategyNone string = "None"
+)
+
 // prop value enum
 func (m *TimeResponse) validateExecutionStrategyEnum(path, location string, value string) error {
-	if timeResponseTypeExecutionStrategyPropEnum == nil {
-		var res []string
-		if err := json.Unmarshal([]byte(`["SingleAttempt","FollowDunning","None"]`), &res); err != nil {
-			return err
-		}
-		for _, v := range res {
-			timeResponseTypeExecutionStrategyPropEnum = append(timeResponseTypeExecutionStrategyPropEnum, v)
-		}
-	}
 	if err := validate.Enum(path, location, value, timeResponseTypeExecutionStrategyPropEnum); err != nil {
 		return err
 	}
@@ -130,6 +128,24 @@ func (m *TimeResponse) validateInvoices(formats strfmt.Registry) error {
 		return nil
 	}
 
+	for i := 0; i < len(m.Invoices); i++ {
+
+		if swag.IsZero(m.Invoices[i]) { // not required
+			continue
+		}
+
+		if m.Invoices[i] != nil {
+
+			if err := m.Invoices[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("invoices" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
 	return nil
 }
 
@@ -137,6 +153,24 @@ func (m *TimeResponse) validateSubscriptions(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Subscriptions) { // not required
 		return nil
+	}
+
+	for i := 0; i < len(m.Subscriptions); i++ {
+
+		if swag.IsZero(m.Subscriptions[i]) { // not required
+			continue
+		}
+
+		if m.Subscriptions[i] != nil {
+
+			if err := m.Subscriptions[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("subscriptions" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil

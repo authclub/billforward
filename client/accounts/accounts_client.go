@@ -42,11 +42,14 @@ func (a *Client) CreateAccount(params *CreateAccountParams) (*CreateAccountOK, e
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &CreateAccountReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*CreateAccountOK), nil
+
 }
 
 /*
@@ -69,11 +72,14 @@ func (a *Client) DeleteAccount(params *DeleteAccountParams) (*DeleteAccountOK, e
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &DeleteAccountReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*DeleteAccountOK), nil
+
 }
 
 /*
@@ -96,11 +102,14 @@ func (a *Client) DeleteMetadataForAccount(params *DeleteMetadataForAccountParams
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &DeleteMetadataForAccountReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*DeleteMetadataForAccountOK), nil
+
 }
 
 /*
@@ -123,11 +132,14 @@ func (a *Client) GetAccountByID(params *GetAccountByIDParams) (*GetAccountByIDOK
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &GetAccountByIDReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*GetAccountByIDOK), nil
+
 }
 
 /*
@@ -150,11 +162,14 @@ func (a *Client) GetAllAccounts(params *GetAllAccountsParams) (*GetAllAccountsOK
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &GetAllAccountsReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*GetAllAccountsOK), nil
+
 }
 
 /*
@@ -177,11 +192,14 @@ func (a *Client) GetMetadataForAccount(params *GetMetadataForAccountParams) (*Ge
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &GetMetadataForAccountReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*GetMetadataForAccountOK), nil
+
 }
 
 /*
@@ -204,11 +222,14 @@ func (a *Client) SetMetadataForAccount(params *SetMetadataForAccountParams) (*Se
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &SetMetadataForAccountReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*SetMetadataForAccountOK), nil
+
 }
 
 /*
@@ -231,11 +252,14 @@ func (a *Client) UpsertMetadataForAccount(params *UpsertMetadataForAccountParams
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &UpsertMetadataForAccountReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*UpsertMetadataForAccountOK), nil
+
 }
 
 // SetTransport changes the transport on the client

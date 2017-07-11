@@ -12,104 +12,72 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-/*FixedTerm FixedTerm
-
-swagger:model FixedTerm
-*/
+// FixedTerm FixedTerm
+// swagger:model FixedTerm
 type FixedTerm struct {
 
-	/* { "description" : "ID of the user who last updated the entity.", "verbs":[] }
-	 */
+	// { "description" : "ID of the user who last updated the entity.", "verbs":[] }
 	ChangedBy string `json:"changedBy,omitempty"`
 
-	/* { "description" : "compoundUplift", "verbs":["POST","PUT","GET"] }The proportional INCREASE in price applied every time the fixed terms recur. e.g. 0.03 is a 3% increase. -0.5 is a 50% decrease. 3 is a 300% increase
-
-	Required: true
-	*/
+	// { "description" : "compoundUplift", "verbs":["POST","PUT","GET"] }The proportional INCREASE in price applied every time the fixed terms recur. e.g. 0.03 is a 3% increase. -0.5 is a 50% decrease. 3 is a 300% increase
+	// Required: true
 	CompoundUplift *float64 `json:"compoundUplift"`
 
-	/* { "description" : "The UTC DateTime when the object was created.", "verbs":[] }
-	 */
+	// { "description" : "The UTC DateTime when the object was created.", "verbs":[] }
 	Created strfmt.DateTime `json:"created,omitempty"`
 
-	/* { "description" : "Is the fixedTerm deleted.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "Is the fixedTerm deleted.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	Deleted bool `json:"deleted"`
 
-	/* fixedTermExpiryBehaviour
-
-	Required: true
-	*/
+	// fixedTermExpiryBehaviour
+	// Required: true
 	ExpiryBehaviour *string `json:"expiryBehaviour"`
 
-	/* expiry_time
-
-	Required: true
-	*/
+	// expiry_time
+	// Required: true
 	ExpiryTime *strfmt.DateTime `json:"expiryTime"`
 
-	/* fixed term definition
-
-	Required: true
-	*/
+	// fixed term definition
+	// Required: true
 	FixedTermDefinition *MutableBillingEntity `json:"fixedTermDefinition"`
 
-	/* { "description" : "fixedTermDefinitionID", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "fixedTermDefinitionID", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	FixedTermDefinitionID *string `json:"fixedTermDefinitionID"`
 
-	/* { "description" : "The number of sequential fixed terms previous to this one for the subscription (i.e. zero indexed 'fixedTermCount').", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "The number of sequential fixed terms previous to this one for the subscription (i.e. zero indexed 'fixedTermCount').", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	FixedTermNumber *int32 `json:"fixedTermNumber"`
 
-	/* id
-	 */
+	// id
 	ID string `json:"id,omitempty"`
 
-	/* { "description" : "The ID of the organization associated with the amendment.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "The ID of the organization associated with the amendment.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	OrganizationID *string `json:"organizationID"`
 
-	/* { "description" : "The number of billing periods that this fixed term lasts for.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "The number of billing periods that this fixed term lasts for.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	Periods *int32 `json:"periods"`
 
-	/* productRatePlanAsOfTime
-
-	Required: true
-	*/
+	// productRatePlanAsOfTime
+	// Required: true
 	ProductRatePlanAsOfTime *strfmt.DateTime `json:"productRatePlanAsOfTime"`
 
-	/* start_time
-
-	Required: true
-	*/
+	// start_time
+	// Required: true
 	StartTime *strfmt.DateTime `json:"startTime"`
 
-	/* state
-
-	Required: true
-	*/
+	// state
+	// Required: true
 	State *string `json:"state"`
 
-	/* { "description" : "subscriptionID", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "subscriptionID", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	SubscriptionID *string `json:"subscriptionID"`
 
-	/* { "description" : "The UTC DateTime when the object was last updated.", "verbs":[] }
-	 */
+	// { "description" : "The UTC DateTime when the object was last updated.", "verbs":[] }
 	Updated strfmt.DateTime `json:"updated,omitempty"`
 }
 
@@ -208,17 +176,29 @@ func (m *FixedTerm) validateDeleted(formats strfmt.Registry) error {
 
 var fixedTermTypeExpiryBehaviourPropEnum []interface{}
 
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["ExpireSubscription","EvergreenSubscription","RecurUplift","RecurLatestPricing"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		fixedTermTypeExpiryBehaviourPropEnum = append(fixedTermTypeExpiryBehaviourPropEnum, v)
+	}
+}
+
+const (
+	// FixedTermExpiryBehaviourExpireSubscription captures enum value "ExpireSubscription"
+	FixedTermExpiryBehaviourExpireSubscription string = "ExpireSubscription"
+	// FixedTermExpiryBehaviourEvergreenSubscription captures enum value "EvergreenSubscription"
+	FixedTermExpiryBehaviourEvergreenSubscription string = "EvergreenSubscription"
+	// FixedTermExpiryBehaviourRecurUplift captures enum value "RecurUplift"
+	FixedTermExpiryBehaviourRecurUplift string = "RecurUplift"
+	// FixedTermExpiryBehaviourRecurLatestPricing captures enum value "RecurLatestPricing"
+	FixedTermExpiryBehaviourRecurLatestPricing string = "RecurLatestPricing"
+)
+
 // prop value enum
 func (m *FixedTerm) validateExpiryBehaviourEnum(path, location string, value string) error {
-	if fixedTermTypeExpiryBehaviourPropEnum == nil {
-		var res []string
-		if err := json.Unmarshal([]byte(`["ExpireSubscription","EvergreenSubscription","RecurUplift","RecurLatestPricing"]`), &res); err != nil {
-			return err
-		}
-		for _, v := range res {
-			fixedTermTypeExpiryBehaviourPropEnum = append(fixedTermTypeExpiryBehaviourPropEnum, v)
-		}
-	}
 	if err := validate.Enum(path, location, value, fixedTermTypeExpiryBehaviourPropEnum); err != nil {
 		return err
 	}
@@ -250,9 +230,16 @@ func (m *FixedTerm) validateExpiryTime(formats strfmt.Registry) error {
 
 func (m *FixedTerm) validateFixedTermDefinition(formats strfmt.Registry) error {
 
+	if err := validate.Required("fixedTermDefinition", "body", m.FixedTermDefinition); err != nil {
+		return err
+	}
+
 	if m.FixedTermDefinition != nil {
 
 		if err := m.FixedTermDefinition.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("fixedTermDefinition")
+			}
 			return err
 		}
 	}
@@ -316,17 +303,27 @@ func (m *FixedTerm) validateStartTime(formats strfmt.Registry) error {
 
 var fixedTermTypeStatePropEnum []interface{}
 
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["NeedsAmendments","Active","Expired"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		fixedTermTypeStatePropEnum = append(fixedTermTypeStatePropEnum, v)
+	}
+}
+
+const (
+	// FixedTermStateNeedsAmendments captures enum value "NeedsAmendments"
+	FixedTermStateNeedsAmendments string = "NeedsAmendments"
+	// FixedTermStateActive captures enum value "Active"
+	FixedTermStateActive string = "Active"
+	// FixedTermStateExpired captures enum value "Expired"
+	FixedTermStateExpired string = "Expired"
+)
+
 // prop value enum
 func (m *FixedTerm) validateStateEnum(path, location string, value string) error {
-	if fixedTermTypeStatePropEnum == nil {
-		var res []string
-		if err := json.Unmarshal([]byte(`["NeedsAmendments","Active","Expired"]`), &res); err != nil {
-			return err
-		}
-		for _, v := range res {
-			fixedTermTypeStatePropEnum = append(fixedTermTypeStatePropEnum, v)
-		}
-	}
 	if err := validate.Enum(path, location, value, fixedTermTypeStatePropEnum); err != nil {
 		return err
 	}

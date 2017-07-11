@@ -42,11 +42,14 @@ func (a *Client) ExecuteInvoice(params *ExecuteInvoiceParams) (*ExecuteInvoiceOK
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &ExecuteInvoiceReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*ExecuteInvoiceOK), nil
+
 }
 
 /*
@@ -69,11 +72,14 @@ func (a *Client) GetInvoiceAsPDF(params *GetInvoiceAsPDFParams) (*GetInvoiceAsPD
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &GetInvoiceAsPDFReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*GetInvoiceAsPDFOK), nil
+
 }
 
 /*
@@ -96,11 +102,14 @@ func (a *Client) GetInvoiceByID(params *GetInvoiceByIDParams) (*GetInvoiceByIDOK
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &GetInvoiceByIDReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*GetInvoiceByIDOK), nil
+
 }
 
 /*
@@ -123,11 +132,14 @@ func (a *Client) GetInvoicesByAccountID(params *GetInvoicesByAccountIDParams) (*
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &GetInvoicesByAccountIDReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*GetInvoicesByAccountIDOK), nil
+
 }
 
 // SetTransport changes the transport on the client

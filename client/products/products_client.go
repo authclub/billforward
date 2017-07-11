@@ -42,11 +42,14 @@ func (a *Client) DeleteMetadataForProduct(params *DeleteMetadataForProductParams
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &DeleteMetadataForProductReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*DeleteMetadataForProductOK), nil
+
 }
 
 /*
@@ -69,11 +72,14 @@ func (a *Client) GetAllProducts(params *GetAllProductsParams) (*GetAllProductsOK
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &GetAllProductsReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*GetAllProductsOK), nil
+
 }
 
 /*
@@ -96,11 +102,14 @@ func (a *Client) GetMetadataForProduct(params *GetMetadataForProductParams) (*Ge
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &GetMetadataForProductReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*GetMetadataForProductOK), nil
+
 }
 
 /*
@@ -123,11 +132,14 @@ func (a *Client) GetProductByID(params *GetProductByIDParams) (*GetProductByIDOK
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &GetProductByIDReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*GetProductByIDOK), nil
+
 }
 
 /*
@@ -150,11 +162,14 @@ func (a *Client) SetMetadataForProduct(params *SetMetadataForProductParams) (*Se
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &SetMetadataForProductReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*SetMetadataForProductOK), nil
+
 }
 
 /*
@@ -177,11 +192,14 @@ func (a *Client) UpsertMetadataForProduct(params *UpsertMetadataForProductParams
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &UpsertMetadataForProductReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*UpsertMetadataForProductOK), nil
+
 }
 
 // SetTransport changes the transport on the client

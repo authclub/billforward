@@ -4,81 +4,63 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"strconv"
+
 	strfmt "github.com/go-openapi/strfmt"
-	"github.com/go-openapi/swag"
 
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
 
-/*Organization Organization within which all your BillForward interactions are scoped.
-
-swagger:model Organization
-*/
+// Organization Organization within which all your BillForward interactions are scoped.
+// swagger:model Organization
 type Organization struct {
 
-	/* alias
-	 */
-	Alias []*Alias `json:"alias,omitempty"`
+	// alias
+	Alias []*Alias `json:"alias"`
 
-	/* { "description" : "Stores the organizations 3rd party API keys which may be used by the system for payment gateway integration etc.", "verbs":["POST","PUT","GET"] }
-	 */
-	APIConfigurations []*MutableBillingEntity `json:"apiConfigurations,omitempty"`
+	// { "description" : "Stores the organizations 3rd party API keys which may be used by the system for payment gateway integration etc.", "verbs":["POST","PUT","GET"] }
+	APIConfigurations []*MutableBillingEntity `json:"apiConfigurations"`
 
-	/* { "description" : "ID of the user who last updated the entity.", "verbs":[] }
-	 */
+	// { "description" : "ID of the user who last updated the entity.", "verbs":[] }
 	ChangedBy string `json:"changedBy,omitempty"`
 
-	/* { "description" : "The OAuth2 clients associated with the organization. In most cases an organization would not have any clients associated with their account. In the case of an APP developer, a clients would exist per an application they have developed. To further understand clients please see the client, OAuth2 API and APP development documentation.", "verbs":["POST","PUT","GET"] }
-	 */
-	Clients []*Client `json:"clients,omitempty"`
+	// { "description" : "The OAuth2 clients associated with the organization. In most cases an organization would not have any clients associated with their account. In the case of an APP developer, a clients would exist per an application they have developed. To further understand clients please see the client, OAuth2 API and APP development documentation.", "verbs":["POST","PUT","GET"] }
+	Clients []*Client `json:"clients"`
 
-	/* { "description" : "The UTC DateTime when the object was created.", "verbs":[] }
-	 */
+	// { "description" : "The UTC DateTime when the object was created.", "verbs":[] }
 	Created strfmt.DateTime `json:"created,omitempty"`
 
-	/* { "description" : "A shortcode for the organization. This is used as a short reference code for use when referring to the organization, by default this is set to the organizations name.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "A shortcode for the organization. This is used as a short reference code for use when referring to the organization, by default this is set to the organizations name.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	CustomerCode *string `json:"customerCode"`
 
-	/* { "description" : "Indicates if an organization has been retired. If an organization has been retired it can still be retrieved using the appropriate flag on API requests.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "Indicates if an organization has been retired. If an organization has been retired it can still be retrieved using the appropriate flag on API requests.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	Deleted bool `json:"deleted"`
 
-	/* { "description" : "The dunning-lines associated with the organization. Dunning lines are used as re-try logic for invoices to attempt to reconcile the payment.", "verbs":["POST","PUT","GET"] }
-	 */
-	DunningLines []*DunningLine `json:"dunningLines,omitempty"`
+	// { "description" : "The dunning-lines associated with the organization. Dunning lines are used as re-try logic for invoices to attempt to reconcile the payment.", "verbs":["POST","PUT","GET"] }
+	DunningLines []*DunningLine `json:"dunningLines"`
 
-	/* { "description" : "ID of the organization.", "verbs":["POST","PUT","GET"] }
-	 */
+	// { "description" : "ID of the organization.", "verbs":["POST","PUT","GET"] }
 	ID string `json:"id,omitempty"`
 
-	/* { "description" : "The name of the organization.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "The name of the organization.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	Name *string `json:"name"`
 
-	/* { "description" : "The card-vault gateways associated with the organization.", "verbs":["POST","PUT","GET"] }
-	 */
-	OrganizationGateways []*MutableBillingEntity `json:"organizationGateways,omitempty"`
+	// { "description" : "The card-vault gateways associated with the organization.", "verbs":["POST","PUT","GET"] }
+	OrganizationGateways []*MutableBillingEntity `json:"organizationGateways"`
 
-	/* { "description" : "The taxation-strategies associated with the organization. Taxation-strategies may be linked to product-rate-plans to specify how their tax should be calculated.", "verbs":["POST","PUT","GET"] }
-	 */
-	TaxationStrategies []*MutableBillingEntity `json:"taxationStrategies,omitempty"`
+	// { "description" : "The taxation-strategies associated with the organization. Taxation-strategies may be linked to product-rate-plans to specify how their tax should be calculated.", "verbs":["POST","PUT","GET"] }
+	TaxationStrategies []*MutableBillingEntity `json:"taxationStrategies"`
 
-	/* { "description" : "The UTC DateTime when the object was last updated.", "verbs":[] }
-	 */
+	// { "description" : "The UTC DateTime when the object was last updated.", "verbs":[] }
 	Updated strfmt.DateTime `json:"updated,omitempty"`
 
-	/* { "description" : "The WebHooks associated with the organization. These are the end-points where notifications are sent. WebHooks are added, updated and removed from the organization. Thus to add a WebHook, the webhook must be defined on this property of the organization and then the organization updated. To update a WebHook the same procedure must be followed, first retrieving the organization followed by updating the appropriate WebHook, finally the organization is updated.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "The WebHooks associated with the organization. These are the end-points where notifications are sent. WebHooks are added, updated and removed from the organization. Thus to add a WebHook, the webhook must be defined on this property of the organization and then the organization updated. To update a WebHook the same procedure must be followed, first retrieving the organization followed by updating the appropriate WebHook, finally the organization is updated.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	Webhooks []*MutableBillingEntity `json:"webhooks"`
 }
 
@@ -148,6 +130,24 @@ func (m *Organization) validateAlias(formats strfmt.Registry) error {
 		return nil
 	}
 
+	for i := 0; i < len(m.Alias); i++ {
+
+		if swag.IsZero(m.Alias[i]) { // not required
+			continue
+		}
+
+		if m.Alias[i] != nil {
+
+			if err := m.Alias[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("alias" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
 	return nil
 }
 
@@ -157,6 +157,24 @@ func (m *Organization) validateAPIConfigurations(formats strfmt.Registry) error 
 		return nil
 	}
 
+	for i := 0; i < len(m.APIConfigurations); i++ {
+
+		if swag.IsZero(m.APIConfigurations[i]) { // not required
+			continue
+		}
+
+		if m.APIConfigurations[i] != nil {
+
+			if err := m.APIConfigurations[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("apiConfigurations" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
 	return nil
 }
 
@@ -164,6 +182,24 @@ func (m *Organization) validateClients(formats strfmt.Registry) error {
 
 	if swag.IsZero(m.Clients) { // not required
 		return nil
+	}
+
+	for i := 0; i < len(m.Clients); i++ {
+
+		if swag.IsZero(m.Clients[i]) { // not required
+			continue
+		}
+
+		if m.Clients[i] != nil {
+
+			if err := m.Clients[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("clients" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil
@@ -193,6 +229,24 @@ func (m *Organization) validateDunningLines(formats strfmt.Registry) error {
 		return nil
 	}
 
+	for i := 0; i < len(m.DunningLines); i++ {
+
+		if swag.IsZero(m.DunningLines[i]) { // not required
+			continue
+		}
+
+		if m.DunningLines[i] != nil {
+
+			if err := m.DunningLines[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("dunningLines" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
 	return nil
 }
 
@@ -211,6 +265,24 @@ func (m *Organization) validateOrganizationGateways(formats strfmt.Registry) err
 		return nil
 	}
 
+	for i := 0; i < len(m.OrganizationGateways); i++ {
+
+		if swag.IsZero(m.OrganizationGateways[i]) { // not required
+			continue
+		}
+
+		if m.OrganizationGateways[i] != nil {
+
+			if err := m.OrganizationGateways[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("organizationGateways" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
 	return nil
 }
 
@@ -220,6 +292,24 @@ func (m *Organization) validateTaxationStrategies(formats strfmt.Registry) error
 		return nil
 	}
 
+	for i := 0; i < len(m.TaxationStrategies); i++ {
+
+		if swag.IsZero(m.TaxationStrategies[i]) { // not required
+			continue
+		}
+
+		if m.TaxationStrategies[i] != nil {
+
+			if err := m.TaxationStrategies[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("taxationStrategies" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
 	return nil
 }
 
@@ -227,6 +317,24 @@ func (m *Organization) validateWebhooks(formats strfmt.Registry) error {
 
 	if err := validate.Required("webhooks", "body", m.Webhooks); err != nil {
 		return err
+	}
+
+	for i := 0; i < len(m.Webhooks); i++ {
+
+		if swag.IsZero(m.Webhooks[i]) { // not required
+			continue
+		}
+
+		if m.Webhooks[i] != nil {
+
+			if err := m.Webhooks[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("webhooks" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil

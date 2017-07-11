@@ -4,8 +4,14 @@ package subscriptions
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"net/http"
+	"time"
+
+	"golang.org/x/net/context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
+	cr "github.com/go-openapi/runtime/client"
 
 	strfmt "github.com/go-openapi/strfmt"
 
@@ -16,7 +22,39 @@ import (
 // with the default values initialized.
 func NewCreateAggregatingSubscriptionParams() *CreateAggregatingSubscriptionParams {
 	var ()
-	return &CreateAggregatingSubscriptionParams{}
+	return &CreateAggregatingSubscriptionParams{
+
+		timeout: cr.DefaultTimeout,
+	}
+}
+
+// NewCreateAggregatingSubscriptionParamsWithTimeout creates a new CreateAggregatingSubscriptionParams object
+// with the default values initialized, and the ability to set a timeout on a request
+func NewCreateAggregatingSubscriptionParamsWithTimeout(timeout time.Duration) *CreateAggregatingSubscriptionParams {
+	var ()
+	return &CreateAggregatingSubscriptionParams{
+
+		timeout: timeout,
+	}
+}
+
+// NewCreateAggregatingSubscriptionParamsWithContext creates a new CreateAggregatingSubscriptionParams object
+// with the default values initialized, and the ability to set a context for a request
+func NewCreateAggregatingSubscriptionParamsWithContext(ctx context.Context) *CreateAggregatingSubscriptionParams {
+	var ()
+	return &CreateAggregatingSubscriptionParams{
+
+		Context: ctx,
+	}
+}
+
+// NewCreateAggregatingSubscriptionParamsWithHTTPClient creates a new CreateAggregatingSubscriptionParams object
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
+func NewCreateAggregatingSubscriptionParamsWithHTTPClient(client *http.Client) *CreateAggregatingSubscriptionParams {
+	var ()
+	return &CreateAggregatingSubscriptionParams{
+		HTTPClient: client,
+	}
 }
 
 /*CreateAggregatingSubscriptionParams contains all the parameters to send to the API endpoint
@@ -26,17 +64,62 @@ type CreateAggregatingSubscriptionParams struct {
 
 	/*Request*/
 	Request *models.CreateAggregatingSubscriptionRequest
+
+	timeout    time.Duration
+	Context    context.Context
+	HTTPClient *http.Client
+}
+
+// WithTimeout adds the timeout to the create aggregating subscription params
+func (o *CreateAggregatingSubscriptionParams) WithTimeout(timeout time.Duration) *CreateAggregatingSubscriptionParams {
+	o.SetTimeout(timeout)
+	return o
+}
+
+// SetTimeout adds the timeout to the create aggregating subscription params
+func (o *CreateAggregatingSubscriptionParams) SetTimeout(timeout time.Duration) {
+	o.timeout = timeout
+}
+
+// WithContext adds the context to the create aggregating subscription params
+func (o *CreateAggregatingSubscriptionParams) WithContext(ctx context.Context) *CreateAggregatingSubscriptionParams {
+	o.SetContext(ctx)
+	return o
+}
+
+// SetContext adds the context to the create aggregating subscription params
+func (o *CreateAggregatingSubscriptionParams) SetContext(ctx context.Context) {
+	o.Context = ctx
+}
+
+// WithHTTPClient adds the HTTPClient to the create aggregating subscription params
+func (o *CreateAggregatingSubscriptionParams) WithHTTPClient(client *http.Client) *CreateAggregatingSubscriptionParams {
+	o.SetHTTPClient(client)
+	return o
+}
+
+// SetHTTPClient adds the HTTPClient to the create aggregating subscription params
+func (o *CreateAggregatingSubscriptionParams) SetHTTPClient(client *http.Client) {
+	o.HTTPClient = client
 }
 
 // WithRequest adds the request to the create aggregating subscription params
-func (o *CreateAggregatingSubscriptionParams) WithRequest(Request *models.CreateAggregatingSubscriptionRequest) *CreateAggregatingSubscriptionParams {
-	o.Request = Request
+func (o *CreateAggregatingSubscriptionParams) WithRequest(request *models.CreateAggregatingSubscriptionRequest) *CreateAggregatingSubscriptionParams {
+	o.SetRequest(request)
 	return o
+}
+
+// SetRequest adds the request to the create aggregating subscription params
+func (o *CreateAggregatingSubscriptionParams) SetRequest(request *models.CreateAggregatingSubscriptionRequest) {
+	o.Request = request
 }
 
 // WriteToRequest writes these params to a swagger request
 func (o *CreateAggregatingSubscriptionParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
+	if err := r.SetTimeout(o.timeout); err != nil {
+		return err
+	}
 	var res []error
 
 	if o.Request == nil {

@@ -10,26 +10,19 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-/*PricingComponentQuantityRequest pricing component quantity request
-
-swagger:model PricingComponentQuantityRequest
-*/
+// PricingComponentQuantityRequest pricing component quantity request
+// swagger:model PricingComponentQuantityRequest
 type PricingComponentQuantityRequest struct {
 
-	/* { "description" : "Percentage to be discounted", "verbs":["POST","GET"] }
-	 */
+	// { "description" : "Percentage to be discounted", "verbs":["POST","GET"] }
 	PercentageDiscount float64 `json:"percentageDiscount,omitempty"`
 
-	/* pricing component
-
-	Required: true
-	*/
+	// pricing component
+	// Required: true
 	PricingComponent *string `json:"pricingComponent"`
 
-	/* quantity
-
-	Required: true
-	*/
+	// quantity
+	// Required: true
 	Quantity *int64 `json:"quantity"`
 }
 

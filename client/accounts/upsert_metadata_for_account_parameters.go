@@ -4,8 +4,14 @@ package accounts
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"net/http"
+	"time"
+
+	"golang.org/x/net/context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
+	cr "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/swag"
 
 	strfmt "github.com/go-openapi/strfmt"
@@ -17,7 +23,39 @@ import (
 // with the default values initialized.
 func NewUpsertMetadataForAccountParams() *UpsertMetadataForAccountParams {
 	var ()
-	return &UpsertMetadataForAccountParams{}
+	return &UpsertMetadataForAccountParams{
+
+		timeout: cr.DefaultTimeout,
+	}
+}
+
+// NewUpsertMetadataForAccountParamsWithTimeout creates a new UpsertMetadataForAccountParams object
+// with the default values initialized, and the ability to set a timeout on a request
+func NewUpsertMetadataForAccountParamsWithTimeout(timeout time.Duration) *UpsertMetadataForAccountParams {
+	var ()
+	return &UpsertMetadataForAccountParams{
+
+		timeout: timeout,
+	}
+}
+
+// NewUpsertMetadataForAccountParamsWithContext creates a new UpsertMetadataForAccountParams object
+// with the default values initialized, and the ability to set a context for a request
+func NewUpsertMetadataForAccountParamsWithContext(ctx context.Context) *UpsertMetadataForAccountParams {
+	var ()
+	return &UpsertMetadataForAccountParams{
+
+		Context: ctx,
+	}
+}
+
+// NewUpsertMetadataForAccountParamsWithHTTPClient creates a new UpsertMetadataForAccountParams object
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
+func NewUpsertMetadataForAccountParamsWithHTTPClient(client *http.Client) *UpsertMetadataForAccountParams {
+	var ()
+	return &UpsertMetadataForAccountParams{
+		HTTPClient: client,
+	}
 }
 
 /*UpsertMetadataForAccountParams contains all the parameters to send to the API endpoint
@@ -34,29 +72,84 @@ type UpsertMetadataForAccountParams struct {
 
 	*/
 	Organizations []string
+
+	timeout    time.Duration
+	Context    context.Context
+	HTTPClient *http.Client
 }
 
-// WithAccountID adds the accountId to the upsert metadata for account params
-func (o *UpsertMetadataForAccountParams) WithAccountID(AccountID string) *UpsertMetadataForAccountParams {
-	o.AccountID = AccountID
+// WithTimeout adds the timeout to the upsert metadata for account params
+func (o *UpsertMetadataForAccountParams) WithTimeout(timeout time.Duration) *UpsertMetadataForAccountParams {
+	o.SetTimeout(timeout)
 	return o
+}
+
+// SetTimeout adds the timeout to the upsert metadata for account params
+func (o *UpsertMetadataForAccountParams) SetTimeout(timeout time.Duration) {
+	o.timeout = timeout
+}
+
+// WithContext adds the context to the upsert metadata for account params
+func (o *UpsertMetadataForAccountParams) WithContext(ctx context.Context) *UpsertMetadataForAccountParams {
+	o.SetContext(ctx)
+	return o
+}
+
+// SetContext adds the context to the upsert metadata for account params
+func (o *UpsertMetadataForAccountParams) SetContext(ctx context.Context) {
+	o.Context = ctx
+}
+
+// WithHTTPClient adds the HTTPClient to the upsert metadata for account params
+func (o *UpsertMetadataForAccountParams) WithHTTPClient(client *http.Client) *UpsertMetadataForAccountParams {
+	o.SetHTTPClient(client)
+	return o
+}
+
+// SetHTTPClient adds the HTTPClient to the upsert metadata for account params
+func (o *UpsertMetadataForAccountParams) SetHTTPClient(client *http.Client) {
+	o.HTTPClient = client
+}
+
+// WithAccountID adds the accountID to the upsert metadata for account params
+func (o *UpsertMetadataForAccountParams) WithAccountID(accountID string) *UpsertMetadataForAccountParams {
+	o.SetAccountID(accountID)
+	return o
+}
+
+// SetAccountID adds the accountId to the upsert metadata for account params
+func (o *UpsertMetadataForAccountParams) SetAccountID(accountID string) {
+	o.AccountID = accountID
 }
 
 // WithMetadata adds the metadata to the upsert metadata for account params
-func (o *UpsertMetadataForAccountParams) WithMetadata(Metadata models.DynamicMetadata) *UpsertMetadataForAccountParams {
-	o.Metadata = Metadata
+func (o *UpsertMetadataForAccountParams) WithMetadata(metadata models.DynamicMetadata) *UpsertMetadataForAccountParams {
+	o.SetMetadata(metadata)
 	return o
 }
 
+// SetMetadata adds the metadata to the upsert metadata for account params
+func (o *UpsertMetadataForAccountParams) SetMetadata(metadata models.DynamicMetadata) {
+	o.Metadata = metadata
+}
+
 // WithOrganizations adds the organizations to the upsert metadata for account params
-func (o *UpsertMetadataForAccountParams) WithOrganizations(Organizations []string) *UpsertMetadataForAccountParams {
-	o.Organizations = Organizations
+func (o *UpsertMetadataForAccountParams) WithOrganizations(organizations []string) *UpsertMetadataForAccountParams {
+	o.SetOrganizations(organizations)
 	return o
+}
+
+// SetOrganizations adds the organizations to the upsert metadata for account params
+func (o *UpsertMetadataForAccountParams) SetOrganizations(organizations []string) {
+	o.Organizations = organizations
 }
 
 // WriteToRequest writes these params to a swagger request
 func (o *UpsertMetadataForAccountParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
+	if err := r.SetTimeout(o.timeout); err != nil {
+		return err
+	}
 	var res []error
 
 	// path param account-ID

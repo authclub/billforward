@@ -4,8 +4,14 @@ package payment_methods
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"net/http"
+	"time"
+
+	"golang.org/x/net/context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
+	cr "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/swag"
 
 	strfmt "github.com/go-openapi/strfmt"
@@ -15,7 +21,39 @@ import (
 // with the default values initialized.
 func NewDeletePaymentMethodParams() *DeletePaymentMethodParams {
 	var ()
-	return &DeletePaymentMethodParams{}
+	return &DeletePaymentMethodParams{
+
+		timeout: cr.DefaultTimeout,
+	}
+}
+
+// NewDeletePaymentMethodParamsWithTimeout creates a new DeletePaymentMethodParams object
+// with the default values initialized, and the ability to set a timeout on a request
+func NewDeletePaymentMethodParamsWithTimeout(timeout time.Duration) *DeletePaymentMethodParams {
+	var ()
+	return &DeletePaymentMethodParams{
+
+		timeout: timeout,
+	}
+}
+
+// NewDeletePaymentMethodParamsWithContext creates a new DeletePaymentMethodParams object
+// with the default values initialized, and the ability to set a context for a request
+func NewDeletePaymentMethodParamsWithContext(ctx context.Context) *DeletePaymentMethodParams {
+	var ()
+	return &DeletePaymentMethodParams{
+
+		Context: ctx,
+	}
+}
+
+// NewDeletePaymentMethodParamsWithHTTPClient creates a new DeletePaymentMethodParams object
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
+func NewDeletePaymentMethodParamsWithHTTPClient(client *http.Client) *DeletePaymentMethodParams {
+	var ()
+	return &DeletePaymentMethodParams{
+		HTTPClient: client,
+	}
 }
 
 /*DeletePaymentMethodParams contains all the parameters to send to the API endpoint
@@ -30,23 +68,73 @@ type DeletePaymentMethodParams struct {
 	Organizations []string
 	/*PaymentMethodID*/
 	PaymentMethodID string
+
+	timeout    time.Duration
+	Context    context.Context
+	HTTPClient *http.Client
+}
+
+// WithTimeout adds the timeout to the delete payment method params
+func (o *DeletePaymentMethodParams) WithTimeout(timeout time.Duration) *DeletePaymentMethodParams {
+	o.SetTimeout(timeout)
+	return o
+}
+
+// SetTimeout adds the timeout to the delete payment method params
+func (o *DeletePaymentMethodParams) SetTimeout(timeout time.Duration) {
+	o.timeout = timeout
+}
+
+// WithContext adds the context to the delete payment method params
+func (o *DeletePaymentMethodParams) WithContext(ctx context.Context) *DeletePaymentMethodParams {
+	o.SetContext(ctx)
+	return o
+}
+
+// SetContext adds the context to the delete payment method params
+func (o *DeletePaymentMethodParams) SetContext(ctx context.Context) {
+	o.Context = ctx
+}
+
+// WithHTTPClient adds the HTTPClient to the delete payment method params
+func (o *DeletePaymentMethodParams) WithHTTPClient(client *http.Client) *DeletePaymentMethodParams {
+	o.SetHTTPClient(client)
+	return o
+}
+
+// SetHTTPClient adds the HTTPClient to the delete payment method params
+func (o *DeletePaymentMethodParams) SetHTTPClient(client *http.Client) {
+	o.HTTPClient = client
 }
 
 // WithOrganizations adds the organizations to the delete payment method params
-func (o *DeletePaymentMethodParams) WithOrganizations(Organizations []string) *DeletePaymentMethodParams {
-	o.Organizations = Organizations
+func (o *DeletePaymentMethodParams) WithOrganizations(organizations []string) *DeletePaymentMethodParams {
+	o.SetOrganizations(organizations)
 	return o
 }
 
-// WithPaymentMethodID adds the paymentMethodId to the delete payment method params
-func (o *DeletePaymentMethodParams) WithPaymentMethodID(PaymentMethodID string) *DeletePaymentMethodParams {
-	o.PaymentMethodID = PaymentMethodID
+// SetOrganizations adds the organizations to the delete payment method params
+func (o *DeletePaymentMethodParams) SetOrganizations(organizations []string) {
+	o.Organizations = organizations
+}
+
+// WithPaymentMethodID adds the paymentMethodID to the delete payment method params
+func (o *DeletePaymentMethodParams) WithPaymentMethodID(paymentMethodID string) *DeletePaymentMethodParams {
+	o.SetPaymentMethodID(paymentMethodID)
 	return o
+}
+
+// SetPaymentMethodID adds the paymentMethodId to the delete payment method params
+func (o *DeletePaymentMethodParams) SetPaymentMethodID(paymentMethodID string) {
+	o.PaymentMethodID = paymentMethodID
 }
 
 // WriteToRequest writes these params to a swagger request
 func (o *DeletePaymentMethodParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
+	if err := r.SetTimeout(o.timeout); err != nil {
+		return err
+	}
 	var res []error
 
 	valuesOrganizations := o.Organizations

@@ -10,16 +10,12 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-/*ReviveSubscriptionRequest ReviveSubscriptionRequest
-
-swagger:model ReviveSubscriptionRequest
-*/
+// ReviveSubscriptionRequest ReviveSubscriptionRequest
+// swagger:model ReviveSubscriptionRequest
 type ReviveSubscriptionRequest struct {
 
-	/* subscription ID
-
-	Required: true
-	*/
+	// subscription ID
+	// Required: true
 	SubscriptionID *string `json:"subscriptionID"`
 }
 

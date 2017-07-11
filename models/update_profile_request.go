@@ -4,79 +4,63 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"strconv"
+
 	strfmt "github.com/go-openapi/strfmt"
-	"github.com/go-openapi/swag"
 
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
 
-/*UpdateProfileRequest UpdateProfileRequest
-
-swagger:model UpdateProfileRequest
-*/
+// UpdateProfileRequest UpdateProfileRequest
+// swagger:model UpdateProfileRequest
 type UpdateProfileRequest struct {
 
-	/* { "description" : "", "verbs":["GET"] }
-
-	Required: true
-	*/
+	// { "description" : "", "verbs":["GET"] }
+	// Required: true
 	AccountID *string `json:"accountID"`
 
-	/* { "description" : "Any additional information", "verbs":["POST","PUT","GET"] }
-	 */
+	// { "description" : "Any additional information", "verbs":["POST","PUT","GET"] }
 	AdditionalInformation *string `json:"additionalInformation,omitempty"`
 
-	/* { "description" : "Address associated with the profile", "verbs":["POST","PUT","GET"] }
-	 */
-	Addresses []*Address `json:"addresses,omitempty"`
+	// { "description" : "Address associated with the profile", "verbs":["POST","PUT","GET"] }
+	Addresses []*Address `json:"addresses"`
 
-	/* { "description" : "", "verbs":["POST","PUT","GET"] }
-	 */
+	// { "description" : "", "verbs":["POST","PUT","GET"] }
 	CompanyName *string `json:"companyName,omitempty"`
 
-	/* { "description" : "Date of birth in YYYY-MM-DD format", "verbs":["POST","PUT","GET"] }
-	 */
+	// { "description" : "Date of birth in YYYY-MM-DD format", "verbs":["POST","PUT","GET"] }
 	Dob *strfmt.DateTime `json:"dob,omitempty"`
 
-	/* { "description" : "E-mail address", "verbs":["POST","PUT","GET"] }
-	 */
+	// { "description" : "E-mail address", "verbs":["POST","PUT","GET"] }
 	Email *string `json:"email,omitempty"`
 
-	/* { "description" : "Fax number", "verbs":["POST","PUT","GET"] }
-	 */
+	// { "description" : "Fax number", "verbs":["POST","PUT","GET"] }
 	Fax *string `json:"fax,omitempty"`
 
-	/* { "description" : "", "verbs":["POST","PUT","GET"] }
-	 */
+	// { "description" : "", "verbs":["POST","PUT","GET"] }
 	FirstName *string `json:"firstName,omitempty"`
 
-	/* id
-	 */
+	// id
 	ID string `json:"id,omitempty"`
 
-	/* { "description" : "Home telephone number", "verbs":["POST","PUT","GET"] }
-	 */
+	// { "description" : "Home telephone number", "verbs":["POST","PUT","GET"] }
 	Landline *string `json:"landline,omitempty"`
 
-	/* { "description" : "", "verbs":["POST","PUT","GET"] }
-	 */
+	// { "description" : "", "verbs":["POST","PUT","GET"] }
 	LastName *string `json:"lastName,omitempty"`
 
-	/* { "description" : "", "verbs":["POST","PUT","GET"] }
-	 */
+	// { "description" : "", "verbs":["POST","PUT","GET"] }
 	LogoURL *string `json:"logoURL,omitempty"`
 
-	/* { "description" : "Mobile telephone number", "verbs":["POST","PUT","GET"] }
-	 */
+	// { "description" : "Mobile telephone number", "verbs":["POST","PUT","GET"] }
 	Mobile *string `json:"mobile,omitempty"`
 
-	/* { "description" : "", "verbs":[] }
-	 */
+	// { "description" : "", "verbs":[] }
 	OrganizationID *string `json:"organizationID,omitempty"`
 
-	/* { "description" : "VAT number", "verbs":["POST","PUT","GET"] }
-	 */
+	// { "description" : "VAT number", "verbs":["POST","PUT","GET"] }
 	VatNumber *string `json:"vatNumber,omitempty"`
 }
 
@@ -113,6 +97,24 @@ func (m *UpdateProfileRequest) validateAddresses(formats strfmt.Registry) error 
 
 	if swag.IsZero(m.Addresses) { // not required
 		return nil
+	}
+
+	for i := 0; i < len(m.Addresses); i++ {
+
+		if swag.IsZero(m.Addresses[i]) { // not required
+			continue
+		}
+
+		if m.Addresses[i] != nil {
+
+			if err := m.Addresses[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("addresses" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil

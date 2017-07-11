@@ -42,11 +42,14 @@ func (a *Client) GetAllProfiles(params *GetAllProfilesParams) (*GetAllProfilesOK
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &GetAllProfilesReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*GetAllProfilesOK), nil
+
 }
 
 /*
@@ -69,11 +72,14 @@ func (a *Client) GetProfile(params *GetProfileParams) (*GetProfileOK, error) {
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &GetProfileReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*GetProfileOK), nil
+
 }
 
 /*
@@ -96,11 +102,14 @@ func (a *Client) GetProfileByAccountID(params *GetProfileByAccountIDParams) (*Ge
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &GetProfileByAccountIDReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*GetProfileByAccountIDOK), nil
+
 }
 
 /*
@@ -123,11 +132,14 @@ func (a *Client) GetProfileByEmailAddress(params *GetProfileByEmailAddressParams
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &GetProfileByEmailAddressReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*GetProfileByEmailAddressOK), nil
+
 }
 
 /*
@@ -150,11 +162,14 @@ func (a *Client) UpdateProfile(params *UpdateProfileParams) (*UpdateProfileOK, e
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &UpdateProfileReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*UpdateProfileOK), nil
+
 }
 
 // SetTransport changes the transport on the client

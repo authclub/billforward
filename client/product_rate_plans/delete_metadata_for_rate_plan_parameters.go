@@ -4,8 +4,14 @@ package product_rate_plans
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"net/http"
+	"time"
+
+	"golang.org/x/net/context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
+	cr "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/swag"
 
 	strfmt "github.com/go-openapi/strfmt"
@@ -15,7 +21,39 @@ import (
 // with the default values initialized.
 func NewDeleteMetadataForRatePlanParams() *DeleteMetadataForRatePlanParams {
 	var ()
-	return &DeleteMetadataForRatePlanParams{}
+	return &DeleteMetadataForRatePlanParams{
+
+		timeout: cr.DefaultTimeout,
+	}
+}
+
+// NewDeleteMetadataForRatePlanParamsWithTimeout creates a new DeleteMetadataForRatePlanParams object
+// with the default values initialized, and the ability to set a timeout on a request
+func NewDeleteMetadataForRatePlanParamsWithTimeout(timeout time.Duration) *DeleteMetadataForRatePlanParams {
+	var ()
+	return &DeleteMetadataForRatePlanParams{
+
+		timeout: timeout,
+	}
+}
+
+// NewDeleteMetadataForRatePlanParamsWithContext creates a new DeleteMetadataForRatePlanParams object
+// with the default values initialized, and the ability to set a context for a request
+func NewDeleteMetadataForRatePlanParamsWithContext(ctx context.Context) *DeleteMetadataForRatePlanParams {
+	var ()
+	return &DeleteMetadataForRatePlanParams{
+
+		Context: ctx,
+	}
+}
+
+// NewDeleteMetadataForRatePlanParamsWithHTTPClient creates a new DeleteMetadataForRatePlanParams object
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
+func NewDeleteMetadataForRatePlanParamsWithHTTPClient(client *http.Client) *DeleteMetadataForRatePlanParams {
+	var ()
+	return &DeleteMetadataForRatePlanParams{
+		HTTPClient: client,
+	}
 }
 
 /*DeleteMetadataForRatePlanParams contains all the parameters to send to the API endpoint
@@ -30,23 +68,73 @@ type DeleteMetadataForRatePlanParams struct {
 	Organizations []string
 	/*ProductRatePlanID*/
 	ProductRatePlanID string
+
+	timeout    time.Duration
+	Context    context.Context
+	HTTPClient *http.Client
+}
+
+// WithTimeout adds the timeout to the delete metadata for rate plan params
+func (o *DeleteMetadataForRatePlanParams) WithTimeout(timeout time.Duration) *DeleteMetadataForRatePlanParams {
+	o.SetTimeout(timeout)
+	return o
+}
+
+// SetTimeout adds the timeout to the delete metadata for rate plan params
+func (o *DeleteMetadataForRatePlanParams) SetTimeout(timeout time.Duration) {
+	o.timeout = timeout
+}
+
+// WithContext adds the context to the delete metadata for rate plan params
+func (o *DeleteMetadataForRatePlanParams) WithContext(ctx context.Context) *DeleteMetadataForRatePlanParams {
+	o.SetContext(ctx)
+	return o
+}
+
+// SetContext adds the context to the delete metadata for rate plan params
+func (o *DeleteMetadataForRatePlanParams) SetContext(ctx context.Context) {
+	o.Context = ctx
+}
+
+// WithHTTPClient adds the HTTPClient to the delete metadata for rate plan params
+func (o *DeleteMetadataForRatePlanParams) WithHTTPClient(client *http.Client) *DeleteMetadataForRatePlanParams {
+	o.SetHTTPClient(client)
+	return o
+}
+
+// SetHTTPClient adds the HTTPClient to the delete metadata for rate plan params
+func (o *DeleteMetadataForRatePlanParams) SetHTTPClient(client *http.Client) {
+	o.HTTPClient = client
 }
 
 // WithOrganizations adds the organizations to the delete metadata for rate plan params
-func (o *DeleteMetadataForRatePlanParams) WithOrganizations(Organizations []string) *DeleteMetadataForRatePlanParams {
-	o.Organizations = Organizations
+func (o *DeleteMetadataForRatePlanParams) WithOrganizations(organizations []string) *DeleteMetadataForRatePlanParams {
+	o.SetOrganizations(organizations)
 	return o
 }
 
-// WithProductRatePlanID adds the productRatePlanId to the delete metadata for rate plan params
-func (o *DeleteMetadataForRatePlanParams) WithProductRatePlanID(ProductRatePlanID string) *DeleteMetadataForRatePlanParams {
-	o.ProductRatePlanID = ProductRatePlanID
+// SetOrganizations adds the organizations to the delete metadata for rate plan params
+func (o *DeleteMetadataForRatePlanParams) SetOrganizations(organizations []string) {
+	o.Organizations = organizations
+}
+
+// WithProductRatePlanID adds the productRatePlanID to the delete metadata for rate plan params
+func (o *DeleteMetadataForRatePlanParams) WithProductRatePlanID(productRatePlanID string) *DeleteMetadataForRatePlanParams {
+	o.SetProductRatePlanID(productRatePlanID)
 	return o
+}
+
+// SetProductRatePlanID adds the productRatePlanId to the delete metadata for rate plan params
+func (o *DeleteMetadataForRatePlanParams) SetProductRatePlanID(productRatePlanID string) {
+	o.ProductRatePlanID = productRatePlanID
 }
 
 // WriteToRequest writes these params to a swagger request
 func (o *DeleteMetadataForRatePlanParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
+	if err := r.SetTimeout(o.timeout); err != nil {
+		return err
+	}
 	var res []error
 
 	valuesOrganizations := o.Organizations

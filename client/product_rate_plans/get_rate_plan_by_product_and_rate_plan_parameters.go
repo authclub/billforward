@@ -4,8 +4,14 @@ package product_rate_plans
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"net/http"
+	"time"
+
+	"golang.org/x/net/context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
+	cr "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/swag"
 
 	strfmt "github.com/go-openapi/strfmt"
@@ -15,11 +21,11 @@ import (
 // with the default values initialized.
 func NewGetRatePlanByProductAndRatePlanParams() *GetRatePlanByProductAndRatePlanParams {
 	var (
-		includeRetiredDefault bool   = bool(false)
-		offsetDefault         int32  = int32(0)
-		orderDefault          string = string("DESC")
-		orderByDefault        string = string("created")
-		recordsDefault        int32  = int32(10)
+		includeRetiredDefault = bool(false)
+		offsetDefault         = int32(0)
+		orderDefault          = string("DESC")
+		orderByDefault        = string("created")
+		recordsDefault        = int32(10)
 	)
 	return &GetRatePlanByProductAndRatePlanParams{
 		IncludeRetired: &includeRetiredDefault,
@@ -27,6 +33,70 @@ func NewGetRatePlanByProductAndRatePlanParams() *GetRatePlanByProductAndRatePlan
 		Order:          &orderDefault,
 		OrderBy:        &orderByDefault,
 		Records:        &recordsDefault,
+
+		timeout: cr.DefaultTimeout,
+	}
+}
+
+// NewGetRatePlanByProductAndRatePlanParamsWithTimeout creates a new GetRatePlanByProductAndRatePlanParams object
+// with the default values initialized, and the ability to set a timeout on a request
+func NewGetRatePlanByProductAndRatePlanParamsWithTimeout(timeout time.Duration) *GetRatePlanByProductAndRatePlanParams {
+	var (
+		includeRetiredDefault = bool(false)
+		offsetDefault         = int32(0)
+		orderDefault          = string("DESC")
+		orderByDefault        = string("created")
+		recordsDefault        = int32(10)
+	)
+	return &GetRatePlanByProductAndRatePlanParams{
+		IncludeRetired: &includeRetiredDefault,
+		Offset:         &offsetDefault,
+		Order:          &orderDefault,
+		OrderBy:        &orderByDefault,
+		Records:        &recordsDefault,
+
+		timeout: timeout,
+	}
+}
+
+// NewGetRatePlanByProductAndRatePlanParamsWithContext creates a new GetRatePlanByProductAndRatePlanParams object
+// with the default values initialized, and the ability to set a context for a request
+func NewGetRatePlanByProductAndRatePlanParamsWithContext(ctx context.Context) *GetRatePlanByProductAndRatePlanParams {
+	var (
+		includeRetiredDefault = bool(false)
+		offsetDefault         = int32(0)
+		orderDefault          = string("DESC")
+		orderByDefault        = string("created")
+		recordsDefault        = int32(10)
+	)
+	return &GetRatePlanByProductAndRatePlanParams{
+		IncludeRetired: &includeRetiredDefault,
+		Offset:         &offsetDefault,
+		Order:          &orderDefault,
+		OrderBy:        &orderByDefault,
+		Records:        &recordsDefault,
+
+		Context: ctx,
+	}
+}
+
+// NewGetRatePlanByProductAndRatePlanParamsWithHTTPClient creates a new GetRatePlanByProductAndRatePlanParams object
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
+func NewGetRatePlanByProductAndRatePlanParamsWithHTTPClient(client *http.Client) *GetRatePlanByProductAndRatePlanParams {
+	var (
+		includeRetiredDefault = bool(false)
+		offsetDefault         = int32(0)
+		orderDefault          = string("DESC")
+		orderByDefault        = string("created")
+		recordsDefault        = int32(10)
+	)
+	return &GetRatePlanByProductAndRatePlanParams{
+		IncludeRetired: &includeRetiredDefault,
+		Offset:         &offsetDefault,
+		Order:          &orderDefault,
+		OrderBy:        &orderByDefault,
+		Records:        &recordsDefault,
+		HTTPClient:     client,
 	}
 }
 
@@ -69,59 +139,139 @@ type GetRatePlanByProductAndRatePlanParams struct {
 
 	*/
 	Records *int32
+
+	timeout    time.Duration
+	Context    context.Context
+	HTTPClient *http.Client
+}
+
+// WithTimeout adds the timeout to the get rate plan by product and rate plan params
+func (o *GetRatePlanByProductAndRatePlanParams) WithTimeout(timeout time.Duration) *GetRatePlanByProductAndRatePlanParams {
+	o.SetTimeout(timeout)
+	return o
+}
+
+// SetTimeout adds the timeout to the get rate plan by product and rate plan params
+func (o *GetRatePlanByProductAndRatePlanParams) SetTimeout(timeout time.Duration) {
+	o.timeout = timeout
+}
+
+// WithContext adds the context to the get rate plan by product and rate plan params
+func (o *GetRatePlanByProductAndRatePlanParams) WithContext(ctx context.Context) *GetRatePlanByProductAndRatePlanParams {
+	o.SetContext(ctx)
+	return o
+}
+
+// SetContext adds the context to the get rate plan by product and rate plan params
+func (o *GetRatePlanByProductAndRatePlanParams) SetContext(ctx context.Context) {
+	o.Context = ctx
+}
+
+// WithHTTPClient adds the HTTPClient to the get rate plan by product and rate plan params
+func (o *GetRatePlanByProductAndRatePlanParams) WithHTTPClient(client *http.Client) *GetRatePlanByProductAndRatePlanParams {
+	o.SetHTTPClient(client)
+	return o
+}
+
+// SetHTTPClient adds the HTTPClient to the get rate plan by product and rate plan params
+func (o *GetRatePlanByProductAndRatePlanParams) SetHTTPClient(client *http.Client) {
+	o.HTTPClient = client
 }
 
 // WithIncludeRetired adds the includeRetired to the get rate plan by product and rate plan params
-func (o *GetRatePlanByProductAndRatePlanParams) WithIncludeRetired(IncludeRetired *bool) *GetRatePlanByProductAndRatePlanParams {
-	o.IncludeRetired = IncludeRetired
+func (o *GetRatePlanByProductAndRatePlanParams) WithIncludeRetired(includeRetired *bool) *GetRatePlanByProductAndRatePlanParams {
+	o.SetIncludeRetired(includeRetired)
 	return o
+}
+
+// SetIncludeRetired adds the includeRetired to the get rate plan by product and rate plan params
+func (o *GetRatePlanByProductAndRatePlanParams) SetIncludeRetired(includeRetired *bool) {
+	o.IncludeRetired = includeRetired
 }
 
 // WithOffset adds the offset to the get rate plan by product and rate plan params
-func (o *GetRatePlanByProductAndRatePlanParams) WithOffset(Offset *int32) *GetRatePlanByProductAndRatePlanParams {
-	o.Offset = Offset
+func (o *GetRatePlanByProductAndRatePlanParams) WithOffset(offset *int32) *GetRatePlanByProductAndRatePlanParams {
+	o.SetOffset(offset)
 	return o
+}
+
+// SetOffset adds the offset to the get rate plan by product and rate plan params
+func (o *GetRatePlanByProductAndRatePlanParams) SetOffset(offset *int32) {
+	o.Offset = offset
 }
 
 // WithOrder adds the order to the get rate plan by product and rate plan params
-func (o *GetRatePlanByProductAndRatePlanParams) WithOrder(Order *string) *GetRatePlanByProductAndRatePlanParams {
-	o.Order = Order
+func (o *GetRatePlanByProductAndRatePlanParams) WithOrder(order *string) *GetRatePlanByProductAndRatePlanParams {
+	o.SetOrder(order)
 	return o
+}
+
+// SetOrder adds the order to the get rate plan by product and rate plan params
+func (o *GetRatePlanByProductAndRatePlanParams) SetOrder(order *string) {
+	o.Order = order
 }
 
 // WithOrderBy adds the orderBy to the get rate plan by product and rate plan params
-func (o *GetRatePlanByProductAndRatePlanParams) WithOrderBy(OrderBy *string) *GetRatePlanByProductAndRatePlanParams {
-	o.OrderBy = OrderBy
+func (o *GetRatePlanByProductAndRatePlanParams) WithOrderBy(orderBy *string) *GetRatePlanByProductAndRatePlanParams {
+	o.SetOrderBy(orderBy)
 	return o
+}
+
+// SetOrderBy adds the orderBy to the get rate plan by product and rate plan params
+func (o *GetRatePlanByProductAndRatePlanParams) SetOrderBy(orderBy *string) {
+	o.OrderBy = orderBy
 }
 
 // WithOrganizations adds the organizations to the get rate plan by product and rate plan params
-func (o *GetRatePlanByProductAndRatePlanParams) WithOrganizations(Organizations []string) *GetRatePlanByProductAndRatePlanParams {
-	o.Organizations = Organizations
+func (o *GetRatePlanByProductAndRatePlanParams) WithOrganizations(organizations []string) *GetRatePlanByProductAndRatePlanParams {
+	o.SetOrganizations(organizations)
 	return o
 }
 
-// WithProductID adds the productId to the get rate plan by product and rate plan params
-func (o *GetRatePlanByProductAndRatePlanParams) WithProductID(ProductID string) *GetRatePlanByProductAndRatePlanParams {
-	o.ProductID = ProductID
+// SetOrganizations adds the organizations to the get rate plan by product and rate plan params
+func (o *GetRatePlanByProductAndRatePlanParams) SetOrganizations(organizations []string) {
+	o.Organizations = organizations
+}
+
+// WithProductID adds the productID to the get rate plan by product and rate plan params
+func (o *GetRatePlanByProductAndRatePlanParams) WithProductID(productID string) *GetRatePlanByProductAndRatePlanParams {
+	o.SetProductID(productID)
 	return o
 }
 
-// WithRatePlanID adds the ratePlanId to the get rate plan by product and rate plan params
-func (o *GetRatePlanByProductAndRatePlanParams) WithRatePlanID(RatePlanID string) *GetRatePlanByProductAndRatePlanParams {
-	o.RatePlanID = RatePlanID
+// SetProductID adds the productId to the get rate plan by product and rate plan params
+func (o *GetRatePlanByProductAndRatePlanParams) SetProductID(productID string) {
+	o.ProductID = productID
+}
+
+// WithRatePlanID adds the ratePlanID to the get rate plan by product and rate plan params
+func (o *GetRatePlanByProductAndRatePlanParams) WithRatePlanID(ratePlanID string) *GetRatePlanByProductAndRatePlanParams {
+	o.SetRatePlanID(ratePlanID)
 	return o
+}
+
+// SetRatePlanID adds the ratePlanId to the get rate plan by product and rate plan params
+func (o *GetRatePlanByProductAndRatePlanParams) SetRatePlanID(ratePlanID string) {
+	o.RatePlanID = ratePlanID
 }
 
 // WithRecords adds the records to the get rate plan by product and rate plan params
-func (o *GetRatePlanByProductAndRatePlanParams) WithRecords(Records *int32) *GetRatePlanByProductAndRatePlanParams {
-	o.Records = Records
+func (o *GetRatePlanByProductAndRatePlanParams) WithRecords(records *int32) *GetRatePlanByProductAndRatePlanParams {
+	o.SetRecords(records)
 	return o
+}
+
+// SetRecords adds the records to the get rate plan by product and rate plan params
+func (o *GetRatePlanByProductAndRatePlanParams) SetRecords(records *int32) {
+	o.Records = records
 }
 
 // WriteToRequest writes these params to a swagger request
 func (o *GetRatePlanByProductAndRatePlanParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
+	if err := r.SetTimeout(o.timeout); err != nil {
+		return err
+	}
 	var res []error
 
 	if o.IncludeRetired != nil {

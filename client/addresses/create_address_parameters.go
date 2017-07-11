@@ -4,8 +4,14 @@ package addresses
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"net/http"
+	"time"
+
+	"golang.org/x/net/context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
+	cr "github.com/go-openapi/runtime/client"
 
 	strfmt "github.com/go-openapi/strfmt"
 
@@ -16,7 +22,39 @@ import (
 // with the default values initialized.
 func NewCreateAddressParams() *CreateAddressParams {
 	var ()
-	return &CreateAddressParams{}
+	return &CreateAddressParams{
+
+		timeout: cr.DefaultTimeout,
+	}
+}
+
+// NewCreateAddressParamsWithTimeout creates a new CreateAddressParams object
+// with the default values initialized, and the ability to set a timeout on a request
+func NewCreateAddressParamsWithTimeout(timeout time.Duration) *CreateAddressParams {
+	var ()
+	return &CreateAddressParams{
+
+		timeout: timeout,
+	}
+}
+
+// NewCreateAddressParamsWithContext creates a new CreateAddressParams object
+// with the default values initialized, and the ability to set a context for a request
+func NewCreateAddressParamsWithContext(ctx context.Context) *CreateAddressParams {
+	var ()
+	return &CreateAddressParams{
+
+		Context: ctx,
+	}
+}
+
+// NewCreateAddressParamsWithHTTPClient creates a new CreateAddressParams object
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
+func NewCreateAddressParamsWithHTTPClient(client *http.Client) *CreateAddressParams {
+	var ()
+	return &CreateAddressParams{
+		HTTPClient: client,
+	}
 }
 
 /*CreateAddressParams contains all the parameters to send to the API endpoint
@@ -29,17 +67,62 @@ type CreateAddressParams struct {
 
 	*/
 	Request *models.CreateAddressRequest
+
+	timeout    time.Duration
+	Context    context.Context
+	HTTPClient *http.Client
+}
+
+// WithTimeout adds the timeout to the create address params
+func (o *CreateAddressParams) WithTimeout(timeout time.Duration) *CreateAddressParams {
+	o.SetTimeout(timeout)
+	return o
+}
+
+// SetTimeout adds the timeout to the create address params
+func (o *CreateAddressParams) SetTimeout(timeout time.Duration) {
+	o.timeout = timeout
+}
+
+// WithContext adds the context to the create address params
+func (o *CreateAddressParams) WithContext(ctx context.Context) *CreateAddressParams {
+	o.SetContext(ctx)
+	return o
+}
+
+// SetContext adds the context to the create address params
+func (o *CreateAddressParams) SetContext(ctx context.Context) {
+	o.Context = ctx
+}
+
+// WithHTTPClient adds the HTTPClient to the create address params
+func (o *CreateAddressParams) WithHTTPClient(client *http.Client) *CreateAddressParams {
+	o.SetHTTPClient(client)
+	return o
+}
+
+// SetHTTPClient adds the HTTPClient to the create address params
+func (o *CreateAddressParams) SetHTTPClient(client *http.Client) {
+	o.HTTPClient = client
 }
 
 // WithRequest adds the request to the create address params
-func (o *CreateAddressParams) WithRequest(Request *models.CreateAddressRequest) *CreateAddressParams {
-	o.Request = Request
+func (o *CreateAddressParams) WithRequest(request *models.CreateAddressRequest) *CreateAddressParams {
+	o.SetRequest(request)
 	return o
+}
+
+// SetRequest adds the request to the create address params
+func (o *CreateAddressParams) SetRequest(request *models.CreateAddressRequest) {
+	o.Request = request
 }
 
 // WriteToRequest writes these params to a swagger request
 func (o *CreateAddressParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
+	if err := r.SetTimeout(o.timeout); err != nil {
+		return err
+	}
 	var res []error
 
 	if o.Request == nil {

@@ -4,8 +4,14 @@ package product_rate_plans
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"net/http"
+	"time"
+
+	"golang.org/x/net/context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
+	cr "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/swag"
 
 	strfmt "github.com/go-openapi/strfmt"
@@ -15,11 +21,11 @@ import (
 // with the default values initialized.
 func NewGetAllRatePlansParams() *GetAllRatePlansParams {
 	var (
-		includeRetiredDefault bool   = bool(false)
-		offsetDefault         int32  = int32(0)
-		orderDefault          string = string("DESC")
-		orderByDefault        string = string("created")
-		recordsDefault        int32  = int32(10)
+		includeRetiredDefault = bool(false)
+		offsetDefault         = int32(0)
+		orderDefault          = string("DESC")
+		orderByDefault        = string("created")
+		recordsDefault        = int32(10)
 	)
 	return &GetAllRatePlansParams{
 		IncludeRetired: &includeRetiredDefault,
@@ -27,6 +33,70 @@ func NewGetAllRatePlansParams() *GetAllRatePlansParams {
 		Order:          &orderDefault,
 		OrderBy:        &orderByDefault,
 		Records:        &recordsDefault,
+
+		timeout: cr.DefaultTimeout,
+	}
+}
+
+// NewGetAllRatePlansParamsWithTimeout creates a new GetAllRatePlansParams object
+// with the default values initialized, and the ability to set a timeout on a request
+func NewGetAllRatePlansParamsWithTimeout(timeout time.Duration) *GetAllRatePlansParams {
+	var (
+		includeRetiredDefault = bool(false)
+		offsetDefault         = int32(0)
+		orderDefault          = string("DESC")
+		orderByDefault        = string("created")
+		recordsDefault        = int32(10)
+	)
+	return &GetAllRatePlansParams{
+		IncludeRetired: &includeRetiredDefault,
+		Offset:         &offsetDefault,
+		Order:          &orderDefault,
+		OrderBy:        &orderByDefault,
+		Records:        &recordsDefault,
+
+		timeout: timeout,
+	}
+}
+
+// NewGetAllRatePlansParamsWithContext creates a new GetAllRatePlansParams object
+// with the default values initialized, and the ability to set a context for a request
+func NewGetAllRatePlansParamsWithContext(ctx context.Context) *GetAllRatePlansParams {
+	var (
+		includeRetiredDefault = bool(false)
+		offsetDefault         = int32(0)
+		orderDefault          = string("DESC")
+		orderByDefault        = string("created")
+		recordsDefault        = int32(10)
+	)
+	return &GetAllRatePlansParams{
+		IncludeRetired: &includeRetiredDefault,
+		Offset:         &offsetDefault,
+		Order:          &orderDefault,
+		OrderBy:        &orderByDefault,
+		Records:        &recordsDefault,
+
+		Context: ctx,
+	}
+}
+
+// NewGetAllRatePlansParamsWithHTTPClient creates a new GetAllRatePlansParams object
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
+func NewGetAllRatePlansParamsWithHTTPClient(client *http.Client) *GetAllRatePlansParams {
+	var (
+		includeRetiredDefault = bool(false)
+		offsetDefault         = int32(0)
+		orderDefault          = string("DESC")
+		orderByDefault        = string("created")
+		recordsDefault        = int32(10)
+	)
+	return &GetAllRatePlansParams{
+		IncludeRetired: &includeRetiredDefault,
+		Offset:         &offsetDefault,
+		Order:          &orderDefault,
+		OrderBy:        &orderByDefault,
+		Records:        &recordsDefault,
+		HTTPClient:     client,
 	}
 }
 
@@ -67,53 +137,128 @@ type GetAllRatePlansParams struct {
 
 	*/
 	Records *int32
+
+	timeout    time.Duration
+	Context    context.Context
+	HTTPClient *http.Client
+}
+
+// WithTimeout adds the timeout to the get all rate plans params
+func (o *GetAllRatePlansParams) WithTimeout(timeout time.Duration) *GetAllRatePlansParams {
+	o.SetTimeout(timeout)
+	return o
+}
+
+// SetTimeout adds the timeout to the get all rate plans params
+func (o *GetAllRatePlansParams) SetTimeout(timeout time.Duration) {
+	o.timeout = timeout
+}
+
+// WithContext adds the context to the get all rate plans params
+func (o *GetAllRatePlansParams) WithContext(ctx context.Context) *GetAllRatePlansParams {
+	o.SetContext(ctx)
+	return o
+}
+
+// SetContext adds the context to the get all rate plans params
+func (o *GetAllRatePlansParams) SetContext(ctx context.Context) {
+	o.Context = ctx
+}
+
+// WithHTTPClient adds the HTTPClient to the get all rate plans params
+func (o *GetAllRatePlansParams) WithHTTPClient(client *http.Client) *GetAllRatePlansParams {
+	o.SetHTTPClient(client)
+	return o
+}
+
+// SetHTTPClient adds the HTTPClient to the get all rate plans params
+func (o *GetAllRatePlansParams) SetHTTPClient(client *http.Client) {
+	o.HTTPClient = client
 }
 
 // WithIncludeRetired adds the includeRetired to the get all rate plans params
-func (o *GetAllRatePlansParams) WithIncludeRetired(IncludeRetired *bool) *GetAllRatePlansParams {
-	o.IncludeRetired = IncludeRetired
+func (o *GetAllRatePlansParams) WithIncludeRetired(includeRetired *bool) *GetAllRatePlansParams {
+	o.SetIncludeRetired(includeRetired)
 	return o
+}
+
+// SetIncludeRetired adds the includeRetired to the get all rate plans params
+func (o *GetAllRatePlansParams) SetIncludeRetired(includeRetired *bool) {
+	o.IncludeRetired = includeRetired
 }
 
 // WithMetadata adds the metadata to the get all rate plans params
-func (o *GetAllRatePlansParams) WithMetadata(Metadata *string) *GetAllRatePlansParams {
-	o.Metadata = Metadata
+func (o *GetAllRatePlansParams) WithMetadata(metadata *string) *GetAllRatePlansParams {
+	o.SetMetadata(metadata)
 	return o
+}
+
+// SetMetadata adds the metadata to the get all rate plans params
+func (o *GetAllRatePlansParams) SetMetadata(metadata *string) {
+	o.Metadata = metadata
 }
 
 // WithOffset adds the offset to the get all rate plans params
-func (o *GetAllRatePlansParams) WithOffset(Offset *int32) *GetAllRatePlansParams {
-	o.Offset = Offset
+func (o *GetAllRatePlansParams) WithOffset(offset *int32) *GetAllRatePlansParams {
+	o.SetOffset(offset)
 	return o
+}
+
+// SetOffset adds the offset to the get all rate plans params
+func (o *GetAllRatePlansParams) SetOffset(offset *int32) {
+	o.Offset = offset
 }
 
 // WithOrder adds the order to the get all rate plans params
-func (o *GetAllRatePlansParams) WithOrder(Order *string) *GetAllRatePlansParams {
-	o.Order = Order
+func (o *GetAllRatePlansParams) WithOrder(order *string) *GetAllRatePlansParams {
+	o.SetOrder(order)
 	return o
+}
+
+// SetOrder adds the order to the get all rate plans params
+func (o *GetAllRatePlansParams) SetOrder(order *string) {
+	o.Order = order
 }
 
 // WithOrderBy adds the orderBy to the get all rate plans params
-func (o *GetAllRatePlansParams) WithOrderBy(OrderBy *string) *GetAllRatePlansParams {
-	o.OrderBy = OrderBy
+func (o *GetAllRatePlansParams) WithOrderBy(orderBy *string) *GetAllRatePlansParams {
+	o.SetOrderBy(orderBy)
 	return o
+}
+
+// SetOrderBy adds the orderBy to the get all rate plans params
+func (o *GetAllRatePlansParams) SetOrderBy(orderBy *string) {
+	o.OrderBy = orderBy
 }
 
 // WithOrganizations adds the organizations to the get all rate plans params
-func (o *GetAllRatePlansParams) WithOrganizations(Organizations []string) *GetAllRatePlansParams {
-	o.Organizations = Organizations
+func (o *GetAllRatePlansParams) WithOrganizations(organizations []string) *GetAllRatePlansParams {
+	o.SetOrganizations(organizations)
 	return o
 }
 
+// SetOrganizations adds the organizations to the get all rate plans params
+func (o *GetAllRatePlansParams) SetOrganizations(organizations []string) {
+	o.Organizations = organizations
+}
+
 // WithRecords adds the records to the get all rate plans params
-func (o *GetAllRatePlansParams) WithRecords(Records *int32) *GetAllRatePlansParams {
-	o.Records = Records
+func (o *GetAllRatePlansParams) WithRecords(records *int32) *GetAllRatePlansParams {
+	o.SetRecords(records)
 	return o
+}
+
+// SetRecords adds the records to the get all rate plans params
+func (o *GetAllRatePlansParams) SetRecords(records *int32) {
+	o.Records = records
 }
 
 // WriteToRequest writes these params to a swagger request
 func (o *GetAllRatePlansParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
+	if err := r.SetTimeout(o.timeout); err != nil {
+		return err
+	}
 	var res []error
 
 	if o.IncludeRetired != nil {

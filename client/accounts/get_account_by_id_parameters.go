@@ -4,8 +4,14 @@ package accounts
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"net/http"
+	"time"
+
+	"golang.org/x/net/context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
+	cr "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/swag"
 
 	strfmt "github.com/go-openapi/strfmt"
@@ -15,7 +21,39 @@ import (
 // with the default values initialized.
 func NewGetAccountByIDParams() *GetAccountByIDParams {
 	var ()
-	return &GetAccountByIDParams{}
+	return &GetAccountByIDParams{
+
+		timeout: cr.DefaultTimeout,
+	}
+}
+
+// NewGetAccountByIDParamsWithTimeout creates a new GetAccountByIDParams object
+// with the default values initialized, and the ability to set a timeout on a request
+func NewGetAccountByIDParamsWithTimeout(timeout time.Duration) *GetAccountByIDParams {
+	var ()
+	return &GetAccountByIDParams{
+
+		timeout: timeout,
+	}
+}
+
+// NewGetAccountByIDParamsWithContext creates a new GetAccountByIDParams object
+// with the default values initialized, and the ability to set a context for a request
+func NewGetAccountByIDParamsWithContext(ctx context.Context) *GetAccountByIDParams {
+	var ()
+	return &GetAccountByIDParams{
+
+		Context: ctx,
+	}
+}
+
+// NewGetAccountByIDParamsWithHTTPClient creates a new GetAccountByIDParams object
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
+func NewGetAccountByIDParamsWithHTTPClient(client *http.Client) *GetAccountByIDParams {
+	var ()
+	return &GetAccountByIDParams{
+		HTTPClient: client,
+	}
 }
 
 /*GetAccountByIDParams contains all the parameters to send to the API endpoint
@@ -27,23 +65,73 @@ type GetAccountByIDParams struct {
 	AccountID string
 	/*Organizations*/
 	Organizations []string
+
+	timeout    time.Duration
+	Context    context.Context
+	HTTPClient *http.Client
 }
 
-// WithAccountID adds the accountId to the get account by ID params
-func (o *GetAccountByIDParams) WithAccountID(AccountID string) *GetAccountByIDParams {
-	o.AccountID = AccountID
+// WithTimeout adds the timeout to the get account by ID params
+func (o *GetAccountByIDParams) WithTimeout(timeout time.Duration) *GetAccountByIDParams {
+	o.SetTimeout(timeout)
 	return o
+}
+
+// SetTimeout adds the timeout to the get account by ID params
+func (o *GetAccountByIDParams) SetTimeout(timeout time.Duration) {
+	o.timeout = timeout
+}
+
+// WithContext adds the context to the get account by ID params
+func (o *GetAccountByIDParams) WithContext(ctx context.Context) *GetAccountByIDParams {
+	o.SetContext(ctx)
+	return o
+}
+
+// SetContext adds the context to the get account by ID params
+func (o *GetAccountByIDParams) SetContext(ctx context.Context) {
+	o.Context = ctx
+}
+
+// WithHTTPClient adds the HTTPClient to the get account by ID params
+func (o *GetAccountByIDParams) WithHTTPClient(client *http.Client) *GetAccountByIDParams {
+	o.SetHTTPClient(client)
+	return o
+}
+
+// SetHTTPClient adds the HTTPClient to the get account by ID params
+func (o *GetAccountByIDParams) SetHTTPClient(client *http.Client) {
+	o.HTTPClient = client
+}
+
+// WithAccountID adds the accountID to the get account by ID params
+func (o *GetAccountByIDParams) WithAccountID(accountID string) *GetAccountByIDParams {
+	o.SetAccountID(accountID)
+	return o
+}
+
+// SetAccountID adds the accountId to the get account by ID params
+func (o *GetAccountByIDParams) SetAccountID(accountID string) {
+	o.AccountID = accountID
 }
 
 // WithOrganizations adds the organizations to the get account by ID params
-func (o *GetAccountByIDParams) WithOrganizations(Organizations []string) *GetAccountByIDParams {
-	o.Organizations = Organizations
+func (o *GetAccountByIDParams) WithOrganizations(organizations []string) *GetAccountByIDParams {
+	o.SetOrganizations(organizations)
 	return o
+}
+
+// SetOrganizations adds the organizations to the get account by ID params
+func (o *GetAccountByIDParams) SetOrganizations(organizations []string) {
+	o.Organizations = organizations
 }
 
 // WriteToRequest writes these params to a swagger request
 func (o *GetAccountByIDParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
+	if err := r.SetTimeout(o.timeout); err != nil {
+		return err
+	}
 	var res []error
 
 	// path param account-ID

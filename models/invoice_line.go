@@ -9,173 +9,123 @@ import (
 	strfmt "github.com/go-openapi/strfmt"
 
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
 
-/*InvoiceLine An invoice-line represents the portion of an invoice specific to one particular pricing-component and its associated pricing-component-value.
-
-swagger:model InvoiceLine
-*/
+// InvoiceLine An invoice-line represents the portion of an invoice specific to one particular pricing-component and its associated pricing-component-value.
+// swagger:model InvoiceLine
 type InvoiceLine struct {
 
-	/* { "description" : "A human readable explanation of how the value of the invoice-line was calculated.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "A human readable explanation of how the value of the invoice-line was calculated.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	Calculation *string `json:"calculation"`
 
-	/* { "description" : "ID of the user who last updated the entity.", "verbs":[] }
-	 */
+	// { "description" : "ID of the user who last updated the entity.", "verbs":[] }
 	ChangedBy string `json:"changedBy,omitempty"`
 
-	/* { "description" : "charge-type.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "charge-type.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	ChargeType *string `json:"chargeType"`
 
-	/* The ID of the invoice that is associated with the invoice-line.
-
-	Required: true
-	*/
+	// The ID of the invoice that is associated with the invoice-line.
+	// Required: true
 	ChildInvoiceID *string `json:"childInvoiceID"`
 
-	/* { "description" : "The component value for the unit-of-measure that is associated with the invoice-line.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "The component value for the unit-of-measure that is associated with the invoice-line.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	ComponentValue *int32 `json:"componentValue"`
 
-	/* { "description" : "The cost of the invoice-line including tax.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "The cost of the invoice-line including tax.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	Cost *float64 `json:"cost"`
 
-	/* { "description" : "The UTC DateTime when the object was created.", "verbs":[] }
-	 */
+	// { "description" : "The UTC DateTime when the object was created.", "verbs":[] }
 	Created strfmt.DateTime `json:"created,omitempty"`
 
-	/* { "description" : "The human readable description of the invoice-line.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "The human readable description of the invoice-line.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	Description *string `json:"description"`
 
-	/* { "description" : "ID of the invoice-line.", "verbs":["POST","PUT","GET"] }
-	 */
+	// { "description" : "ID of the invoice-line.", "verbs":["POST","PUT","GET"] }
 	ID string `json:"id,omitempty"`
 
-	/* { "description" : "invoice associated with the invoice-line.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "invoice associated with the invoice-line.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	InvoiceID *string `json:"invoiceID"`
 
-	/* { "description" : "The human readable name of the invoice-line.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "The human readable name of the invoice-line.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	Name *string `json:"name"`
 
-	/* { "description" : "ID of the organization associated with the invoice-line.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "ID of the organization associated with the invoice-line.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	OrganizationID *string `json:"organizationID"`
 
-	/* The period end of the charge.
-
-	Required: true
-	*/
+	// The period end of the charge.
+	// Required: true
 	PeriodEnd *strfmt.DateTime `json:"periodEnd"`
 
-	/* The period start of the charge.
-
-	Required: true
-	*/
+	// The period start of the charge.
+	// Required: true
 	PeriodStart *strfmt.DateTime `json:"periodStart"`
 
-	/* The ID of the pricing-component that is associated with the invoice-line.
-
-	Required: true
-	*/
+	// The ID of the pricing-component that is associated with the invoice-line.
+	// Required: true
 	PricingComponentID *string `json:"pricingComponentID"`
 
-	/* The name of the pricing-component that is associated with the invoice-line.
-
-	Required: true
-	*/
+	// The name of the pricing-component that is associated with the invoice-line.
+	// Required: true
 	PricingComponentName *string `json:"pricingComponentName"`
 
-	/* { "description" : "The type of the pricing component associated with the invoice line.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "The type of the pricing component associated with the invoice line.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	PricingComponentType *string `json:"pricingComponentType"`
 
-	/* { "description" : "the product ID associated with the invoice-line.", "verbs":["POST","PUT","GET"] }
-	 */
+	// { "description" : "the product ID associated with the invoice-line.", "verbs":["POST","PUT","GET"] }
 	ProductID string `json:"productID,omitempty"`
 
-	/* { "description" : "the product name associated with the invoice-line.", "verbs":["POST","PUT","GET"] }
-	 */
+	// { "description" : "the product name associated with the invoice-line.", "verbs":["POST","PUT","GET"] }
 	ProductName string `json:"productName,omitempty"`
 
-	/* { "description" : "the product rate plan ID associated with the invoice-line.", "verbs":["POST","PUT","GET"] }
-	 */
+	// { "description" : "the product rate plan ID associated with the invoice-line.", "verbs":["POST","PUT","GET"] }
 	ProductRatePlanID string `json:"productRatePlanID,omitempty"`
 
-	/* { "description" : "the product rate plan name associated with the invoice-line.", "verbs":["POST","PUT","GET"] }
-	 */
+	// { "description" : "the product rate plan name associated with the invoice-line.", "verbs":["POST","PUT","GET"] }
 	ProductRatePlanName string `json:"productRatePlanName,omitempty"`
 
-	/* The public name of the pricing-component that is associated with the invoice-line.
-
-	Required: true
-	*/
+	// The public name of the pricing-component that is associated with the invoice-line.
+	// Required: true
 	PublicPricingComponentName *string `json:"publicPricingComponentName"`
 
-	/* { "description" : "the public product name associated with the invoice-line.", "verbs":["POST","PUT","GET"] }
-	 */
+	// { "description" : "the public product name associated with the invoice-line.", "verbs":["POST","PUT","GET"] }
 	PublicProductName string `json:"publicProductName,omitempty"`
 
-	/* { "description" : "the public product rate plan name associated with the invoice-line.", "verbs":["POST","PUT","GET"] }
-	 */
+	// { "description" : "the public product rate plan name associated with the invoice-line.", "verbs":["POST","PUT","GET"] }
 	PublicProductRatePlanName string `json:"publicProductRatePlanName,omitempty"`
 
-	/* The ID of the subscription-charge that is associated with the invoice-line.
-
-	Required: true
-	*/
+	// The ID of the subscription-charge that is associated with the invoice-line.
+	// Required: true
 	SubscriptionChargeID *string `json:"subscriptionChargeID"`
 
-	/* { "description" : "the subscription ID associated with the invoice-line.", "verbs":["POST","PUT","GET"] }
-	 */
+	// { "description" : "the subscription ID associated with the invoice-line.", "verbs":["POST","PUT","GET"] }
 	SubscriptionID string `json:"subscriptionID,omitempty"`
 
-	/* { "description" : "The cumulative tax of the invoice-line.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "The cumulative tax of the invoice-line.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	Tax *float64 `json:"tax"`
 
-	/* The type of the invoice-line.
-
-	Required: true
-	*/
+	// The type of the invoice-line.
+	// Required: true
 	Type *string `json:"type"`
 
-	/* { "description" : "The unit-of-measure associated with the invoice-line.", "verbs":["POST","PUT","GET"] }
-	 */
+	// { "description" : "The unit-of-measure associated with the invoice-line.", "verbs":["POST","PUT","GET"] }
 	UnitOfMeasure *UnitOfMeasure `json:"unitOfMeasure,omitempty"`
 
-	/* { "description" : "unit-of-measure associated with the invoice-line.", "verbs":["POST","PUT","GET"] }
-	 */
+	// { "description" : "unit-of-measure associated with the invoice-line.", "verbs":["POST","PUT","GET"] }
 	UnitOfMeasureID string `json:"unitOfMeasureID,omitempty"`
 
-	/* { "description" : "The UTC DateTime when the object was last updated.", "verbs":[] }
-	 */
+	// { "description" : "The UTC DateTime when the object was last updated.", "verbs":[] }
 	Updated strfmt.DateTime `json:"updated,omitempty"`
 }
 
@@ -273,6 +223,11 @@ func (m *InvoiceLine) Validate(formats strfmt.Registry) error {
 		res = append(res, err)
 	}
 
+	if err := m.validateUnitOfMeasure(formats); err != nil {
+		// prop
+		res = append(res, err)
+	}
+
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
@@ -290,17 +245,25 @@ func (m *InvoiceLine) validateCalculation(formats strfmt.Registry) error {
 
 var invoiceLineTypeChargeTypePropEnum []interface{}
 
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Credit","Debit"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		invoiceLineTypeChargeTypePropEnum = append(invoiceLineTypeChargeTypePropEnum, v)
+	}
+}
+
+const (
+	// InvoiceLineChargeTypeCredit captures enum value "Credit"
+	InvoiceLineChargeTypeCredit string = "Credit"
+	// InvoiceLineChargeTypeDebit captures enum value "Debit"
+	InvoiceLineChargeTypeDebit string = "Debit"
+)
+
 // prop value enum
 func (m *InvoiceLine) validateChargeTypeEnum(path, location string, value string) error {
-	if invoiceLineTypeChargeTypePropEnum == nil {
-		var res []string
-		if err := json.Unmarshal([]byte(`["Credit","Debit"]`), &res); err != nil {
-			return err
-		}
-		for _, v := range res {
-			invoiceLineTypeChargeTypePropEnum = append(invoiceLineTypeChargeTypePropEnum, v)
-		}
-	}
 	if err := validate.Enum(path, location, value, invoiceLineTypeChargeTypePropEnum); err != nil {
 		return err
 	}
@@ -422,17 +385,29 @@ func (m *InvoiceLine) validatePricingComponentName(formats strfmt.Registry) erro
 
 var invoiceLineTypePricingComponentTypePropEnum []interface{}
 
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["setup","subscription","arrears","usage"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		invoiceLineTypePricingComponentTypePropEnum = append(invoiceLineTypePricingComponentTypePropEnum, v)
+	}
+}
+
+const (
+	// InvoiceLinePricingComponentTypeSetup captures enum value "setup"
+	InvoiceLinePricingComponentTypeSetup string = "setup"
+	// InvoiceLinePricingComponentTypeSubscription captures enum value "subscription"
+	InvoiceLinePricingComponentTypeSubscription string = "subscription"
+	// InvoiceLinePricingComponentTypeArrears captures enum value "arrears"
+	InvoiceLinePricingComponentTypeArrears string = "arrears"
+	// InvoiceLinePricingComponentTypeUsage captures enum value "usage"
+	InvoiceLinePricingComponentTypeUsage string = "usage"
+)
+
 // prop value enum
 func (m *InvoiceLine) validatePricingComponentTypeEnum(path, location string, value string) error {
-	if invoiceLineTypePricingComponentTypePropEnum == nil {
-		var res []string
-		if err := json.Unmarshal([]byte(`["setup","subscription","arrears","usage"]`), &res); err != nil {
-			return err
-		}
-		for _, v := range res {
-			invoiceLineTypePricingComponentTypePropEnum = append(invoiceLineTypePricingComponentTypePropEnum, v)
-		}
-	}
 	if err := validate.Enum(path, location, value, invoiceLineTypePricingComponentTypePropEnum); err != nil {
 		return err
 	}
@@ -482,17 +457,29 @@ func (m *InvoiceLine) validateTax(formats strfmt.Registry) error {
 
 var invoiceLineTypeTypePropEnum []interface{}
 
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["PricingComponent","Coupon","Migration","AggregatedInvoice"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		invoiceLineTypeTypePropEnum = append(invoiceLineTypeTypePropEnum, v)
+	}
+}
+
+const (
+	// InvoiceLineTypePricingComponent captures enum value "PricingComponent"
+	InvoiceLineTypePricingComponent string = "PricingComponent"
+	// InvoiceLineTypeCoupon captures enum value "Coupon"
+	InvoiceLineTypeCoupon string = "Coupon"
+	// InvoiceLineTypeMigration captures enum value "Migration"
+	InvoiceLineTypeMigration string = "Migration"
+	// InvoiceLineTypeAggregatedInvoice captures enum value "AggregatedInvoice"
+	InvoiceLineTypeAggregatedInvoice string = "AggregatedInvoice"
+)
+
 // prop value enum
 func (m *InvoiceLine) validateTypeEnum(path, location string, value string) error {
-	if invoiceLineTypeTypePropEnum == nil {
-		var res []string
-		if err := json.Unmarshal([]byte(`["PricingComponent","Coupon","Migration","AggregatedInvoice"]`), &res); err != nil {
-			return err
-		}
-		for _, v := range res {
-			invoiceLineTypeTypePropEnum = append(invoiceLineTypeTypePropEnum, v)
-		}
-	}
 	if err := validate.Enum(path, location, value, invoiceLineTypeTypePropEnum); err != nil {
 		return err
 	}
@@ -508,6 +495,25 @@ func (m *InvoiceLine) validateType(formats strfmt.Registry) error {
 	// value enum
 	if err := m.validateTypeEnum("type", "body", *m.Type); err != nil {
 		return err
+	}
+
+	return nil
+}
+
+func (m *InvoiceLine) validateUnitOfMeasure(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.UnitOfMeasure) { // not required
+		return nil
+	}
+
+	if m.UnitOfMeasure != nil {
+
+		if err := m.UnitOfMeasure.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("unitOfMeasure")
+			}
+			return err
+		}
 	}
 
 	return nil

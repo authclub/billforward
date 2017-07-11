@@ -10,86 +10,60 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-/*Client An oAuth2 client with which BillForward users may authenticate.
-
-swagger:model Client
-*/
+// Client An oAuth2 client with which BillForward users may authenticate.
+// swagger:model Client
 type Client struct {
 
-	/* { "description" : "The amount of time in seconds that an access token for the client is valid.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "The amount of time in seconds that an access token for the client is valid.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	AccessTokenValiditySeconds *int32 `json:"accessTokenValiditySeconds"`
 
-	/* { "description" : "Authorities associated with the client.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "Authorities associated with the client.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	Authorities *string `json:"authorities"`
 
-	/* { "description" : "Oauth2 Grant Types which may be used when authenticating with the client.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "Oauth2 Grant Types which may be used when authenticating with the client.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	AuthorizedGrantTypes *string `json:"authorizedGrantTypes"`
 
-	/* { "description" : "ID of the user who last updated the entity.", "verbs":[] }
-	 */
+	// { "description" : "ID of the user who last updated the entity.", "verbs":[] }
 	ChangedBy string `json:"changedBy,omitempty"`
 
-	/* { "description" : "ID of the OAuth2 client.", "verbs":["POST","PUT","GET"] }
-	 */
+	// { "description" : "ID of the OAuth2 client.", "verbs":["POST","PUT","GET"] }
 	ClientID string `json:"clientId,omitempty"`
 
-	/* { "description" : "Unique Client Secret of the client. This is used as the OAuth2 Client secret", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "Unique Client Secret of the client. This is used as the OAuth2 Client secret", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	ClientSecret *string `json:"clientSecret"`
 
-	/* { "description" : "The UTC DateTime when the object was created.", "verbs":[] }
-	 */
+	// { "description" : "The UTC DateTime when the object was created.", "verbs":[] }
 	Created strfmt.DateTime `json:"created,omitempty"`
 
-	/* { "description" : "Indicates if a client has been retired. If a client has been retired it can still be retrieved using the appropriate flag on API requests.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "Indicates if a client has been retired. If a client has been retired it can still be retrieved using the appropriate flag on API requests.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	Deleted bool `json:"deleted"`
 
-	/* { "description" : "Organization associated with the client.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "Organization associated with the client.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	OrganizationID *string `json:"organizationID"`
 
-	/* { "description" : "The amount of time in seconds that a refresh token for the client is valid.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "The amount of time in seconds that a refresh token for the client is valid.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	RefreshTokenValiditySeconds *int32 `json:"refreshTokenValiditySeconds"`
 
-	/* { "description" : "Registered Redirect URIs associated with the client.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "Registered Redirect URIs associated with the client.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	RegisteredRedirectUris *string `json:"registeredRedirectUris"`
 
-	/* { "description" : "Resources associated with the client.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "Resources associated with the client.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	ResourceIds *string `json:"resourceIds"`
 
-	/* { "description" : "Scopes associated with the client.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "Scopes associated with the client.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	Scope *string `json:"scope"`
 
-	/* { "description" : "The UTC DateTime when the object was last updated.", "verbs":[] }
-	 */
+	// { "description" : "The UTC DateTime when the object was last updated.", "verbs":[] }
 	Updated strfmt.DateTime `json:"updated,omitempty"`
 }
 

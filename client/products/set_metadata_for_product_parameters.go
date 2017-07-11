@@ -4,8 +4,14 @@ package products
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"net/http"
+	"time"
+
+	"golang.org/x/net/context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
+	cr "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/swag"
 
 	strfmt "github.com/go-openapi/strfmt"
@@ -17,7 +23,39 @@ import (
 // with the default values initialized.
 func NewSetMetadataForProductParams() *SetMetadataForProductParams {
 	var ()
-	return &SetMetadataForProductParams{}
+	return &SetMetadataForProductParams{
+
+		timeout: cr.DefaultTimeout,
+	}
+}
+
+// NewSetMetadataForProductParamsWithTimeout creates a new SetMetadataForProductParams object
+// with the default values initialized, and the ability to set a timeout on a request
+func NewSetMetadataForProductParamsWithTimeout(timeout time.Duration) *SetMetadataForProductParams {
+	var ()
+	return &SetMetadataForProductParams{
+
+		timeout: timeout,
+	}
+}
+
+// NewSetMetadataForProductParamsWithContext creates a new SetMetadataForProductParams object
+// with the default values initialized, and the ability to set a context for a request
+func NewSetMetadataForProductParamsWithContext(ctx context.Context) *SetMetadataForProductParams {
+	var ()
+	return &SetMetadataForProductParams{
+
+		Context: ctx,
+	}
+}
+
+// NewSetMetadataForProductParamsWithHTTPClient creates a new SetMetadataForProductParams object
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
+func NewSetMetadataForProductParamsWithHTTPClient(client *http.Client) *SetMetadataForProductParams {
+	var ()
+	return &SetMetadataForProductParams{
+		HTTPClient: client,
+	}
 }
 
 /*SetMetadataForProductParams contains all the parameters to send to the API endpoint
@@ -34,29 +72,84 @@ type SetMetadataForProductParams struct {
 	Organizations []string
 	/*ProductID*/
 	ProductID string
+
+	timeout    time.Duration
+	Context    context.Context
+	HTTPClient *http.Client
+}
+
+// WithTimeout adds the timeout to the set metadata for product params
+func (o *SetMetadataForProductParams) WithTimeout(timeout time.Duration) *SetMetadataForProductParams {
+	o.SetTimeout(timeout)
+	return o
+}
+
+// SetTimeout adds the timeout to the set metadata for product params
+func (o *SetMetadataForProductParams) SetTimeout(timeout time.Duration) {
+	o.timeout = timeout
+}
+
+// WithContext adds the context to the set metadata for product params
+func (o *SetMetadataForProductParams) WithContext(ctx context.Context) *SetMetadataForProductParams {
+	o.SetContext(ctx)
+	return o
+}
+
+// SetContext adds the context to the set metadata for product params
+func (o *SetMetadataForProductParams) SetContext(ctx context.Context) {
+	o.Context = ctx
+}
+
+// WithHTTPClient adds the HTTPClient to the set metadata for product params
+func (o *SetMetadataForProductParams) WithHTTPClient(client *http.Client) *SetMetadataForProductParams {
+	o.SetHTTPClient(client)
+	return o
+}
+
+// SetHTTPClient adds the HTTPClient to the set metadata for product params
+func (o *SetMetadataForProductParams) SetHTTPClient(client *http.Client) {
+	o.HTTPClient = client
 }
 
 // WithMetadata adds the metadata to the set metadata for product params
-func (o *SetMetadataForProductParams) WithMetadata(Metadata models.DynamicMetadata) *SetMetadataForProductParams {
-	o.Metadata = Metadata
+func (o *SetMetadataForProductParams) WithMetadata(metadata models.DynamicMetadata) *SetMetadataForProductParams {
+	o.SetMetadata(metadata)
 	return o
+}
+
+// SetMetadata adds the metadata to the set metadata for product params
+func (o *SetMetadataForProductParams) SetMetadata(metadata models.DynamicMetadata) {
+	o.Metadata = metadata
 }
 
 // WithOrganizations adds the organizations to the set metadata for product params
-func (o *SetMetadataForProductParams) WithOrganizations(Organizations []string) *SetMetadataForProductParams {
-	o.Organizations = Organizations
+func (o *SetMetadataForProductParams) WithOrganizations(organizations []string) *SetMetadataForProductParams {
+	o.SetOrganizations(organizations)
 	return o
 }
 
-// WithProductID adds the productId to the set metadata for product params
-func (o *SetMetadataForProductParams) WithProductID(ProductID string) *SetMetadataForProductParams {
-	o.ProductID = ProductID
+// SetOrganizations adds the organizations to the set metadata for product params
+func (o *SetMetadataForProductParams) SetOrganizations(organizations []string) {
+	o.Organizations = organizations
+}
+
+// WithProductID adds the productID to the set metadata for product params
+func (o *SetMetadataForProductParams) WithProductID(productID string) *SetMetadataForProductParams {
+	o.SetProductID(productID)
 	return o
+}
+
+// SetProductID adds the productId to the set metadata for product params
+func (o *SetMetadataForProductParams) SetProductID(productID string) {
+	o.ProductID = productID
 }
 
 // WriteToRequest writes these params to a swagger request
 func (o *SetMetadataForProductParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
+	if err := r.SetTimeout(o.timeout); err != nil {
+		return err
+	}
 	var res []error
 
 	if err := r.SetBodyParam(o.Metadata); err != nil {

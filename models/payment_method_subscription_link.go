@@ -7,63 +7,55 @@ import (
 	strfmt "github.com/go-openapi/strfmt"
 
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
 
-/*PaymentMethodSubscriptionLink PaymentMethodSubscriptionLink
-
-swagger:model PaymentMethodSubscriptionLink
-*/
+// PaymentMethodSubscriptionLink PaymentMethodSubscriptionLink
+// swagger:model PaymentMethodSubscriptionLink
 type PaymentMethodSubscriptionLink struct {
 
-	/* { "description" : "ID of the user who last updated the entity.", "verbs":[] }
-	 */
+	// { "description" : "ID of the user who last updated the entity.", "verbs":[] }
 	ChangedBy string `json:"changedBy,omitempty"`
 
-	/* { "description" : "The UTC DateTime when the object was created.", "verbs":[] }
-	 */
+	// { "description" : "The UTC DateTime when the object was created.", "verbs":[] }
 	Created strfmt.DateTime `json:"created,omitempty"`
 
-	/* { "description" : "CRM ID of the product-rate-plan.", "verbs":["POST","PUT","GET"] }
-	 */
+	// { "description" : "CRM ID of the product-rate-plan.", "verbs":["POST","PUT","GET"] }
 	CrmID string `json:"crmID,omitempty"`
 
-	/* deleted
-	 */
+	// deleted
 	Deleted *bool `json:"deleted,omitempty"`
 
-	/* { "description" : "", "verbs":["GET"] }
-	 */
+	// { "description" : "", "verbs":["GET"] }
 	ID string `json:"id,omitempty"`
 
-	/* organization ID
-	 */
+	// organization ID
 	OrganizationID string `json:"organizationID,omitempty"`
 
-	/* payment method
-	 */
+	// payment method
 	PaymentMethod *PaymentMethod `json:"paymentMethod,omitempty"`
 
-	/* { "description" : "Payment method to add to subscription.", "verbs":["POST","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "Payment method to add to subscription.", "verbs":["POST","GET"] }
+	// Required: true
 	PaymentMethodID *string `json:"paymentMethodID"`
 
-	/* { "description" : "Subscription to add payment method to.", "verbs":["POST","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "Subscription to add payment method to.", "verbs":["POST","GET"] }
+	// Required: true
 	SubscriptionID *string `json:"subscriptionID"`
 
-	/* { "description" : "The UTC DateTime when the object was last updated.", "verbs":[] }
-	 */
+	// { "description" : "The UTC DateTime when the object was last updated.", "verbs":[] }
 	Updated strfmt.DateTime `json:"updated,omitempty"`
 }
 
 // Validate validates this payment method subscription link
 func (m *PaymentMethodSubscriptionLink) Validate(formats strfmt.Registry) error {
 	var res []error
+
+	if err := m.validatePaymentMethod(formats); err != nil {
+		// prop
+		res = append(res, err)
+	}
 
 	if err := m.validatePaymentMethodID(formats); err != nil {
 		// prop
@@ -78,6 +70,25 @@ func (m *PaymentMethodSubscriptionLink) Validate(formats strfmt.Registry) error 
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *PaymentMethodSubscriptionLink) validatePaymentMethod(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.PaymentMethod) { // not required
+		return nil
+	}
+
+	if m.PaymentMethod != nil {
+
+		if err := m.PaymentMethod.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("paymentMethod")
+			}
+			return err
+		}
+	}
+
 	return nil
 }
 

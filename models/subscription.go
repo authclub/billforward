@@ -5,202 +5,149 @@ package models
 
 import (
 	"encoding/json"
+	"strconv"
 
 	strfmt "github.com/go-openapi/strfmt"
-	"github.com/go-openapi/swag"
 
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
 
-/*Subscription Subscription
-
-swagger:model Subscription
-*/
+// Subscription Subscription
+// swagger:model Subscription
 type Subscription struct {
 
-	/* {"description":"","verbs":["POST","GET"]}
-
-	Required: true
-	*/
+	// {"description":"","verbs":["POST","GET"]}
+	// Required: true
 	AccountID *string `json:"accountID"`
 
-	/* {  "default":"true", "description":"Whether the subscription will aggregate all other subscriptions on the account.","verbs":["GET", "PUT", "POST"]}
-	 */
+	// {  "default":"true", "description":"Whether the subscription will aggregate all other subscriptions on the account.","verbs":["GET", "PUT", "POST"]}
 	AggregateAllSubscriptionsOnAccount *bool `json:"aggregateAllSubscriptionsOnAccount,omitempty"`
 
-	/* { "description" : "ID of the user who last updated the entity.", "verbs":[] }
-	 */
+	// { "description" : "ID of the user who last updated the entity.", "verbs":[] }
 	ChangedBy string `json:"changedBy,omitempty"`
 
-	/* {"description":"start of the contracted period.  This will be after a trial, if one exists","verbs":["GET"]}
-	 */
+	// {"description":"start of the contracted period.  This will be after a trial, if one exists","verbs":["GET"]}
 	ContractStart strfmt.DateTime `json:"contractStart,omitempty"`
 
-	/* { "description" : "The UTC DateTime when the object was created.", "verbs":[] }
-	 */
+	// { "description" : "The UTC DateTime when the object was created.", "verbs":[] }
 	Created strfmt.DateTime `json:"created,omitempty"`
 
-	/* {  "default":"true", "description":"Can credit-notes be used to pay outstanding invoices for this subscription.","verbs":["GET", "PUT", "POST"]}
-	 */
+	// {  "default":"true", "description":"Can credit-notes be used to pay outstanding invoices for this subscription.","verbs":["GET", "PUT", "POST"]}
 	CreditEnabled *bool `json:"creditEnabled,omitempty"`
 
-	/* {"description":"","verbs":["POST","PUT","GET"]}
-	 */
+	// {"description":"","verbs":["POST","PUT","GET"]}
 	CrmID string `json:"crmID,omitempty"`
 
-	/* {"description":"End of the current period invoiced for. This can be manually updated to extend trials or delay invoice generation.","verbs":["PUT","GET"]}
-	 */
+	// {"description":"End of the current period invoiced for. This can be manually updated to extend trials or delay invoice generation.","verbs":["PUT","GET"]}
 	CurrentPeriodEnd strfmt.DateTime `json:"currentPeriodEnd,omitempty"`
 
-	/* {"description":"Override for the initial subscription period. Allows periods to align to a date or time regardless of purchase date/time.","verbs":["POST","PUT","GET"]}
-	 */
+	// {"description":"Override for the initial subscription period. Allows periods to align to a date or time regardless of purchase date/time.","verbs":["POST","PUT","GET"]}
 	CurrentPeriodEndExplicit strfmt.DateTime `json:"currentPeriodEndExplicit,omitempty"`
 
-	/* {"description":"Start of the current invoice period. At the end of this period, a new new invoice will be generated","verbs":["POST","GET"]}
-	 */
+	// {"description":"Start of the current invoice period. At the end of this period, a new new invoice will be generated","verbs":["POST","GET"]}
 	CurrentPeriodStart strfmt.DateTime `json:"currentPeriodStart,omitempty"`
 
-	/* {"description":"The current time &mdash; from the point of view of the subscription.","verbs":["GET"]}
-
-	Required: true
-	*/
+	// {"description":"The current time &mdash; from the point of view of the subscription.","verbs":["GET"]}
+	// Required: true
 	CurrentTime *strfmt.DateTime `json:"currentTime"`
 
-	/* {"description":"","verbs":["POST","PUT","GET"]}
-	 */
+	// {"description":"","verbs":["POST","PUT","GET"]}
 	Description string `json:"description,omitempty"`
 
-	/* {  "default":"false", "description":"Are there outstanding invoices which are currently in dunning.","verbs":["GET", "PUT", "POST"]}
-	 */
+	// {  "default":"false", "description":"Are there outstanding invoices which are currently in dunning.","verbs":["GET", "PUT", "POST"]}
 	Dunning *bool `json:"dunning,omitempty"`
 
-	/* {"default":"None","description":"The action that should be taken, should an invoice for some subscription to this rate plan remain unpaid despite the dunning period's being exceeded.<br><span class=\"label label-default\">CancelSubscription</span> &mdash; Demotes the subscription to the `Failed` state as soon as the dunning period is exceeded.<br><span class=\"label label-default\">None</span> &mdash; The subscription is allowed to continue in the `AwaitingPayment` state indefinitely even if the dunning period is exceeded.For slow payment cycles &mdash; or when manual invoice remediation is common &mdash; <span class=\"label label-default\">None</span> is recommended.<br>In a heavily-automated SaaS environment, automatic cancellation via <span class=\"label label-default\">CancelSubscription</span> is recommended.","verbs":["POST","PUT","GET"]}
-	 */
+	// {"default":"None","description":"The action that should be taken, should an invoice for some subscription to this rate plan remain unpaid despite the dunning period's being exceeded.<br><span class=\"label label-default\">CancelSubscription</span> &mdash; Demotes the subscription to the `Failed` state as soon as the dunning period is exceeded.<br><span class=\"label label-default\">None</span> &mdash; The subscription is allowed to continue in the `AwaitingPayment` state indefinitely even if the dunning period is exceeded.For slow payment cycles &mdash; or when manual invoice remediation is common &mdash; <span class=\"label label-default\">None</span> is recommended.<br>In a heavily-automated SaaS environment, automatic cancellation via <span class=\"label label-default\">CancelSubscription</span> is recommended.","verbs":["POST","PUT","GET"]}
 	FailedPaymentBehaviour string `json:"failedPaymentBehaviour,omitempty"`
 
-	/* {"description":"List of fixed terms that have been or are applied to the subscription","verbs":["GET"]}
-	 */
-	FixedTerms []*FixedTerm `json:"fixedTerms,omitempty"`
+	// {"description":"List of fixed terms that have been or are applied to the subscription","verbs":["GET"]}
+	FixedTerms []*FixedTerm `json:"fixedTerms"`
 
-	/* {"description":"","verbs":["GET"]}
-
-	Required: true
-	*/
+	// {"description":"","verbs":["GET"]}
+	// Required: true
 	ID *string `json:"id"`
 
-	/* {"description":"Start of the first successful period","verbs":["GET"]}
-
-	Required: true
-	*/
+	// {"description":"Start of the first successful period","verbs":["GET"]}
+	// Required: true
 	InitialPeriodStart *strfmt.DateTime `json:"initialPeriodStart"`
 
-	/* {"description":"If the subscription is locked, it will not be processed by the system","verbs":[]}
-	 */
+	// {"description":"If the subscription is locked, it will not be processed by the system","verbs":[]}
 	Locked string `json:"locked,omitempty"`
 
-	/* {"description":"Which system is responsible for managing the subscription.","verbs":[]}
-	 */
+	// {"description":"Which system is responsible for managing the subscription.","verbs":[]}
 	ManagedBy string `json:"managedBy,omitempty"`
 
-	/* { "description" : "Add metadata.", "verbs":["POST"] }
-	 */
+	// { "description" : "Add metadata.", "verbs":["POST"] }
 	Metadata DynamicMetadata `json:"metadata,omitempty"`
 
-	/* {"description":"User definable friendly name for the subscription.","verbs":["POST","PUT","GET"]}
-
-	Required: true
-	*/
+	// {"description":"User definable friendly name for the subscription.","verbs":["POST","PUT","GET"]}
+	// Required: true
 	Name *string `json:"name"`
 
-	/* {"description":"Organization associated with the subscription.","verbs":[]}
-
-	Required: true
-	*/
+	// {"description":"Organization associated with the subscription.","verbs":[]}
+	// Required: true
 	OrganizationID *string `json:"organizationID"`
 
-	/* {"description":"","verbs":["GET"]}
-	 */
+	// {"description":"","verbs":["GET"]}
 	ParentID string `json:"parentID,omitempty"`
 
-	/* payment method subscription links
-	 */
-	PaymentMethodSubscriptionLinks []*PaymentMethodSubscriptionLink `json:"paymentMethodSubscriptionLinks,omitempty"`
+	// payment method subscription links
+	PaymentMethodSubscriptionLinks []*PaymentMethodSubscriptionLink `json:"paymentMethodSubscriptionLinks"`
 
-	/* payment terms
-	 */
+	// payment terms
 	PaymentTerms int64 `json:"paymentTerms,omitempty"`
 
-	/* {"description":"The quantities for each pricing component of the rate-plan. Values should be set for all pricing components of the rate-plan apart from the usage components. Usage components should be added when the usage is known, this is often after the end of the current billing cycle.","verbs":["GET", "POST"]}
-	 */
-	PricingComponentValues []*PricingComponentValue `json:"pricingComponentValues,omitempty"`
+	// {"description":"The quantities for each pricing component of the rate-plan. Values should be set for all pricing components of the rate-plan apart from the usage components. Usage components should be added when the usage is known, this is often after the end of the current billing cycle.","verbs":["GET", "POST"]}
+	PricingComponentValues []*PricingComponentValue `json:"pricingComponentValues"`
 
-	/* {"description":"","verbs":["GET"]}
-
-	Required: true
-	*/
+	// {"description":"","verbs":["GET"]}
+	// Required: true
 	ProductID *string `json:"productID"`
 
-	/* {"description":"Identifier of the rate-plan being billed for.","verbs":["POST","PUT","GET"]}
-
-	Required: true
-	*/
+	// {"description":"Identifier of the rate-plan being billed for.","verbs":["POST","PUT","GET"]}
+	// Required: true
 	ProductRatePlanID *string `json:"productRatePlanID"`
 
-	/* {"PUT_description":"A <span class=\"label label-default\">Provisioned</span> subscription can be updated to either <span class=\"label label-default\">Trial</span> or <span class=\"label label-default\">AwaitingPayment</span>, this will start the subscription. Any updates to the state of a non-<span class=\"label label-default\">Provisioned</span> will be ignored. To cancel or otherwise amend a subscription please use the explict amendment calls.", "description":"A <span class=\"label label-default\">Provisioned</span> subscription will not begin until marked as <span class=\"label label-default\">Trial</span> or <span class=\"label label-default\">AwaitingPayment</span>. Trial subscriptions transition to <span class=\"label label-default\">AwaitingPayment</span> when the trial period is over. On subscription renewal the state becomes <span class=\"label label-default\">AwaitingPayment</span>. Once outstanding invoices are paid the state changes to <span class=\"label label-default\">Paid</span>. A subscription is set as either <span class=\"label label-default\">Failed</span> or left as <span class=\"label label-default\">AwaitingPayment</span>, depending on the rate-plan configuration. If a subscription is non-recurring or fixed-term and ends naturally, it will be marked as <span class=\"label label-default\">Expired</span>. If all payment attempts have failed a subscription is marked as <span class=\"label label-default\">Cancelled</span> if it has been manually ended. Once a subscription is marked as <span class=\"label label-default\">Failed</span>, <span class=\"label label-default\">Expired</span>, or <span class=\"label label-default\">Cancelled</span> no invoices other than a final invoice will be issued. Note: Updating account card details will not lead to BillForward automatically retrying payment, manual payment attempts can be made.","verbs":["POST","PUT","GET"]}
-
-	Required: true
-	*/
+	// {"PUT_description":"A <span class=\"label label-default\">Provisioned</span> subscription can be updated to either <span class=\"label label-default\">Trial</span> or <span class=\"label label-default\">AwaitingPayment</span>, this will start the subscription. Any updates to the state of a non-<span class=\"label label-default\">Provisioned</span> will be ignored. To cancel or otherwise amend a subscription please use the explict amendment calls.", "description":"A <span class=\"label label-default\">Provisioned</span> subscription will not begin until marked as <span class=\"label label-default\">Trial</span> or <span class=\"label label-default\">AwaitingPayment</span>. Trial subscriptions transition to <span class=\"label label-default\">AwaitingPayment</span> when the trial period is over. On subscription renewal the state becomes <span class=\"label label-default\">AwaitingPayment</span>. Once outstanding invoices are paid the state changes to <span class=\"label label-default\">Paid</span>. A subscription is set as either <span class=\"label label-default\">Failed</span> or left as <span class=\"label label-default\">AwaitingPayment</span>, depending on the rate-plan configuration. If a subscription is non-recurring or fixed-term and ends naturally, it will be marked as <span class=\"label label-default\">Expired</span>. If all payment attempts have failed a subscription is marked as <span class=\"label label-default\">Cancelled</span> if it has been manually ended. Once a subscription is marked as <span class=\"label label-default\">Failed</span>, <span class=\"label label-default\">Expired</span>, or <span class=\"label label-default\">Cancelled</span> no invoices other than a final invoice will be issued. Note: Updating account card details will not lead to BillForward automatically retrying payment, manual payment attempts can be made.","verbs":["POST","PUT","GET"]}
+	// Required: true
 	State *string `json:"state"`
 
-	/* {"description":"When a subscription will end. This may be in the future if the cancellation is at the end of the current period.","verbs":["GET"]}
-	 */
+	// {"description":"When a subscription will end. This may be in the future if the cancellation is at the end of the current period.","verbs":["GET"]}
 	SubscriptionEnd strfmt.DateTime `json:"subscriptionEnd,omitempty"`
 
-	/* {"description":"Number of paid-for periods billing, excluding trials, since the subscription started.","verbs":["GET"]}
-	 */
+	// {"description":"Number of paid-for periods billing, excluding trials, since the subscription started.","verbs":["GET"]}
 	SuccessfulPeriods int32 `json:"successfulPeriods,omitempty"`
 
-	/* {"description":"How far in the future is the entity (in seconds) compared to the BillForward server's time.","verbs":["GET"]}
-	 */
+	// {"description":"How far in the future is the entity (in seconds) compared to the BillForward server's time.","verbs":["GET"]}
 	TimeOffset int64 `json:"timeOffset,omitempty"`
 
-	/* {"description":"Total number of subscription periods.","verbs":["GET"]}
-	 */
+	// {"description":"Total number of subscription periods.","verbs":["GET"]}
 	TotalPeriods int32 `json:"totalPeriods,omitempty"`
 
-	/* {"description":"The end time of the trial period, if one existed","verbs":["GET"]}
-
-	Required: true
-	*/
+	// {"description":"The end time of the trial period, if one existed","verbs":["GET"]}
+	// Required: true
 	TrialEnd *strfmt.DateTime `json:"trialEnd"`
 
-	/* {"default":"dependent on product", "description":"","verbs":["POST","GET"]}
-	 */
+	// {"default":"dependent on product", "description":"","verbs":["POST","GET"]}
 	Type string `json:"type,omitempty"`
 
-	/* { "description" : "The UTC DateTime when the object was last updated.", "verbs":[] }
-	 */
+	// { "description" : "The UTC DateTime when the object was last updated.", "verbs":[] }
 	Updated strfmt.DateTime `json:"updated,omitempty"`
 
-	/* {"description":"When the current version of the subscription ended, null indicates current version.","verbs":["GET"]}
-	 */
+	// {"description":"When the current version of the subscription ended, null indicates current version.","verbs":["GET"]}
 	VersionEnd strfmt.DateTime `json:"versionEnd,omitempty"`
 
-	/* {"description":"","verbs":["GET"]}
-	 */
+	// {"description":"","verbs":["GET"]}
 	VersionID string `json:"versionID,omitempty"`
 
-	/* {"description":"Incremental version number of the subscription, starts at 1.","verbs":["GET"]}
-
-	Required: true
-	*/
+	// {"description":"Incremental version number of the subscription, starts at 1.","verbs":["GET"]}
+	// Required: true
 	VersionNumber *int32 `json:"versionNumber"`
 
-	/* {"description":"When the current version of the subscription started.","verbs":["GET"]}
-
-	Required: true
-	*/
+	// {"description":"When the current version of the subscription started.","verbs":["GET"]}
+	// Required: true
 	VersionStart *strfmt.DateTime `json:"versionStart"`
 }
 
@@ -324,17 +271,25 @@ func (m *Subscription) validateCurrentTime(formats strfmt.Registry) error {
 
 var subscriptionTypeFailedPaymentBehaviourPropEnum []interface{}
 
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["CancelSubscription","None"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		subscriptionTypeFailedPaymentBehaviourPropEnum = append(subscriptionTypeFailedPaymentBehaviourPropEnum, v)
+	}
+}
+
+const (
+	// SubscriptionFailedPaymentBehaviourCancelSubscription captures enum value "CancelSubscription"
+	SubscriptionFailedPaymentBehaviourCancelSubscription string = "CancelSubscription"
+	// SubscriptionFailedPaymentBehaviourNone captures enum value "None"
+	SubscriptionFailedPaymentBehaviourNone string = "None"
+)
+
 // prop value enum
 func (m *Subscription) validateFailedPaymentBehaviourEnum(path, location string, value string) error {
-	if subscriptionTypeFailedPaymentBehaviourPropEnum == nil {
-		var res []string
-		if err := json.Unmarshal([]byte(`["CancelSubscription","None"]`), &res); err != nil {
-			return err
-		}
-		for _, v := range res {
-			subscriptionTypeFailedPaymentBehaviourPropEnum = append(subscriptionTypeFailedPaymentBehaviourPropEnum, v)
-		}
-	}
 	if err := validate.Enum(path, location, value, subscriptionTypeFailedPaymentBehaviourPropEnum); err != nil {
 		return err
 	}
@@ -361,6 +316,24 @@ func (m *Subscription) validateFixedTerms(formats strfmt.Registry) error {
 		return nil
 	}
 
+	for i := 0; i < len(m.FixedTerms); i++ {
+
+		if swag.IsZero(m.FixedTerms[i]) { // not required
+			continue
+		}
+
+		if m.FixedTerms[i] != nil {
+
+			if err := m.FixedTerms[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("fixedTerms" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
 	return nil
 }
 
@@ -384,17 +357,25 @@ func (m *Subscription) validateInitialPeriodStart(formats strfmt.Registry) error
 
 var subscriptionTypeManagedByPropEnum []interface{}
 
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["BillForward","Stripe"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		subscriptionTypeManagedByPropEnum = append(subscriptionTypeManagedByPropEnum, v)
+	}
+}
+
+const (
+	// SubscriptionManagedByBillForward captures enum value "BillForward"
+	SubscriptionManagedByBillForward string = "BillForward"
+	// SubscriptionManagedByStripe captures enum value "Stripe"
+	SubscriptionManagedByStripe string = "Stripe"
+)
+
 // prop value enum
 func (m *Subscription) validateManagedByEnum(path, location string, value string) error {
-	if subscriptionTypeManagedByPropEnum == nil {
-		var res []string
-		if err := json.Unmarshal([]byte(`["BillForward","Stripe"]`), &res); err != nil {
-			return err
-		}
-		for _, v := range res {
-			subscriptionTypeManagedByPropEnum = append(subscriptionTypeManagedByPropEnum, v)
-		}
-	}
 	if err := validate.Enum(path, location, value, subscriptionTypeManagedByPropEnum); err != nil {
 		return err
 	}
@@ -439,6 +420,24 @@ func (m *Subscription) validatePaymentMethodSubscriptionLinks(formats strfmt.Reg
 		return nil
 	}
 
+	for i := 0; i < len(m.PaymentMethodSubscriptionLinks); i++ {
+
+		if swag.IsZero(m.PaymentMethodSubscriptionLinks[i]) { // not required
+			continue
+		}
+
+		if m.PaymentMethodSubscriptionLinks[i] != nil {
+
+			if err := m.PaymentMethodSubscriptionLinks[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("paymentMethodSubscriptionLinks" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
 	return nil
 }
 
@@ -446,6 +445,24 @@ func (m *Subscription) validatePricingComponentValues(formats strfmt.Registry) e
 
 	if swag.IsZero(m.PricingComponentValues) { // not required
 		return nil
+	}
+
+	for i := 0; i < len(m.PricingComponentValues); i++ {
+
+		if swag.IsZero(m.PricingComponentValues[i]) { // not required
+			continue
+		}
+
+		if m.PricingComponentValues[i] != nil {
+
+			if err := m.PricingComponentValues[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("pricingComponentValues" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil
@@ -471,17 +488,35 @@ func (m *Subscription) validateProductRatePlanID(formats strfmt.Registry) error 
 
 var subscriptionTypeStatePropEnum []interface{}
 
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Trial","Provisioned","Paid","AwaitingPayment","Cancelled","Failed","Expired"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		subscriptionTypeStatePropEnum = append(subscriptionTypeStatePropEnum, v)
+	}
+}
+
+const (
+	// SubscriptionStateTrial captures enum value "Trial"
+	SubscriptionStateTrial string = "Trial"
+	// SubscriptionStateProvisioned captures enum value "Provisioned"
+	SubscriptionStateProvisioned string = "Provisioned"
+	// SubscriptionStatePaid captures enum value "Paid"
+	SubscriptionStatePaid string = "Paid"
+	// SubscriptionStateAwaitingPayment captures enum value "AwaitingPayment"
+	SubscriptionStateAwaitingPayment string = "AwaitingPayment"
+	// SubscriptionStateCancelled captures enum value "Cancelled"
+	SubscriptionStateCancelled string = "Cancelled"
+	// SubscriptionStateFailed captures enum value "Failed"
+	SubscriptionStateFailed string = "Failed"
+	// SubscriptionStateExpired captures enum value "Expired"
+	SubscriptionStateExpired string = "Expired"
+)
+
 // prop value enum
 func (m *Subscription) validateStateEnum(path, location string, value string) error {
-	if subscriptionTypeStatePropEnum == nil {
-		var res []string
-		if err := json.Unmarshal([]byte(`["Trial","Provisioned","Paid","AwaitingPayment","Cancelled","Failed","Expired"]`), &res); err != nil {
-			return err
-		}
-		for _, v := range res {
-			subscriptionTypeStatePropEnum = append(subscriptionTypeStatePropEnum, v)
-		}
-	}
 	if err := validate.Enum(path, location, value, subscriptionTypeStatePropEnum); err != nil {
 		return err
 	}
@@ -513,17 +548,27 @@ func (m *Subscription) validateTrialEnd(formats strfmt.Registry) error {
 
 var subscriptionTypeTypePropEnum []interface{}
 
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Subscription","FixedTerm","Trial"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		subscriptionTypeTypePropEnum = append(subscriptionTypeTypePropEnum, v)
+	}
+}
+
+const (
+	// SubscriptionTypeSubscription captures enum value "Subscription"
+	SubscriptionTypeSubscription string = "Subscription"
+	// SubscriptionTypeFixedTerm captures enum value "FixedTerm"
+	SubscriptionTypeFixedTerm string = "FixedTerm"
+	// SubscriptionTypeTrial captures enum value "Trial"
+	SubscriptionTypeTrial string = "Trial"
+)
+
 // prop value enum
 func (m *Subscription) validateTypeEnum(path, location string, value string) error {
-	if subscriptionTypeTypePropEnum == nil {
-		var res []string
-		if err := json.Unmarshal([]byte(`["Subscription","FixedTerm","Trial"]`), &res); err != nil {
-			return err
-		}
-		for _, v := range res {
-			subscriptionTypeTypePropEnum = append(subscriptionTypeTypePropEnum, v)
-		}
-	}
 	if err := validate.Enum(path, location, value, subscriptionTypeTypePropEnum); err != nil {
 		return err
 	}

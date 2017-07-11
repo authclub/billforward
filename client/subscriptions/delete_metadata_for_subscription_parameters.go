@@ -4,8 +4,14 @@ package subscriptions
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"net/http"
+	"time"
+
+	"golang.org/x/net/context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
+	cr "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/swag"
 
 	strfmt "github.com/go-openapi/strfmt"
@@ -15,7 +21,39 @@ import (
 // with the default values initialized.
 func NewDeleteMetadataForSubscriptionParams() *DeleteMetadataForSubscriptionParams {
 	var ()
-	return &DeleteMetadataForSubscriptionParams{}
+	return &DeleteMetadataForSubscriptionParams{
+
+		timeout: cr.DefaultTimeout,
+	}
+}
+
+// NewDeleteMetadataForSubscriptionParamsWithTimeout creates a new DeleteMetadataForSubscriptionParams object
+// with the default values initialized, and the ability to set a timeout on a request
+func NewDeleteMetadataForSubscriptionParamsWithTimeout(timeout time.Duration) *DeleteMetadataForSubscriptionParams {
+	var ()
+	return &DeleteMetadataForSubscriptionParams{
+
+		timeout: timeout,
+	}
+}
+
+// NewDeleteMetadataForSubscriptionParamsWithContext creates a new DeleteMetadataForSubscriptionParams object
+// with the default values initialized, and the ability to set a context for a request
+func NewDeleteMetadataForSubscriptionParamsWithContext(ctx context.Context) *DeleteMetadataForSubscriptionParams {
+	var ()
+	return &DeleteMetadataForSubscriptionParams{
+
+		Context: ctx,
+	}
+}
+
+// NewDeleteMetadataForSubscriptionParamsWithHTTPClient creates a new DeleteMetadataForSubscriptionParams object
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
+func NewDeleteMetadataForSubscriptionParamsWithHTTPClient(client *http.Client) *DeleteMetadataForSubscriptionParams {
+	var ()
+	return &DeleteMetadataForSubscriptionParams{
+		HTTPClient: client,
+	}
 }
 
 /*DeleteMetadataForSubscriptionParams contains all the parameters to send to the API endpoint
@@ -30,23 +68,73 @@ type DeleteMetadataForSubscriptionParams struct {
 	Organizations []string
 	/*SubscriptionID*/
 	SubscriptionID string
+
+	timeout    time.Duration
+	Context    context.Context
+	HTTPClient *http.Client
+}
+
+// WithTimeout adds the timeout to the delete metadata for subscription params
+func (o *DeleteMetadataForSubscriptionParams) WithTimeout(timeout time.Duration) *DeleteMetadataForSubscriptionParams {
+	o.SetTimeout(timeout)
+	return o
+}
+
+// SetTimeout adds the timeout to the delete metadata for subscription params
+func (o *DeleteMetadataForSubscriptionParams) SetTimeout(timeout time.Duration) {
+	o.timeout = timeout
+}
+
+// WithContext adds the context to the delete metadata for subscription params
+func (o *DeleteMetadataForSubscriptionParams) WithContext(ctx context.Context) *DeleteMetadataForSubscriptionParams {
+	o.SetContext(ctx)
+	return o
+}
+
+// SetContext adds the context to the delete metadata for subscription params
+func (o *DeleteMetadataForSubscriptionParams) SetContext(ctx context.Context) {
+	o.Context = ctx
+}
+
+// WithHTTPClient adds the HTTPClient to the delete metadata for subscription params
+func (o *DeleteMetadataForSubscriptionParams) WithHTTPClient(client *http.Client) *DeleteMetadataForSubscriptionParams {
+	o.SetHTTPClient(client)
+	return o
+}
+
+// SetHTTPClient adds the HTTPClient to the delete metadata for subscription params
+func (o *DeleteMetadataForSubscriptionParams) SetHTTPClient(client *http.Client) {
+	o.HTTPClient = client
 }
 
 // WithOrganizations adds the organizations to the delete metadata for subscription params
-func (o *DeleteMetadataForSubscriptionParams) WithOrganizations(Organizations []string) *DeleteMetadataForSubscriptionParams {
-	o.Organizations = Organizations
+func (o *DeleteMetadataForSubscriptionParams) WithOrganizations(organizations []string) *DeleteMetadataForSubscriptionParams {
+	o.SetOrganizations(organizations)
 	return o
 }
 
-// WithSubscriptionID adds the subscriptionId to the delete metadata for subscription params
-func (o *DeleteMetadataForSubscriptionParams) WithSubscriptionID(SubscriptionID string) *DeleteMetadataForSubscriptionParams {
-	o.SubscriptionID = SubscriptionID
+// SetOrganizations adds the organizations to the delete metadata for subscription params
+func (o *DeleteMetadataForSubscriptionParams) SetOrganizations(organizations []string) {
+	o.Organizations = organizations
+}
+
+// WithSubscriptionID adds the subscriptionID to the delete metadata for subscription params
+func (o *DeleteMetadataForSubscriptionParams) WithSubscriptionID(subscriptionID string) *DeleteMetadataForSubscriptionParams {
+	o.SetSubscriptionID(subscriptionID)
 	return o
+}
+
+// SetSubscriptionID adds the subscriptionId to the delete metadata for subscription params
+func (o *DeleteMetadataForSubscriptionParams) SetSubscriptionID(subscriptionID string) {
+	o.SubscriptionID = subscriptionID
 }
 
 // WriteToRequest writes these params to a swagger request
 func (o *DeleteMetadataForSubscriptionParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
+	if err := r.SetTimeout(o.timeout); err != nil {
+		return err
+	}
 	var res []error
 
 	valuesOrganizations := o.Organizations

@@ -4,8 +4,14 @@ package subscriptions
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"net/http"
+	"time"
+
+	"golang.org/x/net/context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
+	cr "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/swag"
 
 	strfmt "github.com/go-openapi/strfmt"
@@ -17,7 +23,39 @@ import (
 // with the default values initialized.
 func NewSetMetadataForSubscriptionParams() *SetMetadataForSubscriptionParams {
 	var ()
-	return &SetMetadataForSubscriptionParams{}
+	return &SetMetadataForSubscriptionParams{
+
+		timeout: cr.DefaultTimeout,
+	}
+}
+
+// NewSetMetadataForSubscriptionParamsWithTimeout creates a new SetMetadataForSubscriptionParams object
+// with the default values initialized, and the ability to set a timeout on a request
+func NewSetMetadataForSubscriptionParamsWithTimeout(timeout time.Duration) *SetMetadataForSubscriptionParams {
+	var ()
+	return &SetMetadataForSubscriptionParams{
+
+		timeout: timeout,
+	}
+}
+
+// NewSetMetadataForSubscriptionParamsWithContext creates a new SetMetadataForSubscriptionParams object
+// with the default values initialized, and the ability to set a context for a request
+func NewSetMetadataForSubscriptionParamsWithContext(ctx context.Context) *SetMetadataForSubscriptionParams {
+	var ()
+	return &SetMetadataForSubscriptionParams{
+
+		Context: ctx,
+	}
+}
+
+// NewSetMetadataForSubscriptionParamsWithHTTPClient creates a new SetMetadataForSubscriptionParams object
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
+func NewSetMetadataForSubscriptionParamsWithHTTPClient(client *http.Client) *SetMetadataForSubscriptionParams {
+	var ()
+	return &SetMetadataForSubscriptionParams{
+		HTTPClient: client,
+	}
 }
 
 /*SetMetadataForSubscriptionParams contains all the parameters to send to the API endpoint
@@ -34,29 +72,84 @@ type SetMetadataForSubscriptionParams struct {
 	Organizations []string
 	/*SubscriptionID*/
 	SubscriptionID string
+
+	timeout    time.Duration
+	Context    context.Context
+	HTTPClient *http.Client
+}
+
+// WithTimeout adds the timeout to the set metadata for subscription params
+func (o *SetMetadataForSubscriptionParams) WithTimeout(timeout time.Duration) *SetMetadataForSubscriptionParams {
+	o.SetTimeout(timeout)
+	return o
+}
+
+// SetTimeout adds the timeout to the set metadata for subscription params
+func (o *SetMetadataForSubscriptionParams) SetTimeout(timeout time.Duration) {
+	o.timeout = timeout
+}
+
+// WithContext adds the context to the set metadata for subscription params
+func (o *SetMetadataForSubscriptionParams) WithContext(ctx context.Context) *SetMetadataForSubscriptionParams {
+	o.SetContext(ctx)
+	return o
+}
+
+// SetContext adds the context to the set metadata for subscription params
+func (o *SetMetadataForSubscriptionParams) SetContext(ctx context.Context) {
+	o.Context = ctx
+}
+
+// WithHTTPClient adds the HTTPClient to the set metadata for subscription params
+func (o *SetMetadataForSubscriptionParams) WithHTTPClient(client *http.Client) *SetMetadataForSubscriptionParams {
+	o.SetHTTPClient(client)
+	return o
+}
+
+// SetHTTPClient adds the HTTPClient to the set metadata for subscription params
+func (o *SetMetadataForSubscriptionParams) SetHTTPClient(client *http.Client) {
+	o.HTTPClient = client
 }
 
 // WithMetadata adds the metadata to the set metadata for subscription params
-func (o *SetMetadataForSubscriptionParams) WithMetadata(Metadata models.DynamicMetadata) *SetMetadataForSubscriptionParams {
-	o.Metadata = Metadata
+func (o *SetMetadataForSubscriptionParams) WithMetadata(metadata models.DynamicMetadata) *SetMetadataForSubscriptionParams {
+	o.SetMetadata(metadata)
 	return o
+}
+
+// SetMetadata adds the metadata to the set metadata for subscription params
+func (o *SetMetadataForSubscriptionParams) SetMetadata(metadata models.DynamicMetadata) {
+	o.Metadata = metadata
 }
 
 // WithOrganizations adds the organizations to the set metadata for subscription params
-func (o *SetMetadataForSubscriptionParams) WithOrganizations(Organizations []string) *SetMetadataForSubscriptionParams {
-	o.Organizations = Organizations
+func (o *SetMetadataForSubscriptionParams) WithOrganizations(organizations []string) *SetMetadataForSubscriptionParams {
+	o.SetOrganizations(organizations)
 	return o
 }
 
-// WithSubscriptionID adds the subscriptionId to the set metadata for subscription params
-func (o *SetMetadataForSubscriptionParams) WithSubscriptionID(SubscriptionID string) *SetMetadataForSubscriptionParams {
-	o.SubscriptionID = SubscriptionID
+// SetOrganizations adds the organizations to the set metadata for subscription params
+func (o *SetMetadataForSubscriptionParams) SetOrganizations(organizations []string) {
+	o.Organizations = organizations
+}
+
+// WithSubscriptionID adds the subscriptionID to the set metadata for subscription params
+func (o *SetMetadataForSubscriptionParams) WithSubscriptionID(subscriptionID string) *SetMetadataForSubscriptionParams {
+	o.SetSubscriptionID(subscriptionID)
 	return o
+}
+
+// SetSubscriptionID adds the subscriptionId to the set metadata for subscription params
+func (o *SetMetadataForSubscriptionParams) SetSubscriptionID(subscriptionID string) {
+	o.SubscriptionID = subscriptionID
 }
 
 // WriteToRequest writes these params to a swagger request
 func (o *SetMetadataForSubscriptionParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
+	if err := r.SetTimeout(o.timeout); err != nil {
+		return err
+	}
 	var res []error
 
 	if err := r.SetBodyParam(o.Metadata); err != nil {

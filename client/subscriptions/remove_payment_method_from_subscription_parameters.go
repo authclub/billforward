@@ -4,8 +4,14 @@ package subscriptions
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"net/http"
+	"time"
+
+	"golang.org/x/net/context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
+	cr "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/swag"
 
 	strfmt "github.com/go-openapi/strfmt"
@@ -15,7 +21,39 @@ import (
 // with the default values initialized.
 func NewRemovePaymentMethodFromSubscriptionParams() *RemovePaymentMethodFromSubscriptionParams {
 	var ()
-	return &RemovePaymentMethodFromSubscriptionParams{}
+	return &RemovePaymentMethodFromSubscriptionParams{
+
+		timeout: cr.DefaultTimeout,
+	}
+}
+
+// NewRemovePaymentMethodFromSubscriptionParamsWithTimeout creates a new RemovePaymentMethodFromSubscriptionParams object
+// with the default values initialized, and the ability to set a timeout on a request
+func NewRemovePaymentMethodFromSubscriptionParamsWithTimeout(timeout time.Duration) *RemovePaymentMethodFromSubscriptionParams {
+	var ()
+	return &RemovePaymentMethodFromSubscriptionParams{
+
+		timeout: timeout,
+	}
+}
+
+// NewRemovePaymentMethodFromSubscriptionParamsWithContext creates a new RemovePaymentMethodFromSubscriptionParams object
+// with the default values initialized, and the ability to set a context for a request
+func NewRemovePaymentMethodFromSubscriptionParamsWithContext(ctx context.Context) *RemovePaymentMethodFromSubscriptionParams {
+	var ()
+	return &RemovePaymentMethodFromSubscriptionParams{
+
+		Context: ctx,
+	}
+}
+
+// NewRemovePaymentMethodFromSubscriptionParamsWithHTTPClient creates a new RemovePaymentMethodFromSubscriptionParams object
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
+func NewRemovePaymentMethodFromSubscriptionParamsWithHTTPClient(client *http.Client) *RemovePaymentMethodFromSubscriptionParams {
+	var ()
+	return &RemovePaymentMethodFromSubscriptionParams{
+		HTTPClient: client,
+	}
 }
 
 /*RemovePaymentMethodFromSubscriptionParams contains all the parameters to send to the API endpoint
@@ -32,29 +70,84 @@ type RemovePaymentMethodFromSubscriptionParams struct {
 	PaymentMethodID string
 	/*SubscriptionID*/
 	SubscriptionID string
+
+	timeout    time.Duration
+	Context    context.Context
+	HTTPClient *http.Client
+}
+
+// WithTimeout adds the timeout to the remove payment method from subscription params
+func (o *RemovePaymentMethodFromSubscriptionParams) WithTimeout(timeout time.Duration) *RemovePaymentMethodFromSubscriptionParams {
+	o.SetTimeout(timeout)
+	return o
+}
+
+// SetTimeout adds the timeout to the remove payment method from subscription params
+func (o *RemovePaymentMethodFromSubscriptionParams) SetTimeout(timeout time.Duration) {
+	o.timeout = timeout
+}
+
+// WithContext adds the context to the remove payment method from subscription params
+func (o *RemovePaymentMethodFromSubscriptionParams) WithContext(ctx context.Context) *RemovePaymentMethodFromSubscriptionParams {
+	o.SetContext(ctx)
+	return o
+}
+
+// SetContext adds the context to the remove payment method from subscription params
+func (o *RemovePaymentMethodFromSubscriptionParams) SetContext(ctx context.Context) {
+	o.Context = ctx
+}
+
+// WithHTTPClient adds the HTTPClient to the remove payment method from subscription params
+func (o *RemovePaymentMethodFromSubscriptionParams) WithHTTPClient(client *http.Client) *RemovePaymentMethodFromSubscriptionParams {
+	o.SetHTTPClient(client)
+	return o
+}
+
+// SetHTTPClient adds the HTTPClient to the remove payment method from subscription params
+func (o *RemovePaymentMethodFromSubscriptionParams) SetHTTPClient(client *http.Client) {
+	o.HTTPClient = client
 }
 
 // WithOrganizations adds the organizations to the remove payment method from subscription params
-func (o *RemovePaymentMethodFromSubscriptionParams) WithOrganizations(Organizations []string) *RemovePaymentMethodFromSubscriptionParams {
-	o.Organizations = Organizations
+func (o *RemovePaymentMethodFromSubscriptionParams) WithOrganizations(organizations []string) *RemovePaymentMethodFromSubscriptionParams {
+	o.SetOrganizations(organizations)
 	return o
 }
 
-// WithPaymentMethodID adds the paymentMethodId to the remove payment method from subscription params
-func (o *RemovePaymentMethodFromSubscriptionParams) WithPaymentMethodID(PaymentMethodID string) *RemovePaymentMethodFromSubscriptionParams {
-	o.PaymentMethodID = PaymentMethodID
+// SetOrganizations adds the organizations to the remove payment method from subscription params
+func (o *RemovePaymentMethodFromSubscriptionParams) SetOrganizations(organizations []string) {
+	o.Organizations = organizations
+}
+
+// WithPaymentMethodID adds the paymentMethodID to the remove payment method from subscription params
+func (o *RemovePaymentMethodFromSubscriptionParams) WithPaymentMethodID(paymentMethodID string) *RemovePaymentMethodFromSubscriptionParams {
+	o.SetPaymentMethodID(paymentMethodID)
 	return o
 }
 
-// WithSubscriptionID adds the subscriptionId to the remove payment method from subscription params
-func (o *RemovePaymentMethodFromSubscriptionParams) WithSubscriptionID(SubscriptionID string) *RemovePaymentMethodFromSubscriptionParams {
-	o.SubscriptionID = SubscriptionID
+// SetPaymentMethodID adds the paymentMethodId to the remove payment method from subscription params
+func (o *RemovePaymentMethodFromSubscriptionParams) SetPaymentMethodID(paymentMethodID string) {
+	o.PaymentMethodID = paymentMethodID
+}
+
+// WithSubscriptionID adds the subscriptionID to the remove payment method from subscription params
+func (o *RemovePaymentMethodFromSubscriptionParams) WithSubscriptionID(subscriptionID string) *RemovePaymentMethodFromSubscriptionParams {
+	o.SetSubscriptionID(subscriptionID)
 	return o
+}
+
+// SetSubscriptionID adds the subscriptionId to the remove payment method from subscription params
+func (o *RemovePaymentMethodFromSubscriptionParams) SetSubscriptionID(subscriptionID string) {
+	o.SubscriptionID = subscriptionID
 }
 
 // WriteToRequest writes these params to a swagger request
 func (o *RemovePaymentMethodFromSubscriptionParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
+	if err := r.SetTimeout(o.timeout); err != nil {
+		return err
+	}
 	var res []error
 
 	valuesOrganizations := o.Organizations

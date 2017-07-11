@@ -7,48 +7,37 @@ import (
 	"encoding/json"
 
 	strfmt "github.com/go-openapi/strfmt"
-	"github.com/go-openapi/swag"
 
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
 
-/*CancelSubscriptionRequest CancelSubscriptionRequest
-
-swagger:model CancelSubscriptionRequest
-*/
+// CancelSubscriptionRequest CancelSubscriptionRequest
+// swagger:model CancelSubscriptionRequest
 type CancelSubscriptionRequest struct {
 
-	/* cancel children
-	 */
+	// cancel children
 	CancelChildren bool `json:"cancelChildren,omitempty"`
 
-	/* cancel empty parent
-	 */
+	// cancel empty parent
 	CancelEmptyParent bool `json:"cancelEmptyParent,omitempty"`
 
-	/* Specifies whether the service will end immediately on cancellation or if it will continue until the end of the current period. Default: AtPeriodEnd
-	 */
+	// Specifies whether the service will end immediately on cancellation or if it will continue until the end of the current period. Default: AtPeriodEnd
 	CancellationCredit string `json:"cancellationCredit,omitempty"`
 
-	/* service end
-	 */
+	// service end
 	ServiceEnd string `json:"serviceEnd,omitempty"`
 
-	/* source
-
-	Required: true
-	*/
+	// source
+	// Required: true
 	Source *string `json:"source"`
 
-	/* state
-	 */
+	// state
 	State string `json:"state,omitempty"`
 
-	/* subscription ID
-
-	Required: true
-	*/
+	// subscription ID
+	// Required: true
 	SubscriptionID *string `json:"subscriptionID"`
 }
 
@@ -84,17 +73,25 @@ func (m *CancelSubscriptionRequest) Validate(formats strfmt.Registry) error {
 
 var cancelSubscriptionRequestTypeCancellationCreditPropEnum []interface{}
 
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Credit","None"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		cancelSubscriptionRequestTypeCancellationCreditPropEnum = append(cancelSubscriptionRequestTypeCancellationCreditPropEnum, v)
+	}
+}
+
+const (
+	// CancelSubscriptionRequestCancellationCreditCredit captures enum value "Credit"
+	CancelSubscriptionRequestCancellationCreditCredit string = "Credit"
+	// CancelSubscriptionRequestCancellationCreditNone captures enum value "None"
+	CancelSubscriptionRequestCancellationCreditNone string = "None"
+)
+
 // prop value enum
 func (m *CancelSubscriptionRequest) validateCancellationCreditEnum(path, location string, value string) error {
-	if cancelSubscriptionRequestTypeCancellationCreditPropEnum == nil {
-		var res []string
-		if err := json.Unmarshal([]byte(`["Credit","None"]`), &res); err != nil {
-			return err
-		}
-		for _, v := range res {
-			cancelSubscriptionRequestTypeCancellationCreditPropEnum = append(cancelSubscriptionRequestTypeCancellationCreditPropEnum, v)
-		}
-	}
 	if err := validate.Enum(path, location, value, cancelSubscriptionRequestTypeCancellationCreditPropEnum); err != nil {
 		return err
 	}
@@ -117,17 +114,25 @@ func (m *CancelSubscriptionRequest) validateCancellationCredit(formats strfmt.Re
 
 var cancelSubscriptionRequestTypeServiceEndPropEnum []interface{}
 
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Immediate","AtPeriodEnd"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		cancelSubscriptionRequestTypeServiceEndPropEnum = append(cancelSubscriptionRequestTypeServiceEndPropEnum, v)
+	}
+}
+
+const (
+	// CancelSubscriptionRequestServiceEndImmediate captures enum value "Immediate"
+	CancelSubscriptionRequestServiceEndImmediate string = "Immediate"
+	// CancelSubscriptionRequestServiceEndAtPeriodEnd captures enum value "AtPeriodEnd"
+	CancelSubscriptionRequestServiceEndAtPeriodEnd string = "AtPeriodEnd"
+)
+
 // prop value enum
 func (m *CancelSubscriptionRequest) validateServiceEndEnum(path, location string, value string) error {
-	if cancelSubscriptionRequestTypeServiceEndPropEnum == nil {
-		var res []string
-		if err := json.Unmarshal([]byte(`["Immediate","AtPeriodEnd"]`), &res); err != nil {
-			return err
-		}
-		for _, v := range res {
-			cancelSubscriptionRequestTypeServiceEndPropEnum = append(cancelSubscriptionRequestTypeServiceEndPropEnum, v)
-		}
-	}
 	if err := validate.Enum(path, location, value, cancelSubscriptionRequestTypeServiceEndPropEnum); err != nil {
 		return err
 	}

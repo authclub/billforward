@@ -42,11 +42,14 @@ func (a *Client) CreateAddress(params *CreateAddressParams) (*CreateAddressOK, e
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &CreateAddressReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*CreateAddressOK), nil
+
 }
 
 /*
@@ -69,11 +72,14 @@ func (a *Client) UpdateAddress(params *UpdateAddressParams) (*UpdateAddressOK, e
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &UpdateAddressReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*UpdateAddressOK), nil
+
 }
 
 // SetTransport changes the transport on the client

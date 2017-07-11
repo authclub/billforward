@@ -4,8 +4,14 @@ package products
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"net/http"
+	"time"
+
+	"golang.org/x/net/context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
+	cr "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/swag"
 
 	strfmt "github.com/go-openapi/strfmt"
@@ -15,11 +21,11 @@ import (
 // with the default values initialized.
 func NewGetAllProductsParams() *GetAllProductsParams {
 	var (
-		includeRetiredDefault bool   = bool(true)
-		offsetDefault         int32  = int32(0)
-		orderDefault          string = string("DESC")
-		orderByDefault        string = string("created")
-		recordsDefault        int32  = int32(10)
+		includeRetiredDefault = bool(true)
+		offsetDefault         = int32(0)
+		orderDefault          = string("DESC")
+		orderByDefault        = string("created")
+		recordsDefault        = int32(10)
 	)
 	return &GetAllProductsParams{
 		IncludeRetired: &includeRetiredDefault,
@@ -27,6 +33,70 @@ func NewGetAllProductsParams() *GetAllProductsParams {
 		Order:          &orderDefault,
 		OrderBy:        &orderByDefault,
 		Records:        &recordsDefault,
+
+		timeout: cr.DefaultTimeout,
+	}
+}
+
+// NewGetAllProductsParamsWithTimeout creates a new GetAllProductsParams object
+// with the default values initialized, and the ability to set a timeout on a request
+func NewGetAllProductsParamsWithTimeout(timeout time.Duration) *GetAllProductsParams {
+	var (
+		includeRetiredDefault = bool(true)
+		offsetDefault         = int32(0)
+		orderDefault          = string("DESC")
+		orderByDefault        = string("created")
+		recordsDefault        = int32(10)
+	)
+	return &GetAllProductsParams{
+		IncludeRetired: &includeRetiredDefault,
+		Offset:         &offsetDefault,
+		Order:          &orderDefault,
+		OrderBy:        &orderByDefault,
+		Records:        &recordsDefault,
+
+		timeout: timeout,
+	}
+}
+
+// NewGetAllProductsParamsWithContext creates a new GetAllProductsParams object
+// with the default values initialized, and the ability to set a context for a request
+func NewGetAllProductsParamsWithContext(ctx context.Context) *GetAllProductsParams {
+	var (
+		includeRetiredDefault = bool(true)
+		offsetDefault         = int32(0)
+		orderDefault          = string("DESC")
+		orderByDefault        = string("created")
+		recordsDefault        = int32(10)
+	)
+	return &GetAllProductsParams{
+		IncludeRetired: &includeRetiredDefault,
+		Offset:         &offsetDefault,
+		Order:          &orderDefault,
+		OrderBy:        &orderByDefault,
+		Records:        &recordsDefault,
+
+		Context: ctx,
+	}
+}
+
+// NewGetAllProductsParamsWithHTTPClient creates a new GetAllProductsParams object
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
+func NewGetAllProductsParamsWithHTTPClient(client *http.Client) *GetAllProductsParams {
+	var (
+		includeRetiredDefault = bool(true)
+		offsetDefault         = int32(0)
+		orderDefault          = string("DESC")
+		orderByDefault        = string("created")
+		recordsDefault        = int32(10)
+	)
+	return &GetAllProductsParams{
+		IncludeRetired: &includeRetiredDefault,
+		Offset:         &offsetDefault,
+		Order:          &orderDefault,
+		OrderBy:        &orderByDefault,
+		Records:        &recordsDefault,
+		HTTPClient:     client,
 	}
 }
 
@@ -67,53 +137,128 @@ type GetAllProductsParams struct {
 
 	*/
 	Records *int32
+
+	timeout    time.Duration
+	Context    context.Context
+	HTTPClient *http.Client
+}
+
+// WithTimeout adds the timeout to the get all products params
+func (o *GetAllProductsParams) WithTimeout(timeout time.Duration) *GetAllProductsParams {
+	o.SetTimeout(timeout)
+	return o
+}
+
+// SetTimeout adds the timeout to the get all products params
+func (o *GetAllProductsParams) SetTimeout(timeout time.Duration) {
+	o.timeout = timeout
+}
+
+// WithContext adds the context to the get all products params
+func (o *GetAllProductsParams) WithContext(ctx context.Context) *GetAllProductsParams {
+	o.SetContext(ctx)
+	return o
+}
+
+// SetContext adds the context to the get all products params
+func (o *GetAllProductsParams) SetContext(ctx context.Context) {
+	o.Context = ctx
+}
+
+// WithHTTPClient adds the HTTPClient to the get all products params
+func (o *GetAllProductsParams) WithHTTPClient(client *http.Client) *GetAllProductsParams {
+	o.SetHTTPClient(client)
+	return o
+}
+
+// SetHTTPClient adds the HTTPClient to the get all products params
+func (o *GetAllProductsParams) SetHTTPClient(client *http.Client) {
+	o.HTTPClient = client
 }
 
 // WithIncludeRetired adds the includeRetired to the get all products params
-func (o *GetAllProductsParams) WithIncludeRetired(IncludeRetired *bool) *GetAllProductsParams {
-	o.IncludeRetired = IncludeRetired
+func (o *GetAllProductsParams) WithIncludeRetired(includeRetired *bool) *GetAllProductsParams {
+	o.SetIncludeRetired(includeRetired)
 	return o
+}
+
+// SetIncludeRetired adds the includeRetired to the get all products params
+func (o *GetAllProductsParams) SetIncludeRetired(includeRetired *bool) {
+	o.IncludeRetired = includeRetired
 }
 
 // WithMetadata adds the metadata to the get all products params
-func (o *GetAllProductsParams) WithMetadata(Metadata *string) *GetAllProductsParams {
-	o.Metadata = Metadata
+func (o *GetAllProductsParams) WithMetadata(metadata *string) *GetAllProductsParams {
+	o.SetMetadata(metadata)
 	return o
+}
+
+// SetMetadata adds the metadata to the get all products params
+func (o *GetAllProductsParams) SetMetadata(metadata *string) {
+	o.Metadata = metadata
 }
 
 // WithOffset adds the offset to the get all products params
-func (o *GetAllProductsParams) WithOffset(Offset *int32) *GetAllProductsParams {
-	o.Offset = Offset
+func (o *GetAllProductsParams) WithOffset(offset *int32) *GetAllProductsParams {
+	o.SetOffset(offset)
 	return o
+}
+
+// SetOffset adds the offset to the get all products params
+func (o *GetAllProductsParams) SetOffset(offset *int32) {
+	o.Offset = offset
 }
 
 // WithOrder adds the order to the get all products params
-func (o *GetAllProductsParams) WithOrder(Order *string) *GetAllProductsParams {
-	o.Order = Order
+func (o *GetAllProductsParams) WithOrder(order *string) *GetAllProductsParams {
+	o.SetOrder(order)
 	return o
+}
+
+// SetOrder adds the order to the get all products params
+func (o *GetAllProductsParams) SetOrder(order *string) {
+	o.Order = order
 }
 
 // WithOrderBy adds the orderBy to the get all products params
-func (o *GetAllProductsParams) WithOrderBy(OrderBy *string) *GetAllProductsParams {
-	o.OrderBy = OrderBy
+func (o *GetAllProductsParams) WithOrderBy(orderBy *string) *GetAllProductsParams {
+	o.SetOrderBy(orderBy)
 	return o
+}
+
+// SetOrderBy adds the orderBy to the get all products params
+func (o *GetAllProductsParams) SetOrderBy(orderBy *string) {
+	o.OrderBy = orderBy
 }
 
 // WithOrganizations adds the organizations to the get all products params
-func (o *GetAllProductsParams) WithOrganizations(Organizations []string) *GetAllProductsParams {
-	o.Organizations = Organizations
+func (o *GetAllProductsParams) WithOrganizations(organizations []string) *GetAllProductsParams {
+	o.SetOrganizations(organizations)
 	return o
 }
 
+// SetOrganizations adds the organizations to the get all products params
+func (o *GetAllProductsParams) SetOrganizations(organizations []string) {
+	o.Organizations = organizations
+}
+
 // WithRecords adds the records to the get all products params
-func (o *GetAllProductsParams) WithRecords(Records *int32) *GetAllProductsParams {
-	o.Records = Records
+func (o *GetAllProductsParams) WithRecords(records *int32) *GetAllProductsParams {
+	o.SetRecords(records)
 	return o
+}
+
+// SetRecords adds the records to the get all products params
+func (o *GetAllProductsParams) SetRecords(records *int32) {
+	o.Records = records
 }
 
 // WriteToRequest writes these params to a swagger request
 func (o *GetAllProductsParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
+	if err := r.SetTimeout(o.timeout); err != nil {
+		return err
+	}
 	var res []error
 
 	if o.IncludeRetired != nil {

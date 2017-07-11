@@ -42,11 +42,14 @@ func (a *Client) DeleteMetadataForRatePlan(params *DeleteMetadataForRatePlanPara
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &DeleteMetadataForRatePlanReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*DeleteMetadataForRatePlanOK), nil
+
 }
 
 /*
@@ -69,11 +72,14 @@ func (a *Client) GetAllRatePlans(params *GetAllRatePlansParams) (*GetAllRatePlan
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &GetAllRatePlansReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*GetAllRatePlansOK), nil
+
 }
 
 /*
@@ -96,11 +102,14 @@ func (a *Client) GetMetadataForRatePlan(params *GetMetadataForRatePlanParams) (*
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &GetMetadataForRatePlanReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*GetMetadataForRatePlanOK), nil
+
 }
 
 /*
@@ -123,11 +132,14 @@ func (a *Client) GetProductRatePlanByID(params *GetProductRatePlanByIDParams) (*
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &GetProductRatePlanByIDReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*GetProductRatePlanByIDOK), nil
+
 }
 
 /*
@@ -150,11 +162,14 @@ func (a *Client) GetRatePlanByProduct(params *GetRatePlanByProductParams) (*GetR
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &GetRatePlanByProductReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*GetRatePlanByProductOK), nil
+
 }
 
 /*
@@ -177,11 +192,14 @@ func (a *Client) GetRatePlanByProductAndRatePlan(params *GetRatePlanByProductAnd
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &GetRatePlanByProductAndRatePlanReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*GetRatePlanByProductAndRatePlanOK), nil
+
 }
 
 /*
@@ -204,11 +222,14 @@ func (a *Client) SetMetadataForRatePlan(params *SetMetadataForRatePlanParams) (*
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &SetMetadataForRatePlanReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*SetMetadataForRatePlanOK), nil
+
 }
 
 /*
@@ -231,11 +252,14 @@ func (a *Client) UpsertMetadataForRatePlan(params *UpsertMetadataForRatePlanPara
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &UpsertMetadataForRatePlanReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*UpsertMetadataForRatePlanOK), nil
+
 }
 
 // SetTransport changes the transport on the client

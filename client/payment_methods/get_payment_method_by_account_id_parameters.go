@@ -4,8 +4,14 @@ package payment_methods
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"net/http"
+	"time"
+
+	"golang.org/x/net/context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
+	cr "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/swag"
 
 	strfmt "github.com/go-openapi/strfmt"
@@ -15,12 +21,12 @@ import (
 // with the default values initialized.
 func NewGetPaymentMethodByAccountIDParams() *GetPaymentMethodByAccountIDParams {
 	var (
-		defaultOnlyDefault    bool   = bool(false)
-		includeRetiredDefault bool   = bool(true)
-		offsetDefault         int32  = int32(0)
-		orderDefault          string = string("DESC")
-		orderByDefault        string = string("id")
-		recordsDefault        int32  = int32(10)
+		defaultOnlyDefault    = bool(false)
+		includeRetiredDefault = bool(true)
+		offsetDefault         = int32(0)
+		orderDefault          = string("DESC")
+		orderByDefault        = string("id")
+		recordsDefault        = int32(10)
 	)
 	return &GetPaymentMethodByAccountIDParams{
 		DefaultOnly:    &defaultOnlyDefault,
@@ -29,6 +35,76 @@ func NewGetPaymentMethodByAccountIDParams() *GetPaymentMethodByAccountIDParams {
 		Order:          &orderDefault,
 		OrderBy:        &orderByDefault,
 		Records:        &recordsDefault,
+
+		timeout: cr.DefaultTimeout,
+	}
+}
+
+// NewGetPaymentMethodByAccountIDParamsWithTimeout creates a new GetPaymentMethodByAccountIDParams object
+// with the default values initialized, and the ability to set a timeout on a request
+func NewGetPaymentMethodByAccountIDParamsWithTimeout(timeout time.Duration) *GetPaymentMethodByAccountIDParams {
+	var (
+		defaultOnlyDefault    = bool(false)
+		includeRetiredDefault = bool(true)
+		offsetDefault         = int32(0)
+		orderDefault          = string("DESC")
+		orderByDefault        = string("id")
+		recordsDefault        = int32(10)
+	)
+	return &GetPaymentMethodByAccountIDParams{
+		DefaultOnly:    &defaultOnlyDefault,
+		IncludeRetired: &includeRetiredDefault,
+		Offset:         &offsetDefault,
+		Order:          &orderDefault,
+		OrderBy:        &orderByDefault,
+		Records:        &recordsDefault,
+
+		timeout: timeout,
+	}
+}
+
+// NewGetPaymentMethodByAccountIDParamsWithContext creates a new GetPaymentMethodByAccountIDParams object
+// with the default values initialized, and the ability to set a context for a request
+func NewGetPaymentMethodByAccountIDParamsWithContext(ctx context.Context) *GetPaymentMethodByAccountIDParams {
+	var (
+		defaultOnlyDefault    = bool(false)
+		includeRetiredDefault = bool(true)
+		offsetDefault         = int32(0)
+		orderDefault          = string("DESC")
+		orderByDefault        = string("id")
+		recordsDefault        = int32(10)
+	)
+	return &GetPaymentMethodByAccountIDParams{
+		DefaultOnly:    &defaultOnlyDefault,
+		IncludeRetired: &includeRetiredDefault,
+		Offset:         &offsetDefault,
+		Order:          &orderDefault,
+		OrderBy:        &orderByDefault,
+		Records:        &recordsDefault,
+
+		Context: ctx,
+	}
+}
+
+// NewGetPaymentMethodByAccountIDParamsWithHTTPClient creates a new GetPaymentMethodByAccountIDParams object
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
+func NewGetPaymentMethodByAccountIDParamsWithHTTPClient(client *http.Client) *GetPaymentMethodByAccountIDParams {
+	var (
+		defaultOnlyDefault    = bool(false)
+		includeRetiredDefault = bool(true)
+		offsetDefault         = int32(0)
+		orderDefault          = string("DESC")
+		orderByDefault        = string("id")
+		recordsDefault        = int32(10)
+	)
+	return &GetPaymentMethodByAccountIDParams{
+		DefaultOnly:    &defaultOnlyDefault,
+		IncludeRetired: &includeRetiredDefault,
+		Offset:         &offsetDefault,
+		Order:          &orderDefault,
+		OrderBy:        &orderByDefault,
+		Records:        &recordsDefault,
+		HTTPClient:     client,
 	}
 }
 
@@ -74,59 +150,139 @@ type GetPaymentMethodByAccountIDParams struct {
 
 	*/
 	Records *int32
+
+	timeout    time.Duration
+	Context    context.Context
+	HTTPClient *http.Client
 }
 
-// WithAccountID adds the accountId to the get payment method by account ID params
-func (o *GetPaymentMethodByAccountIDParams) WithAccountID(AccountID string) *GetPaymentMethodByAccountIDParams {
-	o.AccountID = AccountID
+// WithTimeout adds the timeout to the get payment method by account ID params
+func (o *GetPaymentMethodByAccountIDParams) WithTimeout(timeout time.Duration) *GetPaymentMethodByAccountIDParams {
+	o.SetTimeout(timeout)
 	return o
+}
+
+// SetTimeout adds the timeout to the get payment method by account ID params
+func (o *GetPaymentMethodByAccountIDParams) SetTimeout(timeout time.Duration) {
+	o.timeout = timeout
+}
+
+// WithContext adds the context to the get payment method by account ID params
+func (o *GetPaymentMethodByAccountIDParams) WithContext(ctx context.Context) *GetPaymentMethodByAccountIDParams {
+	o.SetContext(ctx)
+	return o
+}
+
+// SetContext adds the context to the get payment method by account ID params
+func (o *GetPaymentMethodByAccountIDParams) SetContext(ctx context.Context) {
+	o.Context = ctx
+}
+
+// WithHTTPClient adds the HTTPClient to the get payment method by account ID params
+func (o *GetPaymentMethodByAccountIDParams) WithHTTPClient(client *http.Client) *GetPaymentMethodByAccountIDParams {
+	o.SetHTTPClient(client)
+	return o
+}
+
+// SetHTTPClient adds the HTTPClient to the get payment method by account ID params
+func (o *GetPaymentMethodByAccountIDParams) SetHTTPClient(client *http.Client) {
+	o.HTTPClient = client
+}
+
+// WithAccountID adds the accountID to the get payment method by account ID params
+func (o *GetPaymentMethodByAccountIDParams) WithAccountID(accountID string) *GetPaymentMethodByAccountIDParams {
+	o.SetAccountID(accountID)
+	return o
+}
+
+// SetAccountID adds the accountId to the get payment method by account ID params
+func (o *GetPaymentMethodByAccountIDParams) SetAccountID(accountID string) {
+	o.AccountID = accountID
 }
 
 // WithDefaultOnly adds the defaultOnly to the get payment method by account ID params
-func (o *GetPaymentMethodByAccountIDParams) WithDefaultOnly(DefaultOnly *bool) *GetPaymentMethodByAccountIDParams {
-	o.DefaultOnly = DefaultOnly
+func (o *GetPaymentMethodByAccountIDParams) WithDefaultOnly(defaultOnly *bool) *GetPaymentMethodByAccountIDParams {
+	o.SetDefaultOnly(defaultOnly)
 	return o
+}
+
+// SetDefaultOnly adds the defaultOnly to the get payment method by account ID params
+func (o *GetPaymentMethodByAccountIDParams) SetDefaultOnly(defaultOnly *bool) {
+	o.DefaultOnly = defaultOnly
 }
 
 // WithIncludeRetired adds the includeRetired to the get payment method by account ID params
-func (o *GetPaymentMethodByAccountIDParams) WithIncludeRetired(IncludeRetired *bool) *GetPaymentMethodByAccountIDParams {
-	o.IncludeRetired = IncludeRetired
+func (o *GetPaymentMethodByAccountIDParams) WithIncludeRetired(includeRetired *bool) *GetPaymentMethodByAccountIDParams {
+	o.SetIncludeRetired(includeRetired)
 	return o
+}
+
+// SetIncludeRetired adds the includeRetired to the get payment method by account ID params
+func (o *GetPaymentMethodByAccountIDParams) SetIncludeRetired(includeRetired *bool) {
+	o.IncludeRetired = includeRetired
 }
 
 // WithOffset adds the offset to the get payment method by account ID params
-func (o *GetPaymentMethodByAccountIDParams) WithOffset(Offset *int32) *GetPaymentMethodByAccountIDParams {
-	o.Offset = Offset
+func (o *GetPaymentMethodByAccountIDParams) WithOffset(offset *int32) *GetPaymentMethodByAccountIDParams {
+	o.SetOffset(offset)
 	return o
+}
+
+// SetOffset adds the offset to the get payment method by account ID params
+func (o *GetPaymentMethodByAccountIDParams) SetOffset(offset *int32) {
+	o.Offset = offset
 }
 
 // WithOrder adds the order to the get payment method by account ID params
-func (o *GetPaymentMethodByAccountIDParams) WithOrder(Order *string) *GetPaymentMethodByAccountIDParams {
-	o.Order = Order
+func (o *GetPaymentMethodByAccountIDParams) WithOrder(order *string) *GetPaymentMethodByAccountIDParams {
+	o.SetOrder(order)
 	return o
+}
+
+// SetOrder adds the order to the get payment method by account ID params
+func (o *GetPaymentMethodByAccountIDParams) SetOrder(order *string) {
+	o.Order = order
 }
 
 // WithOrderBy adds the orderBy to the get payment method by account ID params
-func (o *GetPaymentMethodByAccountIDParams) WithOrderBy(OrderBy *string) *GetPaymentMethodByAccountIDParams {
-	o.OrderBy = OrderBy
+func (o *GetPaymentMethodByAccountIDParams) WithOrderBy(orderBy *string) *GetPaymentMethodByAccountIDParams {
+	o.SetOrderBy(orderBy)
 	return o
+}
+
+// SetOrderBy adds the orderBy to the get payment method by account ID params
+func (o *GetPaymentMethodByAccountIDParams) SetOrderBy(orderBy *string) {
+	o.OrderBy = orderBy
 }
 
 // WithOrganizations adds the organizations to the get payment method by account ID params
-func (o *GetPaymentMethodByAccountIDParams) WithOrganizations(Organizations []string) *GetPaymentMethodByAccountIDParams {
-	o.Organizations = Organizations
+func (o *GetPaymentMethodByAccountIDParams) WithOrganizations(organizations []string) *GetPaymentMethodByAccountIDParams {
+	o.SetOrganizations(organizations)
 	return o
 }
 
+// SetOrganizations adds the organizations to the get payment method by account ID params
+func (o *GetPaymentMethodByAccountIDParams) SetOrganizations(organizations []string) {
+	o.Organizations = organizations
+}
+
 // WithRecords adds the records to the get payment method by account ID params
-func (o *GetPaymentMethodByAccountIDParams) WithRecords(Records *int32) *GetPaymentMethodByAccountIDParams {
-	o.Records = Records
+func (o *GetPaymentMethodByAccountIDParams) WithRecords(records *int32) *GetPaymentMethodByAccountIDParams {
+	o.SetRecords(records)
 	return o
+}
+
+// SetRecords adds the records to the get payment method by account ID params
+func (o *GetPaymentMethodByAccountIDParams) SetRecords(records *int32) {
+	o.Records = records
 }
 
 // WriteToRequest writes these params to a swagger request
 func (o *GetPaymentMethodByAccountIDParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
+	if err := r.SetTimeout(o.timeout); err != nil {
+		return err
+	}
 	var res []error
 
 	// path param account-ID

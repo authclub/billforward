@@ -7,32 +7,26 @@ import (
 	"encoding/json"
 
 	strfmt "github.com/go-openapi/strfmt"
-	"github.com/go-openapi/swag"
 
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
 
-/*BFError Standard BillForward error format.
-
-swagger:model BFError
-*/
+// BFError Standard BillForward error format.
+// swagger:model BFError
 type BFError struct {
 
-	/* {"description":"Code describing the nature of the error. Currently unused; prefer `errorType`.","verbs":["GET","PUT","POST"]}
-	 */
+	// {"description":"Code describing the nature of the error. Currently unused; prefer `errorType`.","verbs":["GET","PUT","POST"]}
 	ErrorCode int32 `json:"errorCode,omitempty"`
 
-	/* {"description":"Human-readable description of the reason for the error.","verbs":["GET","PUT","POST"]}
-	 */
+	// {"description":"Human-readable description of the reason for the error.","verbs":["GET","PUT","POST"]}
 	ErrorMessage string `json:"errorMessage,omitempty"`
 
-	/* {"description":"List of erroneous parameters found in your input (if applicable).","verbs":["GET","PUT","POST"]}
-	 */
-	ErrorParameters []string `json:"errorParameters,omitempty"`
+	// {"description":"List of erroneous parameters found in your input (if applicable).","verbs":["GET","PUT","POST"]}
+	ErrorParameters []string `json:"errorParameters"`
 
-	/* {"description":"Enum categorizing the nature of the error.","verbs":["GET","PUT","POST"]}
-	 */
+	// {"description":"Enum categorizing the nature of the error.","verbs":["GET","PUT","POST"]}
 	ErrorType string `json:"errorType,omitempty"`
 }
 
@@ -67,17 +61,83 @@ func (m *BFError) validateErrorParameters(formats strfmt.Registry) error {
 
 var bFErrorTypeErrorTypePropEnum []interface{}
 
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["BFError","ServerError","ValidationError","UnserializationException","Oauth","PermissionsError","PreconditionFailed","NotImplemented","InvocationError","NoSuchEntity","InconsistentState","StripeOperationFailure","BraintreeOperationFailure","BraintreeValidationError","SagePayOperationFailure","TokenizationAuthCaptureFailure","TokenizationPreAuthFailure","CouponException","CouponUniqueCodesRequestException","CouponUniqueCodesResponseException","RemoveCouponException","AddCouponCodeToSubscriptionRequestException","GatewayAuthenticationError","GatewayAuthorizationError","GatewayResourceNotFoundError","GatewayProtocolVersionError","GatewayInternalError","GatewayDownTemporarilyError","GatewayUnexpectedError","GatewayUnhandledError","GatewaySDKUnhandledError"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		bFErrorTypeErrorTypePropEnum = append(bFErrorTypeErrorTypePropEnum, v)
+	}
+}
+
+const (
+	// BFErrorErrorTypeBFError captures enum value "BFError"
+	BFErrorErrorTypeBFError string = "BFError"
+	// BFErrorErrorTypeServerError captures enum value "ServerError"
+	BFErrorErrorTypeServerError string = "ServerError"
+	// BFErrorErrorTypeValidationError captures enum value "ValidationError"
+	BFErrorErrorTypeValidationError string = "ValidationError"
+	// BFErrorErrorTypeUnserializationException captures enum value "UnserializationException"
+	BFErrorErrorTypeUnserializationException string = "UnserializationException"
+	// BFErrorErrorTypeOauth captures enum value "Oauth"
+	BFErrorErrorTypeOauth string = "Oauth"
+	// BFErrorErrorTypePermissionsError captures enum value "PermissionsError"
+	BFErrorErrorTypePermissionsError string = "PermissionsError"
+	// BFErrorErrorTypePreconditionFailed captures enum value "PreconditionFailed"
+	BFErrorErrorTypePreconditionFailed string = "PreconditionFailed"
+	// BFErrorErrorTypeNotImplemented captures enum value "NotImplemented"
+	BFErrorErrorTypeNotImplemented string = "NotImplemented"
+	// BFErrorErrorTypeInvocationError captures enum value "InvocationError"
+	BFErrorErrorTypeInvocationError string = "InvocationError"
+	// BFErrorErrorTypeNoSuchEntity captures enum value "NoSuchEntity"
+	BFErrorErrorTypeNoSuchEntity string = "NoSuchEntity"
+	// BFErrorErrorTypeInconsistentState captures enum value "InconsistentState"
+	BFErrorErrorTypeInconsistentState string = "InconsistentState"
+	// BFErrorErrorTypeStripeOperationFailure captures enum value "StripeOperationFailure"
+	BFErrorErrorTypeStripeOperationFailure string = "StripeOperationFailure"
+	// BFErrorErrorTypeBraintreeOperationFailure captures enum value "BraintreeOperationFailure"
+	BFErrorErrorTypeBraintreeOperationFailure string = "BraintreeOperationFailure"
+	// BFErrorErrorTypeBraintreeValidationError captures enum value "BraintreeValidationError"
+	BFErrorErrorTypeBraintreeValidationError string = "BraintreeValidationError"
+	// BFErrorErrorTypeSagePayOperationFailure captures enum value "SagePayOperationFailure"
+	BFErrorErrorTypeSagePayOperationFailure string = "SagePayOperationFailure"
+	// BFErrorErrorTypeTokenizationAuthCaptureFailure captures enum value "TokenizationAuthCaptureFailure"
+	BFErrorErrorTypeTokenizationAuthCaptureFailure string = "TokenizationAuthCaptureFailure"
+	// BFErrorErrorTypeTokenizationPreAuthFailure captures enum value "TokenizationPreAuthFailure"
+	BFErrorErrorTypeTokenizationPreAuthFailure string = "TokenizationPreAuthFailure"
+	// BFErrorErrorTypeCouponException captures enum value "CouponException"
+	BFErrorErrorTypeCouponException string = "CouponException"
+	// BFErrorErrorTypeCouponUniqueCodesRequestException captures enum value "CouponUniqueCodesRequestException"
+	BFErrorErrorTypeCouponUniqueCodesRequestException string = "CouponUniqueCodesRequestException"
+	// BFErrorErrorTypeCouponUniqueCodesResponseException captures enum value "CouponUniqueCodesResponseException"
+	BFErrorErrorTypeCouponUniqueCodesResponseException string = "CouponUniqueCodesResponseException"
+	// BFErrorErrorTypeRemoveCouponException captures enum value "RemoveCouponException"
+	BFErrorErrorTypeRemoveCouponException string = "RemoveCouponException"
+	// BFErrorErrorTypeAddCouponCodeToSubscriptionRequestException captures enum value "AddCouponCodeToSubscriptionRequestException"
+	BFErrorErrorTypeAddCouponCodeToSubscriptionRequestException string = "AddCouponCodeToSubscriptionRequestException"
+	// BFErrorErrorTypeGatewayAuthenticationError captures enum value "GatewayAuthenticationError"
+	BFErrorErrorTypeGatewayAuthenticationError string = "GatewayAuthenticationError"
+	// BFErrorErrorTypeGatewayAuthorizationError captures enum value "GatewayAuthorizationError"
+	BFErrorErrorTypeGatewayAuthorizationError string = "GatewayAuthorizationError"
+	// BFErrorErrorTypeGatewayResourceNotFoundError captures enum value "GatewayResourceNotFoundError"
+	BFErrorErrorTypeGatewayResourceNotFoundError string = "GatewayResourceNotFoundError"
+	// BFErrorErrorTypeGatewayProtocolVersionError captures enum value "GatewayProtocolVersionError"
+	BFErrorErrorTypeGatewayProtocolVersionError string = "GatewayProtocolVersionError"
+	// BFErrorErrorTypeGatewayInternalError captures enum value "GatewayInternalError"
+	BFErrorErrorTypeGatewayInternalError string = "GatewayInternalError"
+	// BFErrorErrorTypeGatewayDownTemporarilyError captures enum value "GatewayDownTemporarilyError"
+	BFErrorErrorTypeGatewayDownTemporarilyError string = "GatewayDownTemporarilyError"
+	// BFErrorErrorTypeGatewayUnexpectedError captures enum value "GatewayUnexpectedError"
+	BFErrorErrorTypeGatewayUnexpectedError string = "GatewayUnexpectedError"
+	// BFErrorErrorTypeGatewayUnhandledError captures enum value "GatewayUnhandledError"
+	BFErrorErrorTypeGatewayUnhandledError string = "GatewayUnhandledError"
+	// BFErrorErrorTypeGatewaySDKUnhandledError captures enum value "GatewaySDKUnhandledError"
+	BFErrorErrorTypeGatewaySDKUnhandledError string = "GatewaySDKUnhandledError"
+)
+
 // prop value enum
 func (m *BFError) validateErrorTypeEnum(path, location string, value string) error {
-	if bFErrorTypeErrorTypePropEnum == nil {
-		var res []string
-		if err := json.Unmarshal([]byte(`["BFError","ServerError","ValidationError","UnserializationException","Oauth","PermissionsError","PreconditionFailed","NotImplemented","InvocationError","NoSuchEntity","InconsistentState","StripeOperationFailure","BraintreeOperationFailure","BraintreeValidationError","SagePayOperationFailure","TokenizationAuthCaptureFailure","TokenizationPreAuthFailure","CouponException","CouponUniqueCodesRequestException","CouponUniqueCodesResponseException","RemoveCouponException","AddCouponCodeToSubscriptionRequestException","GatewayAuthenticationError","GatewayAuthorizationError","GatewayResourceNotFoundError","GatewayProtocolVersionError","GatewayInternalError","GatewayDownTemporarilyError","GatewayUnexpectedError","GatewayUnhandledError","GatewaySDKUnhandledError"]`), &res); err != nil {
-			return err
-		}
-		for _, v := range res {
-			bFErrorTypeErrorTypePropEnum = append(bFErrorTypeErrorTypePropEnum, v)
-		}
-	}
 	if err := validate.Enum(path, location, value, bFErrorTypeErrorTypePropEnum); err != nil {
 		return err
 	}

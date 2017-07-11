@@ -4,8 +4,14 @@ package profiles
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"net/http"
+	"time"
+
+	"golang.org/x/net/context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
+	cr "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/swag"
 
 	strfmt "github.com/go-openapi/strfmt"
@@ -15,7 +21,39 @@ import (
 // with the default values initialized.
 func NewGetProfileParams() *GetProfileParams {
 	var ()
-	return &GetProfileParams{}
+	return &GetProfileParams{
+
+		timeout: cr.DefaultTimeout,
+	}
+}
+
+// NewGetProfileParamsWithTimeout creates a new GetProfileParams object
+// with the default values initialized, and the ability to set a timeout on a request
+func NewGetProfileParamsWithTimeout(timeout time.Duration) *GetProfileParams {
+	var ()
+	return &GetProfileParams{
+
+		timeout: timeout,
+	}
+}
+
+// NewGetProfileParamsWithContext creates a new GetProfileParams object
+// with the default values initialized, and the ability to set a context for a request
+func NewGetProfileParamsWithContext(ctx context.Context) *GetProfileParams {
+	var ()
+	return &GetProfileParams{
+
+		Context: ctx,
+	}
+}
+
+// NewGetProfileParamsWithHTTPClient creates a new GetProfileParams object
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
+func NewGetProfileParamsWithHTTPClient(client *http.Client) *GetProfileParams {
+	var ()
+	return &GetProfileParams{
+		HTTPClient: client,
+	}
 }
 
 /*GetProfileParams contains all the parameters to send to the API endpoint
@@ -33,23 +71,73 @@ type GetProfileParams struct {
 
 	*/
 	ProfileID string
+
+	timeout    time.Duration
+	Context    context.Context
+	HTTPClient *http.Client
+}
+
+// WithTimeout adds the timeout to the get profile params
+func (o *GetProfileParams) WithTimeout(timeout time.Duration) *GetProfileParams {
+	o.SetTimeout(timeout)
+	return o
+}
+
+// SetTimeout adds the timeout to the get profile params
+func (o *GetProfileParams) SetTimeout(timeout time.Duration) {
+	o.timeout = timeout
+}
+
+// WithContext adds the context to the get profile params
+func (o *GetProfileParams) WithContext(ctx context.Context) *GetProfileParams {
+	o.SetContext(ctx)
+	return o
+}
+
+// SetContext adds the context to the get profile params
+func (o *GetProfileParams) SetContext(ctx context.Context) {
+	o.Context = ctx
+}
+
+// WithHTTPClient adds the HTTPClient to the get profile params
+func (o *GetProfileParams) WithHTTPClient(client *http.Client) *GetProfileParams {
+	o.SetHTTPClient(client)
+	return o
+}
+
+// SetHTTPClient adds the HTTPClient to the get profile params
+func (o *GetProfileParams) SetHTTPClient(client *http.Client) {
+	o.HTTPClient = client
 }
 
 // WithOrganizations adds the organizations to the get profile params
-func (o *GetProfileParams) WithOrganizations(Organizations []string) *GetProfileParams {
-	o.Organizations = Organizations
+func (o *GetProfileParams) WithOrganizations(organizations []string) *GetProfileParams {
+	o.SetOrganizations(organizations)
 	return o
 }
 
-// WithProfileID adds the profileId to the get profile params
-func (o *GetProfileParams) WithProfileID(ProfileID string) *GetProfileParams {
-	o.ProfileID = ProfileID
+// SetOrganizations adds the organizations to the get profile params
+func (o *GetProfileParams) SetOrganizations(organizations []string) {
+	o.Organizations = organizations
+}
+
+// WithProfileID adds the profileID to the get profile params
+func (o *GetProfileParams) WithProfileID(profileID string) *GetProfileParams {
+	o.SetProfileID(profileID)
 	return o
+}
+
+// SetProfileID adds the profileId to the get profile params
+func (o *GetProfileParams) SetProfileID(profileID string) {
+	o.ProfileID = profileID
 }
 
 // WriteToRequest writes these params to a swagger request
 func (o *GetProfileParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
+	if err := r.SetTimeout(o.timeout); err != nil {
+		return err
+	}
 	var res []error
 
 	valuesOrganizations := o.Organizations

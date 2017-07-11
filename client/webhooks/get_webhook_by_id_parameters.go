@@ -4,8 +4,14 @@ package webhooks
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"net/http"
+	"time"
+
+	"golang.org/x/net/context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
+	cr "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/swag"
 
 	strfmt "github.com/go-openapi/strfmt"
@@ -15,7 +21,39 @@ import (
 // with the default values initialized.
 func NewGetWebhookByIDParams() *GetWebhookByIDParams {
 	var ()
-	return &GetWebhookByIDParams{}
+	return &GetWebhookByIDParams{
+
+		timeout: cr.DefaultTimeout,
+	}
+}
+
+// NewGetWebhookByIDParamsWithTimeout creates a new GetWebhookByIDParams object
+// with the default values initialized, and the ability to set a timeout on a request
+func NewGetWebhookByIDParamsWithTimeout(timeout time.Duration) *GetWebhookByIDParams {
+	var ()
+	return &GetWebhookByIDParams{
+
+		timeout: timeout,
+	}
+}
+
+// NewGetWebhookByIDParamsWithContext creates a new GetWebhookByIDParams object
+// with the default values initialized, and the ability to set a context for a request
+func NewGetWebhookByIDParamsWithContext(ctx context.Context) *GetWebhookByIDParams {
+	var ()
+	return &GetWebhookByIDParams{
+
+		Context: ctx,
+	}
+}
+
+// NewGetWebhookByIDParamsWithHTTPClient creates a new GetWebhookByIDParams object
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
+func NewGetWebhookByIDParamsWithHTTPClient(client *http.Client) *GetWebhookByIDParams {
+	var ()
+	return &GetWebhookByIDParams{
+		HTTPClient: client,
+	}
 }
 
 /*GetWebhookByIDParams contains all the parameters to send to the API endpoint
@@ -33,23 +71,73 @@ type GetWebhookByIDParams struct {
 
 	*/
 	WebhookID string
+
+	timeout    time.Duration
+	Context    context.Context
+	HTTPClient *http.Client
+}
+
+// WithTimeout adds the timeout to the get webhook by ID params
+func (o *GetWebhookByIDParams) WithTimeout(timeout time.Duration) *GetWebhookByIDParams {
+	o.SetTimeout(timeout)
+	return o
+}
+
+// SetTimeout adds the timeout to the get webhook by ID params
+func (o *GetWebhookByIDParams) SetTimeout(timeout time.Duration) {
+	o.timeout = timeout
+}
+
+// WithContext adds the context to the get webhook by ID params
+func (o *GetWebhookByIDParams) WithContext(ctx context.Context) *GetWebhookByIDParams {
+	o.SetContext(ctx)
+	return o
+}
+
+// SetContext adds the context to the get webhook by ID params
+func (o *GetWebhookByIDParams) SetContext(ctx context.Context) {
+	o.Context = ctx
+}
+
+// WithHTTPClient adds the HTTPClient to the get webhook by ID params
+func (o *GetWebhookByIDParams) WithHTTPClient(client *http.Client) *GetWebhookByIDParams {
+	o.SetHTTPClient(client)
+	return o
+}
+
+// SetHTTPClient adds the HTTPClient to the get webhook by ID params
+func (o *GetWebhookByIDParams) SetHTTPClient(client *http.Client) {
+	o.HTTPClient = client
 }
 
 // WithOrganizations adds the organizations to the get webhook by ID params
-func (o *GetWebhookByIDParams) WithOrganizations(Organizations []string) *GetWebhookByIDParams {
-	o.Organizations = Organizations
+func (o *GetWebhookByIDParams) WithOrganizations(organizations []string) *GetWebhookByIDParams {
+	o.SetOrganizations(organizations)
 	return o
 }
 
-// WithWebhookID adds the webhookId to the get webhook by ID params
-func (o *GetWebhookByIDParams) WithWebhookID(WebhookID string) *GetWebhookByIDParams {
-	o.WebhookID = WebhookID
+// SetOrganizations adds the organizations to the get webhook by ID params
+func (o *GetWebhookByIDParams) SetOrganizations(organizations []string) {
+	o.Organizations = organizations
+}
+
+// WithWebhookID adds the webhookID to the get webhook by ID params
+func (o *GetWebhookByIDParams) WithWebhookID(webhookID string) *GetWebhookByIDParams {
+	o.SetWebhookID(webhookID)
 	return o
+}
+
+// SetWebhookID adds the webhookId to the get webhook by ID params
+func (o *GetWebhookByIDParams) SetWebhookID(webhookID string) {
+	o.WebhookID = webhookID
 }
 
 // WriteToRequest writes these params to a swagger request
 func (o *GetWebhookByIDParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
+	if err := r.SetTimeout(o.timeout); err != nil {
+		return err
+	}
 	var res []error
 
 	valuesOrganizations := o.Organizations

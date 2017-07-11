@@ -12,112 +12,79 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-/*MutableBillingEntity Mutable entities are those entities that can be updated after their initial creation.
-
-swagger:model MutableBillingEntity
-*/
+// MutableBillingEntity Mutable entities are those entities that can be updated after their initial creation.
+// swagger:model MutableBillingEntity
 type MutableBillingEntity struct {
 
-	/* { "description" : "ID of the user who last updated the entity.", "verbs":[] }
-	 */
+	// { "description" : "ID of the user who last updated the entity.", "verbs":[] }
 	ChangedBy string `json:"changedBy,omitempty"`
 
-	/* This is config id which links to this sync job.
-
-	Required: true
-	*/
+	// This is config id which links to this sync job.
+	// Required: true
 	ConfigID *string `json:"configID"`
 
-	/* { "description" : "The UTC DateTime when the object was created.", "verbs":[] }
-	 */
+	// { "description" : "The UTC DateTime when the object was created.", "verbs":[] }
 	Created strfmt.DateTime `json:"created,omitempty"`
 
-	/* The account who created the synch job.
-	 */
+	// The account who created the synch job.
 	CreatedBy string `json:"createdBy,omitempty"`
 
-	/* UTC DateTime of the start of the data to sync.
-	 */
+	// UTC DateTime of the start of the data to sync.
 	DataFrom strfmt.DateTime `json:"dataFrom,omitempty"`
 
-	/* UTC DateTime of the start of the data to sync.
-	 */
+	// UTC DateTime of the start of the data to sync.
 	DataTill strfmt.DateTime `json:"dataTill,omitempty"`
 
-	/* Is the sync job deleted.
-
-	Required: true
-	*/
+	// Is the sync job deleted.
+	// Required: true
 	Deleted bool `json:"deleted"`
 
-	/* Description of the Job.
-
-	Required: true
-	*/
+	// Description of the Job.
+	// Required: true
 	Description *string `json:"description"`
 
-	/* ID of the Synchronization Job.
-	 */
+	// ID of the Synchronization Job.
 	ID string `json:"id,omitempty"`
 
-	/* The max number of times the records will try to resync.
-
-	Required: true
-	*/
+	// The max number of times the records will try to resync.
+	// Required: true
 	MaxRetryTimes *int32 `json:"maxRetryTimes"`
 
-	/* Name of the Job.
-
-	Required: true
-	*/
+	// Name of the Job.
+	// Required: true
 	Name *string `json:"name"`
 
-	/* Organization associated with the refund.
-
-	Required: true
-	*/
+	// Organization associated with the refund.
+	// Required: true
 	OrganizationID *string `json:"organizationID"`
 
-	/* The number of times the records tried to resync.
-
-	Required: true
-	*/
+	// The number of times the records tried to resync.
+	// Required: true
 	RetryAttempted *int32 `json:"retryAttempted"`
 
-	/* The scope of the data synch'd.
-
-	Required: true
-	*/
+	// The scope of the data synch'd.
+	// Required: true
 	Scope *string `json:"scope"`
 
-	/* UTC DateTime of the end of the data to sync.
-	 */
+	// UTC DateTime of the end of the data to sync.
 	Started strfmt.DateTime `json:"started,omitempty"`
 
-	/* This is the state of job. Pending jobs have not run. Complete jobs have run without error. Failed jobs have one of more errors. Cancelled jobs did not run.
-
-	Required: true
-	*/
+	// This is the state of job. Pending jobs have not run. Complete jobs have run without error. Failed jobs have one of more errors. Cancelled jobs did not run.
+	// Required: true
 	State *string `json:"state"`
 
-	/* UTC DateTime of the start of the data to sync.
-	 */
+	// UTC DateTime of the start of the data to sync.
 	Stopped strfmt.DateTime `json:"stopped,omitempty"`
 
-	/* This is the target of the job.
-
-	Required: true
-	*/
+	// This is the target of the job.
+	// Required: true
 	Target *string `json:"target"`
 
-	/* This is the type of job. Incremental jobs just sync changes, fully jobs sync all data.
-
-	Required: true
-	*/
+	// This is the type of job. Incremental jobs just sync changes, fully jobs sync all data.
+	// Required: true
 	Type *string `json:"type"`
 
-	/* { "description" : "The UTC DateTime when the object was last updated.", "verbs":[] }
-	 */
+	// { "description" : "The UTC DateTime when the object was last updated.", "verbs":[] }
 	Updated strfmt.DateTime `json:"updated,omitempty"`
 }
 
@@ -251,17 +218,25 @@ func (m *MutableBillingEntity) validateRetryAttempted(formats strfmt.Registry) e
 
 var mutableBillingEntityTypeScopePropEnum []interface{}
 
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Manual","Scheduled"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		mutableBillingEntityTypeScopePropEnum = append(mutableBillingEntityTypeScopePropEnum, v)
+	}
+}
+
+const (
+	// MutableBillingEntityScopeManual captures enum value "Manual"
+	MutableBillingEntityScopeManual string = "Manual"
+	// MutableBillingEntityScopeScheduled captures enum value "Scheduled"
+	MutableBillingEntityScopeScheduled string = "Scheduled"
+)
+
 // prop value enum
 func (m *MutableBillingEntity) validateScopeEnum(path, location string, value string) error {
-	if mutableBillingEntityTypeScopePropEnum == nil {
-		var res []string
-		if err := json.Unmarshal([]byte(`["Manual","Scheduled"]`), &res); err != nil {
-			return err
-		}
-		for _, v := range res {
-			mutableBillingEntityTypeScopePropEnum = append(mutableBillingEntityTypeScopePropEnum, v)
-		}
-	}
 	if err := validate.Enum(path, location, value, mutableBillingEntityTypeScopePropEnum); err != nil {
 		return err
 	}
@@ -284,17 +259,31 @@ func (m *MutableBillingEntity) validateScope(formats strfmt.Registry) error {
 
 var mutableBillingEntityTypeStatePropEnum []interface{}
 
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Pending","Complete","Failed","Cancelled","Processing"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		mutableBillingEntityTypeStatePropEnum = append(mutableBillingEntityTypeStatePropEnum, v)
+	}
+}
+
+const (
+	// MutableBillingEntityStatePending captures enum value "Pending"
+	MutableBillingEntityStatePending string = "Pending"
+	// MutableBillingEntityStateComplete captures enum value "Complete"
+	MutableBillingEntityStateComplete string = "Complete"
+	// MutableBillingEntityStateFailed captures enum value "Failed"
+	MutableBillingEntityStateFailed string = "Failed"
+	// MutableBillingEntityStateCancelled captures enum value "Cancelled"
+	MutableBillingEntityStateCancelled string = "Cancelled"
+	// MutableBillingEntityStateProcessing captures enum value "Processing"
+	MutableBillingEntityStateProcessing string = "Processing"
+)
+
 // prop value enum
 func (m *MutableBillingEntity) validateStateEnum(path, location string, value string) error {
-	if mutableBillingEntityTypeStatePropEnum == nil {
-		var res []string
-		if err := json.Unmarshal([]byte(`["Pending","Complete","Failed","Cancelled","Processing"]`), &res); err != nil {
-			return err
-		}
-		for _, v := range res {
-			mutableBillingEntityTypeStatePropEnum = append(mutableBillingEntityTypeStatePropEnum, v)
-		}
-	}
 	if err := validate.Enum(path, location, value, mutableBillingEntityTypeStatePropEnum); err != nil {
 		return err
 	}
@@ -317,17 +306,23 @@ func (m *MutableBillingEntity) validateState(formats strfmt.Registry) error {
 
 var mutableBillingEntityTypeTargetPropEnum []interface{}
 
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Salesforce"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		mutableBillingEntityTypeTargetPropEnum = append(mutableBillingEntityTypeTargetPropEnum, v)
+	}
+}
+
+const (
+	// MutableBillingEntityTargetSalesforce captures enum value "Salesforce"
+	MutableBillingEntityTargetSalesforce string = "Salesforce"
+)
+
 // prop value enum
 func (m *MutableBillingEntity) validateTargetEnum(path, location string, value string) error {
-	if mutableBillingEntityTypeTargetPropEnum == nil {
-		var res []string
-		if err := json.Unmarshal([]byte(`["Salesforce"]`), &res); err != nil {
-			return err
-		}
-		for _, v := range res {
-			mutableBillingEntityTypeTargetPropEnum = append(mutableBillingEntityTypeTargetPropEnum, v)
-		}
-	}
 	if err := validate.Enum(path, location, value, mutableBillingEntityTypeTargetPropEnum); err != nil {
 		return err
 	}
@@ -350,17 +345,25 @@ func (m *MutableBillingEntity) validateTarget(formats strfmt.Registry) error {
 
 var mutableBillingEntityTypeTypePropEnum []interface{}
 
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Incremental","Full"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		mutableBillingEntityTypeTypePropEnum = append(mutableBillingEntityTypeTypePropEnum, v)
+	}
+}
+
+const (
+	// MutableBillingEntityTypeIncremental captures enum value "Incremental"
+	MutableBillingEntityTypeIncremental string = "Incremental"
+	// MutableBillingEntityTypeFull captures enum value "Full"
+	MutableBillingEntityTypeFull string = "Full"
+)
+
 // prop value enum
 func (m *MutableBillingEntity) validateTypeEnum(path, location string, value string) error {
-	if mutableBillingEntityTypeTypePropEnum == nil {
-		var res []string
-		if err := json.Unmarshal([]byte(`["Incremental","Full"]`), &res); err != nil {
-			return err
-		}
-		for _, v := range res {
-			mutableBillingEntityTypeTypePropEnum = append(mutableBillingEntityTypeTypePropEnum, v)
-		}
-	}
 	if err := validate.Enum(path, location, value, mutableBillingEntityTypeTypePropEnum); err != nil {
 		return err
 	}

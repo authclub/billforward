@@ -4,29 +4,26 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"strconv"
+
 	strfmt "github.com/go-openapi/strfmt"
-	"github.com/go-openapi/swag"
 
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/swag"
 )
 
-/*CreateSubscriptionBatchRequest Entity for requesting that a batch of subscriptions be created.
-
-swagger:model CreateSubscriptionBatchRequest
-*/
+// CreateSubscriptionBatchRequest Entity for requesting that a batch of subscriptions be created.
+// swagger:model CreateSubscriptionBatchRequest
 type CreateSubscriptionBatchRequest struct {
 
-	/* { "description" : "The UTC DateTime when the object was created.", "verbs":[] }
-	 */
+	// { "description" : "The UTC DateTime when the object was created.", "verbs":[] }
 	Created strfmt.DateTime `json:"created,omitempty"`
 
-	/* {"default":"(Auto-populated using your authentication credentials)","description":"ID of the BillForward Organization within which the requested Subscriptions should be created. If omitted, this will be auto-populated using your authentication credentials.","verbs":["POST"]}
-	 */
+	// {"default":"(Auto-populated using your authentication credentials)","description":"ID of the BillForward Organization within which the requested Subscriptions should be created. If omitted, this will be auto-populated using your authentication credentials.","verbs":["POST"]}
 	OrganizationID string `json:"organizationID,omitempty"`
 
-	/* {"default":"(Empty list)","description":"List of entities for requesting that subscriptions be created.","verbs":["POST"]}
-	 */
-	Subscriptions []*CreateSubscriptionRequest `json:"subscriptions,omitempty"`
+	// {"default":"(Empty list)","description":"List of entities for requesting that subscriptions be created.","verbs":["POST"]}
+	Subscriptions []*CreateSubscriptionRequest `json:"subscriptions"`
 }
 
 // Validate validates this create subscription batch request
@@ -48,6 +45,24 @@ func (m *CreateSubscriptionBatchRequest) validateSubscriptions(formats strfmt.Re
 
 	if swag.IsZero(m.Subscriptions) { // not required
 		return nil
+	}
+
+	for i := 0; i < len(m.Subscriptions); i++ {
+
+		if swag.IsZero(m.Subscriptions[i]) { // not required
+			continue
+		}
+
+		if m.Subscriptions[i] != nil {
+
+			if err := m.Subscriptions[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("subscriptions" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
 	}
 
 	return nil

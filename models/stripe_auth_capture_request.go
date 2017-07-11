@@ -10,13 +10,12 @@ import (
 	strfmt "github.com/go-openapi/strfmt"
 
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
 
-/*StripeAuthCaptureRequest stripe auth capture request
-
-swagger:model StripeAuthCaptureRequest
-*/
+// StripeAuthCaptureRequest stripe auth capture request
+// swagger:model StripeAuthCaptureRequest
 type StripeAuthCaptureRequest struct {
 	accountIdField string
 
@@ -36,18 +35,14 @@ type StripeAuthCaptureRequest struct {
 
 	organizationIdField string
 
-	/* {"description":"ID of the captured Card in Stripe. This can be provided as well as &mdash; or instead of &mdash; the one-use `stripeToken`, to lead BillForward to the card tokenized within the Stripe vault.","verbs":["POST"]}
-	 */
+	// {"description":"ID of the captured Card in Stripe. This can be provided as well as &mdash; or instead of &mdash; the one-use `stripeToken`, to lead BillForward to the card tokenized within the Stripe vault.","verbs":["POST"]}
 	CardID string `json:"cardID,omitempty"`
 
-	/* customer ID
-	 */
+	// customer ID
 	CustomerID string `json:"customerID,omitempty"`
 
-	/* {"description":"Single-use token <a href=\"https://stripe.com/docs/stripe.js\">provided by Stripe's client-side card capture SDK</a>, in response to your capturing a card into the Stripe vault. This token will be used by BillForward to find the tokenized card within the Stripe vault &mdash; precursory to linking a BillForward PaymentMethod to that tokenized card.","verbs":["POST"]}
-
-	Required: true
-	*/
+	// {"description":"Single-use token <a href=\"https://stripe.com/docs/stripe.js\">provided by Stripe's client-side card capture SDK</a>, in response to your capturing a card into the Stripe vault. This token will be used by BillForward to find the tokenized card within the Stripe vault &mdash; precursory to linking a BillForward PaymentMethod to that tokenized card.","verbs":["POST"]}
+	// Required: true
 	StripeToken *string `json:"stripeToken"`
 }
 
@@ -144,18 +139,14 @@ func (m *StripeAuthCaptureRequest) UnmarshalJSON(raw []byte) error {
 
 		OrganizationID string `json:"organizationID,omitempty"`
 
-		/* {"description":"ID of the captured Card in Stripe. This can be provided as well as &mdash; or instead of &mdash; the one-use `stripeToken`, to lead BillForward to the card tokenized within the Stripe vault.","verbs":["POST"]}
-		 */
+		// {"description":"ID of the captured Card in Stripe. This can be provided as well as &mdash; or instead of &mdash; the one-use `stripeToken`, to lead BillForward to the card tokenized within the Stripe vault.","verbs":["POST"]}
 		CardID string `json:"cardID,omitempty"`
 
-		/* customer ID
-		 */
+		// customer ID
 		CustomerID string `json:"customerID,omitempty"`
 
-		/* {"description":"Single-use token <a href=\"https://stripe.com/docs/stripe.js\">provided by Stripe's client-side card capture SDK</a>, in response to your capturing a card into the Stripe vault. This token will be used by BillForward to find the tokenized card within the Stripe vault &mdash; precursory to linking a BillForward PaymentMethod to that tokenized card.","verbs":["POST"]}
-
-		Required: true
-		*/
+		// {"description":"Single-use token <a href=\"https://stripe.com/docs/stripe.js\">provided by Stripe's client-side card capture SDK</a>, in response to your capturing a card into the Stripe vault. This token will be used by BillForward to find the tokenized card within the Stripe vault &mdash; precursory to linking a BillForward PaymentMethod to that tokenized card.","verbs":["POST"]}
+		// Required: true
 		StripeToken *string `json:"stripeToken"`
 	}
 
@@ -206,18 +197,14 @@ func (m StripeAuthCaptureRequest) MarshalJSON() ([]byte, error) {
 
 		OrganizationID string `json:"organizationID,omitempty"`
 
-		/* {"description":"ID of the captured Card in Stripe. This can be provided as well as &mdash; or instead of &mdash; the one-use `stripeToken`, to lead BillForward to the card tokenized within the Stripe vault.","verbs":["POST"]}
-		 */
+		// {"description":"ID of the captured Card in Stripe. This can be provided as well as &mdash; or instead of &mdash; the one-use `stripeToken`, to lead BillForward to the card tokenized within the Stripe vault.","verbs":["POST"]}
 		CardID string `json:"cardID,omitempty"`
 
-		/* customer ID
-		 */
+		// customer ID
 		CustomerID string `json:"customerID,omitempty"`
 
-		/* {"description":"Single-use token <a href=\"https://stripe.com/docs/stripe.js\">provided by Stripe's client-side card capture SDK</a>, in response to your capturing a card into the Stripe vault. This token will be used by BillForward to find the tokenized card within the Stripe vault &mdash; precursory to linking a BillForward PaymentMethod to that tokenized card.","verbs":["POST"]}
-
-		Required: true
-		*/
+		// {"description":"Single-use token <a href=\"https://stripe.com/docs/stripe.js\">provided by Stripe's client-side card capture SDK</a>, in response to your capturing a card into the Stripe vault. This token will be used by BillForward to find the tokenized card within the Stripe vault &mdash; precursory to linking a BillForward PaymentMethod to that tokenized card.","verbs":["POST"]}
+		// Required: true
 		StripeToken *string `json:"stripeToken"`
 	}
 
@@ -257,17 +244,18 @@ func (m *StripeAuthCaptureRequest) Validate(formats strfmt.Registry) error {
 
 var stripeAuthCaptureRequestTypeGatewayPropEnum []interface{}
 
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Balanced","Braintree","Cybersource","Paypal","Stripe","AuthorizeNet","Spreedly","SagePay","TrustCommerce","Payvision","Kash"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		stripeAuthCaptureRequestTypeGatewayPropEnum = append(stripeAuthCaptureRequestTypeGatewayPropEnum, v)
+	}
+}
+
 // property enum
 func (m *StripeAuthCaptureRequest) validateGatewayEnum(path, location string, value string) error {
-	if stripeAuthCaptureRequestTypeGatewayPropEnum == nil {
-		var res []string
-		if err := json.Unmarshal([]byte(`["Balanced","Braintree","Cybersource","Paypal","Stripe","AuthorizeNet","Spreedly","SagePay","TrustCommerce","Payvision","Kash"]`), &res); err != nil {
-			return err
-		}
-		for _, v := range res {
-			stripeAuthCaptureRequestTypeGatewayPropEnum = append(stripeAuthCaptureRequestTypeGatewayPropEnum, v)
-		}
-	}
 	if err := validate.Enum(path, location, value, stripeAuthCaptureRequestTypeGatewayPropEnum); err != nil {
 		return err
 	}
@@ -275,6 +263,10 @@ func (m *StripeAuthCaptureRequest) validateGatewayEnum(path, location string, va
 }
 
 func (m *StripeAuthCaptureRequest) validateGateway(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Gateway()) { // not required
+		return nil
+	}
 
 	// value enum
 	if err := m.validateGatewayEnum("gateway", "body", m.Gateway()); err != nil {

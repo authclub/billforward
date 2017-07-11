@@ -4,8 +4,14 @@ package tokenization
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"net/http"
+	"time"
+
+	"golang.org/x/net/context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
+	cr "github.com/go-openapi/runtime/client"
 
 	strfmt "github.com/go-openapi/strfmt"
 
@@ -16,7 +22,39 @@ import (
 // with the default values initialized.
 func NewAuthCaptureParams() *AuthCaptureParams {
 	var ()
-	return &AuthCaptureParams{}
+	return &AuthCaptureParams{
+
+		timeout: cr.DefaultTimeout,
+	}
+}
+
+// NewAuthCaptureParamsWithTimeout creates a new AuthCaptureParams object
+// with the default values initialized, and the ability to set a timeout on a request
+func NewAuthCaptureParamsWithTimeout(timeout time.Duration) *AuthCaptureParams {
+	var ()
+	return &AuthCaptureParams{
+
+		timeout: timeout,
+	}
+}
+
+// NewAuthCaptureParamsWithContext creates a new AuthCaptureParams object
+// with the default values initialized, and the ability to set a context for a request
+func NewAuthCaptureParamsWithContext(ctx context.Context) *AuthCaptureParams {
+	var ()
+	return &AuthCaptureParams{
+
+		Context: ctx,
+	}
+}
+
+// NewAuthCaptureParamsWithHTTPClient creates a new AuthCaptureParams object
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
+func NewAuthCaptureParamsWithHTTPClient(client *http.Client) *AuthCaptureParams {
+	var ()
+	return &AuthCaptureParams{
+		HTTPClient: client,
+	}
 }
 
 /*AuthCaptureParams contains all the parameters to send to the API endpoint
@@ -29,17 +67,62 @@ type AuthCaptureParams struct {
 
 	*/
 	AuthCaptureRequest models.AuthCaptureRequest
+
+	timeout    time.Duration
+	Context    context.Context
+	HTTPClient *http.Client
+}
+
+// WithTimeout adds the timeout to the auth capture params
+func (o *AuthCaptureParams) WithTimeout(timeout time.Duration) *AuthCaptureParams {
+	o.SetTimeout(timeout)
+	return o
+}
+
+// SetTimeout adds the timeout to the auth capture params
+func (o *AuthCaptureParams) SetTimeout(timeout time.Duration) {
+	o.timeout = timeout
+}
+
+// WithContext adds the context to the auth capture params
+func (o *AuthCaptureParams) WithContext(ctx context.Context) *AuthCaptureParams {
+	o.SetContext(ctx)
+	return o
+}
+
+// SetContext adds the context to the auth capture params
+func (o *AuthCaptureParams) SetContext(ctx context.Context) {
+	o.Context = ctx
+}
+
+// WithHTTPClient adds the HTTPClient to the auth capture params
+func (o *AuthCaptureParams) WithHTTPClient(client *http.Client) *AuthCaptureParams {
+	o.SetHTTPClient(client)
+	return o
+}
+
+// SetHTTPClient adds the HTTPClient to the auth capture params
+func (o *AuthCaptureParams) SetHTTPClient(client *http.Client) {
+	o.HTTPClient = client
 }
 
 // WithAuthCaptureRequest adds the authCaptureRequest to the auth capture params
-func (o *AuthCaptureParams) WithAuthCaptureRequest(AuthCaptureRequest models.AuthCaptureRequest) *AuthCaptureParams {
-	o.AuthCaptureRequest = AuthCaptureRequest
+func (o *AuthCaptureParams) WithAuthCaptureRequest(authCaptureRequest models.AuthCaptureRequest) *AuthCaptureParams {
+	o.SetAuthCaptureRequest(authCaptureRequest)
 	return o
+}
+
+// SetAuthCaptureRequest adds the authCaptureRequest to the auth capture params
+func (o *AuthCaptureParams) SetAuthCaptureRequest(authCaptureRequest models.AuthCaptureRequest) {
+	o.AuthCaptureRequest = authCaptureRequest
 }
 
 // WriteToRequest writes these params to a swagger request
 func (o *AuthCaptureParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
+	if err := r.SetTimeout(o.timeout); err != nil {
+		return err
+	}
 	var res []error
 
 	if err := r.SetBodyParam(o.AuthCaptureRequest); err != nil {

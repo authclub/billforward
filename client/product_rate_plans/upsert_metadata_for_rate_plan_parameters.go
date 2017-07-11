@@ -4,8 +4,14 @@ package product_rate_plans
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"net/http"
+	"time"
+
+	"golang.org/x/net/context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
+	cr "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/swag"
 
 	strfmt "github.com/go-openapi/strfmt"
@@ -17,7 +23,39 @@ import (
 // with the default values initialized.
 func NewUpsertMetadataForRatePlanParams() *UpsertMetadataForRatePlanParams {
 	var ()
-	return &UpsertMetadataForRatePlanParams{}
+	return &UpsertMetadataForRatePlanParams{
+
+		timeout: cr.DefaultTimeout,
+	}
+}
+
+// NewUpsertMetadataForRatePlanParamsWithTimeout creates a new UpsertMetadataForRatePlanParams object
+// with the default values initialized, and the ability to set a timeout on a request
+func NewUpsertMetadataForRatePlanParamsWithTimeout(timeout time.Duration) *UpsertMetadataForRatePlanParams {
+	var ()
+	return &UpsertMetadataForRatePlanParams{
+
+		timeout: timeout,
+	}
+}
+
+// NewUpsertMetadataForRatePlanParamsWithContext creates a new UpsertMetadataForRatePlanParams object
+// with the default values initialized, and the ability to set a context for a request
+func NewUpsertMetadataForRatePlanParamsWithContext(ctx context.Context) *UpsertMetadataForRatePlanParams {
+	var ()
+	return &UpsertMetadataForRatePlanParams{
+
+		Context: ctx,
+	}
+}
+
+// NewUpsertMetadataForRatePlanParamsWithHTTPClient creates a new UpsertMetadataForRatePlanParams object
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
+func NewUpsertMetadataForRatePlanParamsWithHTTPClient(client *http.Client) *UpsertMetadataForRatePlanParams {
+	var ()
+	return &UpsertMetadataForRatePlanParams{
+		HTTPClient: client,
+	}
 }
 
 /*UpsertMetadataForRatePlanParams contains all the parameters to send to the API endpoint
@@ -34,29 +72,84 @@ type UpsertMetadataForRatePlanParams struct {
 	Organizations []string
 	/*ProductRatePlanID*/
 	ProductRatePlanID string
+
+	timeout    time.Duration
+	Context    context.Context
+	HTTPClient *http.Client
+}
+
+// WithTimeout adds the timeout to the upsert metadata for rate plan params
+func (o *UpsertMetadataForRatePlanParams) WithTimeout(timeout time.Duration) *UpsertMetadataForRatePlanParams {
+	o.SetTimeout(timeout)
+	return o
+}
+
+// SetTimeout adds the timeout to the upsert metadata for rate plan params
+func (o *UpsertMetadataForRatePlanParams) SetTimeout(timeout time.Duration) {
+	o.timeout = timeout
+}
+
+// WithContext adds the context to the upsert metadata for rate plan params
+func (o *UpsertMetadataForRatePlanParams) WithContext(ctx context.Context) *UpsertMetadataForRatePlanParams {
+	o.SetContext(ctx)
+	return o
+}
+
+// SetContext adds the context to the upsert metadata for rate plan params
+func (o *UpsertMetadataForRatePlanParams) SetContext(ctx context.Context) {
+	o.Context = ctx
+}
+
+// WithHTTPClient adds the HTTPClient to the upsert metadata for rate plan params
+func (o *UpsertMetadataForRatePlanParams) WithHTTPClient(client *http.Client) *UpsertMetadataForRatePlanParams {
+	o.SetHTTPClient(client)
+	return o
+}
+
+// SetHTTPClient adds the HTTPClient to the upsert metadata for rate plan params
+func (o *UpsertMetadataForRatePlanParams) SetHTTPClient(client *http.Client) {
+	o.HTTPClient = client
 }
 
 // WithMetadata adds the metadata to the upsert metadata for rate plan params
-func (o *UpsertMetadataForRatePlanParams) WithMetadata(Metadata models.DynamicMetadata) *UpsertMetadataForRatePlanParams {
-	o.Metadata = Metadata
+func (o *UpsertMetadataForRatePlanParams) WithMetadata(metadata models.DynamicMetadata) *UpsertMetadataForRatePlanParams {
+	o.SetMetadata(metadata)
 	return o
+}
+
+// SetMetadata adds the metadata to the upsert metadata for rate plan params
+func (o *UpsertMetadataForRatePlanParams) SetMetadata(metadata models.DynamicMetadata) {
+	o.Metadata = metadata
 }
 
 // WithOrganizations adds the organizations to the upsert metadata for rate plan params
-func (o *UpsertMetadataForRatePlanParams) WithOrganizations(Organizations []string) *UpsertMetadataForRatePlanParams {
-	o.Organizations = Organizations
+func (o *UpsertMetadataForRatePlanParams) WithOrganizations(organizations []string) *UpsertMetadataForRatePlanParams {
+	o.SetOrganizations(organizations)
 	return o
 }
 
-// WithProductRatePlanID adds the productRatePlanId to the upsert metadata for rate plan params
-func (o *UpsertMetadataForRatePlanParams) WithProductRatePlanID(ProductRatePlanID string) *UpsertMetadataForRatePlanParams {
-	o.ProductRatePlanID = ProductRatePlanID
+// SetOrganizations adds the organizations to the upsert metadata for rate plan params
+func (o *UpsertMetadataForRatePlanParams) SetOrganizations(organizations []string) {
+	o.Organizations = organizations
+}
+
+// WithProductRatePlanID adds the productRatePlanID to the upsert metadata for rate plan params
+func (o *UpsertMetadataForRatePlanParams) WithProductRatePlanID(productRatePlanID string) *UpsertMetadataForRatePlanParams {
+	o.SetProductRatePlanID(productRatePlanID)
 	return o
+}
+
+// SetProductRatePlanID adds the productRatePlanId to the upsert metadata for rate plan params
+func (o *UpsertMetadataForRatePlanParams) SetProductRatePlanID(productRatePlanID string) {
+	o.ProductRatePlanID = productRatePlanID
 }
 
 // WriteToRequest writes these params to a swagger request
 func (o *UpsertMetadataForRatePlanParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
+	if err := r.SetTimeout(o.timeout); err != nil {
+		return err
+	}
 	var res []error
 
 	if err := r.SetBodyParam(o.Metadata); err != nil {

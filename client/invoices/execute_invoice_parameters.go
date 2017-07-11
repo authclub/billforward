@@ -4,8 +4,14 @@ package invoices
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"net/http"
+	"time"
+
+	"golang.org/x/net/context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
+	cr "github.com/go-openapi/runtime/client"
 
 	strfmt "github.com/go-openapi/strfmt"
 
@@ -16,7 +22,39 @@ import (
 // with the default values initialized.
 func NewExecuteInvoiceParams() *ExecuteInvoiceParams {
 	var ()
-	return &ExecuteInvoiceParams{}
+	return &ExecuteInvoiceParams{
+
+		timeout: cr.DefaultTimeout,
+	}
+}
+
+// NewExecuteInvoiceParamsWithTimeout creates a new ExecuteInvoiceParams object
+// with the default values initialized, and the ability to set a timeout on a request
+func NewExecuteInvoiceParamsWithTimeout(timeout time.Duration) *ExecuteInvoiceParams {
+	var ()
+	return &ExecuteInvoiceParams{
+
+		timeout: timeout,
+	}
+}
+
+// NewExecuteInvoiceParamsWithContext creates a new ExecuteInvoiceParams object
+// with the default values initialized, and the ability to set a context for a request
+func NewExecuteInvoiceParamsWithContext(ctx context.Context) *ExecuteInvoiceParams {
+	var ()
+	return &ExecuteInvoiceParams{
+
+		Context: ctx,
+	}
+}
+
+// NewExecuteInvoiceParamsWithHTTPClient creates a new ExecuteInvoiceParams object
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
+func NewExecuteInvoiceParamsWithHTTPClient(client *http.Client) *ExecuteInvoiceParams {
+	var ()
+	return &ExecuteInvoiceParams{
+		HTTPClient: client,
+	}
 }
 
 /*ExecuteInvoiceParams contains all the parameters to send to the API endpoint
@@ -28,23 +66,73 @@ type ExecuteInvoiceParams struct {
 	InvoiceID string
 	/*Request*/
 	Request *models.ExecuteInvoiceRequest
+
+	timeout    time.Duration
+	Context    context.Context
+	HTTPClient *http.Client
 }
 
-// WithInvoiceID adds the invoiceId to the execute invoice params
-func (o *ExecuteInvoiceParams) WithInvoiceID(InvoiceID string) *ExecuteInvoiceParams {
-	o.InvoiceID = InvoiceID
+// WithTimeout adds the timeout to the execute invoice params
+func (o *ExecuteInvoiceParams) WithTimeout(timeout time.Duration) *ExecuteInvoiceParams {
+	o.SetTimeout(timeout)
 	return o
+}
+
+// SetTimeout adds the timeout to the execute invoice params
+func (o *ExecuteInvoiceParams) SetTimeout(timeout time.Duration) {
+	o.timeout = timeout
+}
+
+// WithContext adds the context to the execute invoice params
+func (o *ExecuteInvoiceParams) WithContext(ctx context.Context) *ExecuteInvoiceParams {
+	o.SetContext(ctx)
+	return o
+}
+
+// SetContext adds the context to the execute invoice params
+func (o *ExecuteInvoiceParams) SetContext(ctx context.Context) {
+	o.Context = ctx
+}
+
+// WithHTTPClient adds the HTTPClient to the execute invoice params
+func (o *ExecuteInvoiceParams) WithHTTPClient(client *http.Client) *ExecuteInvoiceParams {
+	o.SetHTTPClient(client)
+	return o
+}
+
+// SetHTTPClient adds the HTTPClient to the execute invoice params
+func (o *ExecuteInvoiceParams) SetHTTPClient(client *http.Client) {
+	o.HTTPClient = client
+}
+
+// WithInvoiceID adds the invoiceID to the execute invoice params
+func (o *ExecuteInvoiceParams) WithInvoiceID(invoiceID string) *ExecuteInvoiceParams {
+	o.SetInvoiceID(invoiceID)
+	return o
+}
+
+// SetInvoiceID adds the invoiceId to the execute invoice params
+func (o *ExecuteInvoiceParams) SetInvoiceID(invoiceID string) {
+	o.InvoiceID = invoiceID
 }
 
 // WithRequest adds the request to the execute invoice params
-func (o *ExecuteInvoiceParams) WithRequest(Request *models.ExecuteInvoiceRequest) *ExecuteInvoiceParams {
-	o.Request = Request
+func (o *ExecuteInvoiceParams) WithRequest(request *models.ExecuteInvoiceRequest) *ExecuteInvoiceParams {
+	o.SetRequest(request)
 	return o
+}
+
+// SetRequest adds the request to the execute invoice params
+func (o *ExecuteInvoiceParams) SetRequest(request *models.ExecuteInvoiceRequest) {
+	o.Request = request
 }
 
 // WriteToRequest writes these params to a swagger request
 func (o *ExecuteInvoiceParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
+	if err := r.SetTimeout(o.timeout); err != nil {
+		return err
+	}
 	var res []error
 
 	// path param invoice-ID

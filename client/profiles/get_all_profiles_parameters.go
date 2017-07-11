@@ -4,8 +4,14 @@ package profiles
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"net/http"
+	"time"
+
+	"golang.org/x/net/context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
+	cr "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/swag"
 
 	strfmt "github.com/go-openapi/strfmt"
@@ -15,16 +21,74 @@ import (
 // with the default values initialized.
 func NewGetAllProfilesParams() *GetAllProfilesParams {
 	var (
-		offsetDefault  int32  = int32(0)
-		orderDefault   string = string("DESC")
-		orderByDefault string = string("created")
-		recordsDefault int32  = int32(10)
+		offsetDefault  = int32(0)
+		orderDefault   = string("DESC")
+		orderByDefault = string("created")
+		recordsDefault = int32(10)
 	)
 	return &GetAllProfilesParams{
 		Offset:  &offsetDefault,
 		Order:   &orderDefault,
 		OrderBy: &orderByDefault,
 		Records: &recordsDefault,
+
+		timeout: cr.DefaultTimeout,
+	}
+}
+
+// NewGetAllProfilesParamsWithTimeout creates a new GetAllProfilesParams object
+// with the default values initialized, and the ability to set a timeout on a request
+func NewGetAllProfilesParamsWithTimeout(timeout time.Duration) *GetAllProfilesParams {
+	var (
+		offsetDefault  = int32(0)
+		orderDefault   = string("DESC")
+		orderByDefault = string("created")
+		recordsDefault = int32(10)
+	)
+	return &GetAllProfilesParams{
+		Offset:  &offsetDefault,
+		Order:   &orderDefault,
+		OrderBy: &orderByDefault,
+		Records: &recordsDefault,
+
+		timeout: timeout,
+	}
+}
+
+// NewGetAllProfilesParamsWithContext creates a new GetAllProfilesParams object
+// with the default values initialized, and the ability to set a context for a request
+func NewGetAllProfilesParamsWithContext(ctx context.Context) *GetAllProfilesParams {
+	var (
+		offsetDefault  = int32(0)
+		orderDefault   = string("DESC")
+		orderByDefault = string("created")
+		recordsDefault = int32(10)
+	)
+	return &GetAllProfilesParams{
+		Offset:  &offsetDefault,
+		Order:   &orderDefault,
+		OrderBy: &orderByDefault,
+		Records: &recordsDefault,
+
+		Context: ctx,
+	}
+}
+
+// NewGetAllProfilesParamsWithHTTPClient creates a new GetAllProfilesParams object
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
+func NewGetAllProfilesParamsWithHTTPClient(client *http.Client) *GetAllProfilesParams {
+	var (
+		offsetDefault  = int32(0)
+		orderDefault   = string("DESC")
+		orderByDefault = string("created")
+		recordsDefault = int32(10)
+	)
+	return &GetAllProfilesParams{
+		Offset:     &offsetDefault,
+		Order:      &orderDefault,
+		OrderBy:    &orderByDefault,
+		Records:    &recordsDefault,
+		HTTPClient: client,
 	}
 }
 
@@ -58,41 +122,106 @@ type GetAllProfilesParams struct {
 
 	*/
 	Records *int32
+
+	timeout    time.Duration
+	Context    context.Context
+	HTTPClient *http.Client
+}
+
+// WithTimeout adds the timeout to the get all profiles params
+func (o *GetAllProfilesParams) WithTimeout(timeout time.Duration) *GetAllProfilesParams {
+	o.SetTimeout(timeout)
+	return o
+}
+
+// SetTimeout adds the timeout to the get all profiles params
+func (o *GetAllProfilesParams) SetTimeout(timeout time.Duration) {
+	o.timeout = timeout
+}
+
+// WithContext adds the context to the get all profiles params
+func (o *GetAllProfilesParams) WithContext(ctx context.Context) *GetAllProfilesParams {
+	o.SetContext(ctx)
+	return o
+}
+
+// SetContext adds the context to the get all profiles params
+func (o *GetAllProfilesParams) SetContext(ctx context.Context) {
+	o.Context = ctx
+}
+
+// WithHTTPClient adds the HTTPClient to the get all profiles params
+func (o *GetAllProfilesParams) WithHTTPClient(client *http.Client) *GetAllProfilesParams {
+	o.SetHTTPClient(client)
+	return o
+}
+
+// SetHTTPClient adds the HTTPClient to the get all profiles params
+func (o *GetAllProfilesParams) SetHTTPClient(client *http.Client) {
+	o.HTTPClient = client
 }
 
 // WithOffset adds the offset to the get all profiles params
-func (o *GetAllProfilesParams) WithOffset(Offset *int32) *GetAllProfilesParams {
-	o.Offset = Offset
+func (o *GetAllProfilesParams) WithOffset(offset *int32) *GetAllProfilesParams {
+	o.SetOffset(offset)
 	return o
+}
+
+// SetOffset adds the offset to the get all profiles params
+func (o *GetAllProfilesParams) SetOffset(offset *int32) {
+	o.Offset = offset
 }
 
 // WithOrder adds the order to the get all profiles params
-func (o *GetAllProfilesParams) WithOrder(Order *string) *GetAllProfilesParams {
-	o.Order = Order
+func (o *GetAllProfilesParams) WithOrder(order *string) *GetAllProfilesParams {
+	o.SetOrder(order)
 	return o
+}
+
+// SetOrder adds the order to the get all profiles params
+func (o *GetAllProfilesParams) SetOrder(order *string) {
+	o.Order = order
 }
 
 // WithOrderBy adds the orderBy to the get all profiles params
-func (o *GetAllProfilesParams) WithOrderBy(OrderBy *string) *GetAllProfilesParams {
-	o.OrderBy = OrderBy
+func (o *GetAllProfilesParams) WithOrderBy(orderBy *string) *GetAllProfilesParams {
+	o.SetOrderBy(orderBy)
 	return o
+}
+
+// SetOrderBy adds the orderBy to the get all profiles params
+func (o *GetAllProfilesParams) SetOrderBy(orderBy *string) {
+	o.OrderBy = orderBy
 }
 
 // WithOrganizations adds the organizations to the get all profiles params
-func (o *GetAllProfilesParams) WithOrganizations(Organizations []string) *GetAllProfilesParams {
-	o.Organizations = Organizations
+func (o *GetAllProfilesParams) WithOrganizations(organizations []string) *GetAllProfilesParams {
+	o.SetOrganizations(organizations)
 	return o
 }
 
+// SetOrganizations adds the organizations to the get all profiles params
+func (o *GetAllProfilesParams) SetOrganizations(organizations []string) {
+	o.Organizations = organizations
+}
+
 // WithRecords adds the records to the get all profiles params
-func (o *GetAllProfilesParams) WithRecords(Records *int32) *GetAllProfilesParams {
-	o.Records = Records
+func (o *GetAllProfilesParams) WithRecords(records *int32) *GetAllProfilesParams {
+	o.SetRecords(records)
 	return o
+}
+
+// SetRecords adds the records to the get all profiles params
+func (o *GetAllProfilesParams) SetRecords(records *int32) {
+	o.Records = records
 }
 
 // WriteToRequest writes these params to a swagger request
 func (o *GetAllProfilesParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
+	if err := r.SetTimeout(o.timeout); err != nil {
+		return err
+	}
 	var res []error
 
 	if o.Offset != nil {

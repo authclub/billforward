@@ -12,68 +12,48 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-/*DunningLine A dunning-line specifies when the next execution attempt of an unpaid invoice should take place given the number of existing execution attempts.
-
-swagger:model DunningLine
-*/
+// DunningLine A dunning-line specifies when the next execution attempt of an unpaid invoice should take place given the number of existing execution attempts.
+// swagger:model DunningLine
 type DunningLine struct {
 
-	/* { "description" : "The payment attempt this dunning line applies to, specified as a positive integer. Dunning lines are ZERO indexed.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "The payment attempt this dunning line applies to, specified as a positive integer. Dunning lines are ZERO indexed.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	AttemptIx *int32 `json:"attemptIx"`
 
-	/* { "description" : "ID of the user who last updated the entity.", "verbs":[] }
-	 */
+	// { "description" : "ID of the user who last updated the entity.", "verbs":[] }
 	ChangedBy string `json:"changedBy,omitempty"`
 
-	/* { "description" : "The UTC DateTime when the object was created.", "verbs":[] }
-	 */
+	// { "description" : "The UTC DateTime when the object was created.", "verbs":[] }
 	Created strfmt.DateTime `json:"created,omitempty"`
 
-	/* { "description" : "Has the dunning-line been deleted?", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "Has the dunning-line been deleted?", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	Deleted bool `json:"deleted"`
 
-	/* { "description" : "The payment gateway to use for this payment attempt.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "The payment gateway to use for this payment attempt.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	Gateway *string `json:"gateway"`
 
-	/* { "description" : "ID of the dunning-line.", "verbs":["GET"] }
-	 */
+	// { "description" : "ID of the dunning-line.", "verbs":["GET"] }
 	ID string `json:"id,omitempty"`
 
-	/* { "description" : "The time before the next payment attempt in minutes.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "The time before the next payment attempt in minutes.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	MinutesDelay *int32 `json:"minutesDelay"`
 
-	/* { "description" : "organization associated with the dunning-line.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "organization associated with the dunning-line.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	Organization *Organization `json:"organization"`
 
-	/* { "description" : "ID of the organization associated with the dunning-line.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "ID of the organization associated with the dunning-line.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	OrganizationID *string `json:"organizationID"`
 
-	/* { "description" : "ID of the organization associated with the dunning-line.", "verbs":["POST","PUT","GET"] }
-
-	Required: true
-	*/
+	// { "description" : "ID of the organization associated with the dunning-line.", "verbs":["POST","PUT","GET"] }
+	// Required: true
 	Type *string `json:"type"`
 
-	/* { "description" : "The UTC DateTime when the object was last updated.", "verbs":[] }
-	 */
+	// { "description" : "The UTC DateTime when the object was last updated.", "verbs":[] }
 	Updated strfmt.DateTime `json:"updated,omitempty"`
 }
 
@@ -142,17 +122,63 @@ func (m *DunningLine) validateDeleted(formats strfmt.Registry) error {
 
 var dunningLineTypeGatewayPropEnum []interface{}
 
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["cybersource_token","card_vault","paypal_simple","locustworld","free","coupon","credit_note","stripe","braintree","balanced","paypal","billforward_test","offline","trial","stripeACH","authorizeNet","spreedly","sagePay","trustCommerce","payvision","kash"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		dunningLineTypeGatewayPropEnum = append(dunningLineTypeGatewayPropEnum, v)
+	}
+}
+
+const (
+	// DunningLineGatewayCybersourceToken captures enum value "cybersource_token"
+	DunningLineGatewayCybersourceToken string = "cybersource_token"
+	// DunningLineGatewayCardVault captures enum value "card_vault"
+	DunningLineGatewayCardVault string = "card_vault"
+	// DunningLineGatewayPaypalSimple captures enum value "paypal_simple"
+	DunningLineGatewayPaypalSimple string = "paypal_simple"
+	// DunningLineGatewayLocustworld captures enum value "locustworld"
+	DunningLineGatewayLocustworld string = "locustworld"
+	// DunningLineGatewayFree captures enum value "free"
+	DunningLineGatewayFree string = "free"
+	// DunningLineGatewayCoupon captures enum value "coupon"
+	DunningLineGatewayCoupon string = "coupon"
+	// DunningLineGatewayCreditNote captures enum value "credit_note"
+	DunningLineGatewayCreditNote string = "credit_note"
+	// DunningLineGatewayStripe captures enum value "stripe"
+	DunningLineGatewayStripe string = "stripe"
+	// DunningLineGatewayBraintree captures enum value "braintree"
+	DunningLineGatewayBraintree string = "braintree"
+	// DunningLineGatewayBalanced captures enum value "balanced"
+	DunningLineGatewayBalanced string = "balanced"
+	// DunningLineGatewayPaypal captures enum value "paypal"
+	DunningLineGatewayPaypal string = "paypal"
+	// DunningLineGatewayBillforwardTest captures enum value "billforward_test"
+	DunningLineGatewayBillforwardTest string = "billforward_test"
+	// DunningLineGatewayOffline captures enum value "offline"
+	DunningLineGatewayOffline string = "offline"
+	// DunningLineGatewayTrial captures enum value "trial"
+	DunningLineGatewayTrial string = "trial"
+	// DunningLineGatewayStripeACH captures enum value "stripeACH"
+	DunningLineGatewayStripeACH string = "stripeACH"
+	// DunningLineGatewayAuthorizeNet captures enum value "authorizeNet"
+	DunningLineGatewayAuthorizeNet string = "authorizeNet"
+	// DunningLineGatewaySpreedly captures enum value "spreedly"
+	DunningLineGatewaySpreedly string = "spreedly"
+	// DunningLineGatewaySagePay captures enum value "sagePay"
+	DunningLineGatewaySagePay string = "sagePay"
+	// DunningLineGatewayTrustCommerce captures enum value "trustCommerce"
+	DunningLineGatewayTrustCommerce string = "trustCommerce"
+	// DunningLineGatewayPayvision captures enum value "payvision"
+	DunningLineGatewayPayvision string = "payvision"
+	// DunningLineGatewayKash captures enum value "kash"
+	DunningLineGatewayKash string = "kash"
+)
+
 // prop value enum
 func (m *DunningLine) validateGatewayEnum(path, location string, value string) error {
-	if dunningLineTypeGatewayPropEnum == nil {
-		var res []string
-		if err := json.Unmarshal([]byte(`["cybersource_token","card_vault","paypal_simple","locustworld","free","coupon","credit_note","stripe","braintree","balanced","paypal","billforward_test","offline","trial","stripeACH","authorizeNet","spreedly","sagePay","trustCommerce","payvision","kash"]`), &res); err != nil {
-			return err
-		}
-		for _, v := range res {
-			dunningLineTypeGatewayPropEnum = append(dunningLineTypeGatewayPropEnum, v)
-		}
-	}
 	if err := validate.Enum(path, location, value, dunningLineTypeGatewayPropEnum); err != nil {
 		return err
 	}
@@ -184,9 +210,16 @@ func (m *DunningLine) validateMinutesDelay(formats strfmt.Registry) error {
 
 func (m *DunningLine) validateOrganization(formats strfmt.Registry) error {
 
+	if err := validate.Required("organization", "body", m.Organization); err != nil {
+		return err
+	}
+
 	if m.Organization != nil {
 
 		if err := m.Organization.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("organization")
+			}
 			return err
 		}
 	}
@@ -205,17 +238,25 @@ func (m *DunningLine) validateOrganizationID(formats strfmt.Registry) error {
 
 var dunningLineTypeTypePropEnum []interface{}
 
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Invoice","Notification"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		dunningLineTypeTypePropEnum = append(dunningLineTypeTypePropEnum, v)
+	}
+}
+
+const (
+	// DunningLineTypeInvoice captures enum value "Invoice"
+	DunningLineTypeInvoice string = "Invoice"
+	// DunningLineTypeNotification captures enum value "Notification"
+	DunningLineTypeNotification string = "Notification"
+)
+
 // prop value enum
 func (m *DunningLine) validateTypeEnum(path, location string, value string) error {
-	if dunningLineTypeTypePropEnum == nil {
-		var res []string
-		if err := json.Unmarshal([]byte(`["Invoice","Notification"]`), &res); err != nil {
-			return err
-		}
-		for _, v := range res {
-			dunningLineTypeTypePropEnum = append(dunningLineTypeTypePropEnum, v)
-		}
-	}
 	if err := validate.Enum(path, location, value, dunningLineTypeTypePropEnum); err != nil {
 		return err
 	}

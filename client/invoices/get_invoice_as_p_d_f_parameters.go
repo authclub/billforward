@@ -4,8 +4,14 @@ package invoices
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"net/http"
+	"time"
+
+	"golang.org/x/net/context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
+	cr "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/swag"
 
 	strfmt "github.com/go-openapi/strfmt"
@@ -15,15 +21,15 @@ import (
 // with the default values initialized.
 func NewGetInvoiceAsPDFParams() *GetInvoiceAsPDFParams {
 	var (
-		includeRetiredDefault            bool   = bool(false)
-		inclusiveEndDefault              bool   = bool(false)
-		offsetDefault                    int32  = int32(0)
-		orderDefault                     string = string("DESC")
-		orderByDefault                   string = string("created")
-		recordsDefault                   int32  = int32(10)
-		showPlanOnlyWhenAmbiguousDefault bool   = bool(true)
-		showZeroCostDefault              bool   = bool(true)
-		tierBreakdownDefault             bool   = bool(false)
+		includeRetiredDefault            = bool(false)
+		inclusiveEndDefault              = bool(false)
+		offsetDefault                    = int32(0)
+		orderDefault                     = string("DESC")
+		orderByDefault                   = string("created")
+		recordsDefault                   = int32(10)
+		showPlanOnlyWhenAmbiguousDefault = bool(true)
+		showZeroCostDefault              = bool(true)
+		tierBreakdownDefault             = bool(false)
 	)
 	return &GetInvoiceAsPDFParams{
 		IncludeRetired:            &includeRetiredDefault,
@@ -35,6 +41,94 @@ func NewGetInvoiceAsPDFParams() *GetInvoiceAsPDFParams {
 		ShowPlanOnlyWhenAmbiguous: &showPlanOnlyWhenAmbiguousDefault,
 		ShowZeroCost:              &showZeroCostDefault,
 		TierBreakdown:             &tierBreakdownDefault,
+
+		timeout: cr.DefaultTimeout,
+	}
+}
+
+// NewGetInvoiceAsPDFParamsWithTimeout creates a new GetInvoiceAsPDFParams object
+// with the default values initialized, and the ability to set a timeout on a request
+func NewGetInvoiceAsPDFParamsWithTimeout(timeout time.Duration) *GetInvoiceAsPDFParams {
+	var (
+		includeRetiredDefault            = bool(false)
+		inclusiveEndDefault              = bool(false)
+		offsetDefault                    = int32(0)
+		orderDefault                     = string("DESC")
+		orderByDefault                   = string("created")
+		recordsDefault                   = int32(10)
+		showPlanOnlyWhenAmbiguousDefault = bool(true)
+		showZeroCostDefault              = bool(true)
+		tierBreakdownDefault             = bool(false)
+	)
+	return &GetInvoiceAsPDFParams{
+		IncludeRetired:            &includeRetiredDefault,
+		InclusiveEnd:              &inclusiveEndDefault,
+		Offset:                    &offsetDefault,
+		Order:                     &orderDefault,
+		OrderBy:                   &orderByDefault,
+		Records:                   &recordsDefault,
+		ShowPlanOnlyWhenAmbiguous: &showPlanOnlyWhenAmbiguousDefault,
+		ShowZeroCost:              &showZeroCostDefault,
+		TierBreakdown:             &tierBreakdownDefault,
+
+		timeout: timeout,
+	}
+}
+
+// NewGetInvoiceAsPDFParamsWithContext creates a new GetInvoiceAsPDFParams object
+// with the default values initialized, and the ability to set a context for a request
+func NewGetInvoiceAsPDFParamsWithContext(ctx context.Context) *GetInvoiceAsPDFParams {
+	var (
+		includeRetiredDefault            = bool(false)
+		inclusiveEndDefault              = bool(false)
+		offsetDefault                    = int32(0)
+		orderDefault                     = string("DESC")
+		orderByDefault                   = string("created")
+		recordsDefault                   = int32(10)
+		showPlanOnlyWhenAmbiguousDefault = bool(true)
+		showZeroCostDefault              = bool(true)
+		tierBreakdownDefault             = bool(false)
+	)
+	return &GetInvoiceAsPDFParams{
+		IncludeRetired:            &includeRetiredDefault,
+		InclusiveEnd:              &inclusiveEndDefault,
+		Offset:                    &offsetDefault,
+		Order:                     &orderDefault,
+		OrderBy:                   &orderByDefault,
+		Records:                   &recordsDefault,
+		ShowPlanOnlyWhenAmbiguous: &showPlanOnlyWhenAmbiguousDefault,
+		ShowZeroCost:              &showZeroCostDefault,
+		TierBreakdown:             &tierBreakdownDefault,
+
+		Context: ctx,
+	}
+}
+
+// NewGetInvoiceAsPDFParamsWithHTTPClient creates a new GetInvoiceAsPDFParams object
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
+func NewGetInvoiceAsPDFParamsWithHTTPClient(client *http.Client) *GetInvoiceAsPDFParams {
+	var (
+		includeRetiredDefault            = bool(false)
+		inclusiveEndDefault              = bool(false)
+		offsetDefault                    = int32(0)
+		orderDefault                     = string("DESC")
+		orderByDefault                   = string("created")
+		recordsDefault                   = int32(10)
+		showPlanOnlyWhenAmbiguousDefault = bool(true)
+		showZeroCostDefault              = bool(true)
+		tierBreakdownDefault             = bool(false)
+	)
+	return &GetInvoiceAsPDFParams{
+		IncludeRetired:            &includeRetiredDefault,
+		InclusiveEnd:              &inclusiveEndDefault,
+		Offset:                    &offsetDefault,
+		Order:                     &orderDefault,
+		OrderBy:                   &orderByDefault,
+		Records:                   &recordsDefault,
+		ShowPlanOnlyWhenAmbiguous: &showPlanOnlyWhenAmbiguousDefault,
+		ShowZeroCost:              &showZeroCostDefault,
+		TierBreakdown:             &tierBreakdownDefault,
+		HTTPClient:                client,
 	}
 }
 
@@ -102,89 +196,194 @@ type GetInvoiceAsPDFParams struct {
 
 	*/
 	TierBreakdown *bool
+
+	timeout    time.Duration
+	Context    context.Context
+	HTTPClient *http.Client
+}
+
+// WithTimeout adds the timeout to the get invoice as p d f params
+func (o *GetInvoiceAsPDFParams) WithTimeout(timeout time.Duration) *GetInvoiceAsPDFParams {
+	o.SetTimeout(timeout)
+	return o
+}
+
+// SetTimeout adds the timeout to the get invoice as p d f params
+func (o *GetInvoiceAsPDFParams) SetTimeout(timeout time.Duration) {
+	o.timeout = timeout
+}
+
+// WithContext adds the context to the get invoice as p d f params
+func (o *GetInvoiceAsPDFParams) WithContext(ctx context.Context) *GetInvoiceAsPDFParams {
+	o.SetContext(ctx)
+	return o
+}
+
+// SetContext adds the context to the get invoice as p d f params
+func (o *GetInvoiceAsPDFParams) SetContext(ctx context.Context) {
+	o.Context = ctx
+}
+
+// WithHTTPClient adds the HTTPClient to the get invoice as p d f params
+func (o *GetInvoiceAsPDFParams) WithHTTPClient(client *http.Client) *GetInvoiceAsPDFParams {
+	o.SetHTTPClient(client)
+	return o
+}
+
+// SetHTTPClient adds the HTTPClient to the get invoice as p d f params
+func (o *GetInvoiceAsPDFParams) SetHTTPClient(client *http.Client) {
+	o.HTTPClient = client
 }
 
 // WithID adds the id to the get invoice as p d f params
-func (o *GetInvoiceAsPDFParams) WithID(ID string) *GetInvoiceAsPDFParams {
-	o.ID = ID
+func (o *GetInvoiceAsPDFParams) WithID(id string) *GetInvoiceAsPDFParams {
+	o.SetID(id)
 	return o
+}
+
+// SetID adds the id to the get invoice as p d f params
+func (o *GetInvoiceAsPDFParams) SetID(id string) {
+	o.ID = id
 }
 
 // WithGroupLineItemsBy adds the groupLineItemsBy to the get invoice as p d f params
-func (o *GetInvoiceAsPDFParams) WithGroupLineItemsBy(GroupLineItemsBy *string) *GetInvoiceAsPDFParams {
-	o.GroupLineItemsBy = GroupLineItemsBy
+func (o *GetInvoiceAsPDFParams) WithGroupLineItemsBy(groupLineItemsBy *string) *GetInvoiceAsPDFParams {
+	o.SetGroupLineItemsBy(groupLineItemsBy)
 	return o
+}
+
+// SetGroupLineItemsBy adds the groupLineItemsBy to the get invoice as p d f params
+func (o *GetInvoiceAsPDFParams) SetGroupLineItemsBy(groupLineItemsBy *string) {
+	o.GroupLineItemsBy = groupLineItemsBy
 }
 
 // WithIncludeFooter adds the includeFooter to the get invoice as p d f params
-func (o *GetInvoiceAsPDFParams) WithIncludeFooter(IncludeFooter *bool) *GetInvoiceAsPDFParams {
-	o.IncludeFooter = IncludeFooter
+func (o *GetInvoiceAsPDFParams) WithIncludeFooter(includeFooter *bool) *GetInvoiceAsPDFParams {
+	o.SetIncludeFooter(includeFooter)
 	return o
+}
+
+// SetIncludeFooter adds the includeFooter to the get invoice as p d f params
+func (o *GetInvoiceAsPDFParams) SetIncludeFooter(includeFooter *bool) {
+	o.IncludeFooter = includeFooter
 }
 
 // WithIncludeRetired adds the includeRetired to the get invoice as p d f params
-func (o *GetInvoiceAsPDFParams) WithIncludeRetired(IncludeRetired *bool) *GetInvoiceAsPDFParams {
-	o.IncludeRetired = IncludeRetired
+func (o *GetInvoiceAsPDFParams) WithIncludeRetired(includeRetired *bool) *GetInvoiceAsPDFParams {
+	o.SetIncludeRetired(includeRetired)
 	return o
+}
+
+// SetIncludeRetired adds the includeRetired to the get invoice as p d f params
+func (o *GetInvoiceAsPDFParams) SetIncludeRetired(includeRetired *bool) {
+	o.IncludeRetired = includeRetired
 }
 
 // WithInclusiveEnd adds the inclusiveEnd to the get invoice as p d f params
-func (o *GetInvoiceAsPDFParams) WithInclusiveEnd(InclusiveEnd *bool) *GetInvoiceAsPDFParams {
-	o.InclusiveEnd = InclusiveEnd
+func (o *GetInvoiceAsPDFParams) WithInclusiveEnd(inclusiveEnd *bool) *GetInvoiceAsPDFParams {
+	o.SetInclusiveEnd(inclusiveEnd)
 	return o
+}
+
+// SetInclusiveEnd adds the inclusiveEnd to the get invoice as p d f params
+func (o *GetInvoiceAsPDFParams) SetInclusiveEnd(inclusiveEnd *bool) {
+	o.InclusiveEnd = inclusiveEnd
 }
 
 // WithOffset adds the offset to the get invoice as p d f params
-func (o *GetInvoiceAsPDFParams) WithOffset(Offset *int32) *GetInvoiceAsPDFParams {
-	o.Offset = Offset
+func (o *GetInvoiceAsPDFParams) WithOffset(offset *int32) *GetInvoiceAsPDFParams {
+	o.SetOffset(offset)
 	return o
+}
+
+// SetOffset adds the offset to the get invoice as p d f params
+func (o *GetInvoiceAsPDFParams) SetOffset(offset *int32) {
+	o.Offset = offset
 }
 
 // WithOrder adds the order to the get invoice as p d f params
-func (o *GetInvoiceAsPDFParams) WithOrder(Order *string) *GetInvoiceAsPDFParams {
-	o.Order = Order
+func (o *GetInvoiceAsPDFParams) WithOrder(order *string) *GetInvoiceAsPDFParams {
+	o.SetOrder(order)
 	return o
+}
+
+// SetOrder adds the order to the get invoice as p d f params
+func (o *GetInvoiceAsPDFParams) SetOrder(order *string) {
+	o.Order = order
 }
 
 // WithOrderBy adds the orderBy to the get invoice as p d f params
-func (o *GetInvoiceAsPDFParams) WithOrderBy(OrderBy *string) *GetInvoiceAsPDFParams {
-	o.OrderBy = OrderBy
+func (o *GetInvoiceAsPDFParams) WithOrderBy(orderBy *string) *GetInvoiceAsPDFParams {
+	o.SetOrderBy(orderBy)
 	return o
+}
+
+// SetOrderBy adds the orderBy to the get invoice as p d f params
+func (o *GetInvoiceAsPDFParams) SetOrderBy(orderBy *string) {
+	o.OrderBy = orderBy
 }
 
 // WithOrganizations adds the organizations to the get invoice as p d f params
-func (o *GetInvoiceAsPDFParams) WithOrganizations(Organizations []string) *GetInvoiceAsPDFParams {
-	o.Organizations = Organizations
+func (o *GetInvoiceAsPDFParams) WithOrganizations(organizations []string) *GetInvoiceAsPDFParams {
+	o.SetOrganizations(organizations)
 	return o
+}
+
+// SetOrganizations adds the organizations to the get invoice as p d f params
+func (o *GetInvoiceAsPDFParams) SetOrganizations(organizations []string) {
+	o.Organizations = organizations
 }
 
 // WithRecords adds the records to the get invoice as p d f params
-func (o *GetInvoiceAsPDFParams) WithRecords(Records *int32) *GetInvoiceAsPDFParams {
-	o.Records = Records
+func (o *GetInvoiceAsPDFParams) WithRecords(records *int32) *GetInvoiceAsPDFParams {
+	o.SetRecords(records)
 	return o
+}
+
+// SetRecords adds the records to the get invoice as p d f params
+func (o *GetInvoiceAsPDFParams) SetRecords(records *int32) {
+	o.Records = records
 }
 
 // WithShowPlanOnlyWhenAmbiguous adds the showPlanOnlyWhenAmbiguous to the get invoice as p d f params
-func (o *GetInvoiceAsPDFParams) WithShowPlanOnlyWhenAmbiguous(ShowPlanOnlyWhenAmbiguous *bool) *GetInvoiceAsPDFParams {
-	o.ShowPlanOnlyWhenAmbiguous = ShowPlanOnlyWhenAmbiguous
+func (o *GetInvoiceAsPDFParams) WithShowPlanOnlyWhenAmbiguous(showPlanOnlyWhenAmbiguous *bool) *GetInvoiceAsPDFParams {
+	o.SetShowPlanOnlyWhenAmbiguous(showPlanOnlyWhenAmbiguous)
 	return o
+}
+
+// SetShowPlanOnlyWhenAmbiguous adds the showPlanOnlyWhenAmbiguous to the get invoice as p d f params
+func (o *GetInvoiceAsPDFParams) SetShowPlanOnlyWhenAmbiguous(showPlanOnlyWhenAmbiguous *bool) {
+	o.ShowPlanOnlyWhenAmbiguous = showPlanOnlyWhenAmbiguous
 }
 
 // WithShowZeroCost adds the showZeroCost to the get invoice as p d f params
-func (o *GetInvoiceAsPDFParams) WithShowZeroCost(ShowZeroCost *bool) *GetInvoiceAsPDFParams {
-	o.ShowZeroCost = ShowZeroCost
+func (o *GetInvoiceAsPDFParams) WithShowZeroCost(showZeroCost *bool) *GetInvoiceAsPDFParams {
+	o.SetShowZeroCost(showZeroCost)
 	return o
 }
 
+// SetShowZeroCost adds the showZeroCost to the get invoice as p d f params
+func (o *GetInvoiceAsPDFParams) SetShowZeroCost(showZeroCost *bool) {
+	o.ShowZeroCost = showZeroCost
+}
+
 // WithTierBreakdown adds the tierBreakdown to the get invoice as p d f params
-func (o *GetInvoiceAsPDFParams) WithTierBreakdown(TierBreakdown *bool) *GetInvoiceAsPDFParams {
-	o.TierBreakdown = TierBreakdown
+func (o *GetInvoiceAsPDFParams) WithTierBreakdown(tierBreakdown *bool) *GetInvoiceAsPDFParams {
+	o.SetTierBreakdown(tierBreakdown)
 	return o
+}
+
+// SetTierBreakdown adds the tierBreakdown to the get invoice as p d f params
+func (o *GetInvoiceAsPDFParams) SetTierBreakdown(tierBreakdown *bool) {
+	o.TierBreakdown = tierBreakdown
 }
 
 // WriteToRequest writes these params to a swagger request
 func (o *GetInvoiceAsPDFParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
+	if err := r.SetTimeout(o.timeout); err != nil {
+		return err
+	}
 	var res []error
 
 	// path param ID

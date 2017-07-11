@@ -42,11 +42,14 @@ func (a *Client) DeletePaymentMethod(params *DeletePaymentMethodParams) (*Delete
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &DeletePaymentMethodReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*DeletePaymentMethodOK), nil
+
 }
 
 /*
@@ -69,11 +72,14 @@ func (a *Client) GetAllPaymentMethods(params *GetAllPaymentMethodsParams) (*GetA
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &GetAllPaymentMethodsReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*GetAllPaymentMethodsOK), nil
+
 }
 
 /*
@@ -96,11 +102,14 @@ func (a *Client) GetPaymentMethodByAccountID(params *GetPaymentMethodByAccountID
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &GetPaymentMethodByAccountIDReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*GetPaymentMethodByAccountIDOK), nil
+
 }
 
 /*
@@ -123,11 +132,14 @@ func (a *Client) GetPaymentMethodByID(params *GetPaymentMethodByIDParams) (*GetP
 		Schemes:            []string{"https"},
 		Params:             params,
 		Reader:             &GetPaymentMethodByIDReader{formats: a.formats},
+		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
 	}
 	return result.(*GetPaymentMethodByIDOK), nil
+
 }
 
 // SetTransport changes the transport on the client

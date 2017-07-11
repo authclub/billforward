@@ -4,8 +4,14 @@ package payments
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"net/http"
+	"time"
+
+	"golang.org/x/net/context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
+	cr "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/swag"
 
 	strfmt "github.com/go-openapi/strfmt"
@@ -15,11 +21,11 @@ import (
 // with the default values initialized.
 func NewGetPaymentByInvoiceIDParams() *GetPaymentByInvoiceIDParams {
 	var (
-		includeRetiredDefault bool   = bool(true)
-		offsetDefault         int32  = int32(0)
-		orderDefault          string = string("DESC")
-		orderByDefault        string = string("id")
-		recordsDefault        int32  = int32(10)
+		includeRetiredDefault = bool(true)
+		offsetDefault         = int32(0)
+		orderDefault          = string("DESC")
+		orderByDefault        = string("id")
+		recordsDefault        = int32(10)
 	)
 	return &GetPaymentByInvoiceIDParams{
 		IncludeRetired: &includeRetiredDefault,
@@ -27,6 +33,70 @@ func NewGetPaymentByInvoiceIDParams() *GetPaymentByInvoiceIDParams {
 		Order:          &orderDefault,
 		OrderBy:        &orderByDefault,
 		Records:        &recordsDefault,
+
+		timeout: cr.DefaultTimeout,
+	}
+}
+
+// NewGetPaymentByInvoiceIDParamsWithTimeout creates a new GetPaymentByInvoiceIDParams object
+// with the default values initialized, and the ability to set a timeout on a request
+func NewGetPaymentByInvoiceIDParamsWithTimeout(timeout time.Duration) *GetPaymentByInvoiceIDParams {
+	var (
+		includeRetiredDefault = bool(true)
+		offsetDefault         = int32(0)
+		orderDefault          = string("DESC")
+		orderByDefault        = string("id")
+		recordsDefault        = int32(10)
+	)
+	return &GetPaymentByInvoiceIDParams{
+		IncludeRetired: &includeRetiredDefault,
+		Offset:         &offsetDefault,
+		Order:          &orderDefault,
+		OrderBy:        &orderByDefault,
+		Records:        &recordsDefault,
+
+		timeout: timeout,
+	}
+}
+
+// NewGetPaymentByInvoiceIDParamsWithContext creates a new GetPaymentByInvoiceIDParams object
+// with the default values initialized, and the ability to set a context for a request
+func NewGetPaymentByInvoiceIDParamsWithContext(ctx context.Context) *GetPaymentByInvoiceIDParams {
+	var (
+		includeRetiredDefault = bool(true)
+		offsetDefault         = int32(0)
+		orderDefault          = string("DESC")
+		orderByDefault        = string("id")
+		recordsDefault        = int32(10)
+	)
+	return &GetPaymentByInvoiceIDParams{
+		IncludeRetired: &includeRetiredDefault,
+		Offset:         &offsetDefault,
+		Order:          &orderDefault,
+		OrderBy:        &orderByDefault,
+		Records:        &recordsDefault,
+
+		Context: ctx,
+	}
+}
+
+// NewGetPaymentByInvoiceIDParamsWithHTTPClient creates a new GetPaymentByInvoiceIDParams object
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
+func NewGetPaymentByInvoiceIDParamsWithHTTPClient(client *http.Client) *GetPaymentByInvoiceIDParams {
+	var (
+		includeRetiredDefault = bool(true)
+		offsetDefault         = int32(0)
+		orderDefault          = string("DESC")
+		orderByDefault        = string("id")
+		recordsDefault        = int32(10)
+	)
+	return &GetPaymentByInvoiceIDParams{
+		IncludeRetired: &includeRetiredDefault,
+		Offset:         &offsetDefault,
+		Order:          &orderDefault,
+		OrderBy:        &orderByDefault,
+		Records:        &recordsDefault,
+		HTTPClient:     client,
 	}
 }
 
@@ -70,53 +140,128 @@ type GetPaymentByInvoiceIDParams struct {
 
 	*/
 	Records *int32
+
+	timeout    time.Duration
+	Context    context.Context
+	HTTPClient *http.Client
+}
+
+// WithTimeout adds the timeout to the get payment by invoice ID params
+func (o *GetPaymentByInvoiceIDParams) WithTimeout(timeout time.Duration) *GetPaymentByInvoiceIDParams {
+	o.SetTimeout(timeout)
+	return o
+}
+
+// SetTimeout adds the timeout to the get payment by invoice ID params
+func (o *GetPaymentByInvoiceIDParams) SetTimeout(timeout time.Duration) {
+	o.timeout = timeout
+}
+
+// WithContext adds the context to the get payment by invoice ID params
+func (o *GetPaymentByInvoiceIDParams) WithContext(ctx context.Context) *GetPaymentByInvoiceIDParams {
+	o.SetContext(ctx)
+	return o
+}
+
+// SetContext adds the context to the get payment by invoice ID params
+func (o *GetPaymentByInvoiceIDParams) SetContext(ctx context.Context) {
+	o.Context = ctx
+}
+
+// WithHTTPClient adds the HTTPClient to the get payment by invoice ID params
+func (o *GetPaymentByInvoiceIDParams) WithHTTPClient(client *http.Client) *GetPaymentByInvoiceIDParams {
+	o.SetHTTPClient(client)
+	return o
+}
+
+// SetHTTPClient adds the HTTPClient to the get payment by invoice ID params
+func (o *GetPaymentByInvoiceIDParams) SetHTTPClient(client *http.Client) {
+	o.HTTPClient = client
 }
 
 // WithIncludeRetired adds the includeRetired to the get payment by invoice ID params
-func (o *GetPaymentByInvoiceIDParams) WithIncludeRetired(IncludeRetired *bool) *GetPaymentByInvoiceIDParams {
-	o.IncludeRetired = IncludeRetired
+func (o *GetPaymentByInvoiceIDParams) WithIncludeRetired(includeRetired *bool) *GetPaymentByInvoiceIDParams {
+	o.SetIncludeRetired(includeRetired)
 	return o
 }
 
-// WithInvoiceID adds the invoiceId to the get payment by invoice ID params
-func (o *GetPaymentByInvoiceIDParams) WithInvoiceID(InvoiceID string) *GetPaymentByInvoiceIDParams {
-	o.InvoiceID = InvoiceID
+// SetIncludeRetired adds the includeRetired to the get payment by invoice ID params
+func (o *GetPaymentByInvoiceIDParams) SetIncludeRetired(includeRetired *bool) {
+	o.IncludeRetired = includeRetired
+}
+
+// WithInvoiceID adds the invoiceID to the get payment by invoice ID params
+func (o *GetPaymentByInvoiceIDParams) WithInvoiceID(invoiceID string) *GetPaymentByInvoiceIDParams {
+	o.SetInvoiceID(invoiceID)
 	return o
+}
+
+// SetInvoiceID adds the invoiceId to the get payment by invoice ID params
+func (o *GetPaymentByInvoiceIDParams) SetInvoiceID(invoiceID string) {
+	o.InvoiceID = invoiceID
 }
 
 // WithOffset adds the offset to the get payment by invoice ID params
-func (o *GetPaymentByInvoiceIDParams) WithOffset(Offset *int32) *GetPaymentByInvoiceIDParams {
-	o.Offset = Offset
+func (o *GetPaymentByInvoiceIDParams) WithOffset(offset *int32) *GetPaymentByInvoiceIDParams {
+	o.SetOffset(offset)
 	return o
+}
+
+// SetOffset adds the offset to the get payment by invoice ID params
+func (o *GetPaymentByInvoiceIDParams) SetOffset(offset *int32) {
+	o.Offset = offset
 }
 
 // WithOrder adds the order to the get payment by invoice ID params
-func (o *GetPaymentByInvoiceIDParams) WithOrder(Order *string) *GetPaymentByInvoiceIDParams {
-	o.Order = Order
+func (o *GetPaymentByInvoiceIDParams) WithOrder(order *string) *GetPaymentByInvoiceIDParams {
+	o.SetOrder(order)
 	return o
+}
+
+// SetOrder adds the order to the get payment by invoice ID params
+func (o *GetPaymentByInvoiceIDParams) SetOrder(order *string) {
+	o.Order = order
 }
 
 // WithOrderBy adds the orderBy to the get payment by invoice ID params
-func (o *GetPaymentByInvoiceIDParams) WithOrderBy(OrderBy *string) *GetPaymentByInvoiceIDParams {
-	o.OrderBy = OrderBy
+func (o *GetPaymentByInvoiceIDParams) WithOrderBy(orderBy *string) *GetPaymentByInvoiceIDParams {
+	o.SetOrderBy(orderBy)
 	return o
+}
+
+// SetOrderBy adds the orderBy to the get payment by invoice ID params
+func (o *GetPaymentByInvoiceIDParams) SetOrderBy(orderBy *string) {
+	o.OrderBy = orderBy
 }
 
 // WithOrganizations adds the organizations to the get payment by invoice ID params
-func (o *GetPaymentByInvoiceIDParams) WithOrganizations(Organizations []string) *GetPaymentByInvoiceIDParams {
-	o.Organizations = Organizations
+func (o *GetPaymentByInvoiceIDParams) WithOrganizations(organizations []string) *GetPaymentByInvoiceIDParams {
+	o.SetOrganizations(organizations)
 	return o
 }
 
+// SetOrganizations adds the organizations to the get payment by invoice ID params
+func (o *GetPaymentByInvoiceIDParams) SetOrganizations(organizations []string) {
+	o.Organizations = organizations
+}
+
 // WithRecords adds the records to the get payment by invoice ID params
-func (o *GetPaymentByInvoiceIDParams) WithRecords(Records *int32) *GetPaymentByInvoiceIDParams {
-	o.Records = Records
+func (o *GetPaymentByInvoiceIDParams) WithRecords(records *int32) *GetPaymentByInvoiceIDParams {
+	o.SetRecords(records)
 	return o
+}
+
+// SetRecords adds the records to the get payment by invoice ID params
+func (o *GetPaymentByInvoiceIDParams) SetRecords(records *int32) {
+	o.Records = records
 }
 
 // WriteToRequest writes these params to a swagger request
 func (o *GetPaymentByInvoiceIDParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
+	if err := r.SetTimeout(o.timeout); err != nil {
+		return err
+	}
 	var res []error
 
 	if o.IncludeRetired != nil {

@@ -5,78 +5,61 @@ package models
 
 import (
 	"encoding/json"
+	"strconv"
 
 	strfmt "github.com/go-openapi/strfmt"
-	"github.com/go-openapi/swag"
 
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
 
-/*CreateAggregatingSubscriptionRequest Entity for requesting that an 'aggregating subscription' (i.e. a 'parent subscription' which collects the charges raised by many 'child subscriptions') be created.
-
-swagger:model CreateAggregatingSubscriptionRequest
-*/
+// CreateAggregatingSubscriptionRequest Entity for requesting that an 'aggregating subscription' (i.e. a 'parent subscription' which collects the charges raised by many 'child subscriptions') be created.
+// swagger:model CreateAggregatingSubscriptionRequest
 type CreateAggregatingSubscriptionRequest struct {
 
-	/* {"description":"ID of the BillForward Account who will own this aggregating subscription. You should ensure beforehand that the customer has had a BillForward Account created for them.","verbs":["POST"]}
-
-	Required: true
-	*/
+	// {"description":"ID of the BillForward Account who will own this aggregating subscription. You should ensure beforehand that the customer has had a BillForward Account created for them.","verbs":["POST"]}
+	// Required: true
 	AccountID *string `json:"accountID"`
 
-	/* {"default":false,"description":"Whether this 'aggregating subscription' should collect charges (starting now) from all other subscriptions (current and future) belonging to this BillForward Account.","verbs":["POST"]}
-	 */
+	// {"default":false,"description":"Whether this 'aggregating subscription' should collect charges (starting now) from all other subscriptions (current and future) belonging to this BillForward Account.","verbs":["POST"]}
 	AggregateAllSubscriptionsOnAccount *bool `json:"aggregateAllSubscriptionsOnAccount,omitempty"`
 
-	/* {"default":"(empty list)","description":"[Required if and only if `productRatePlan` is omitted] List of components whose prices should be recalculated upon invoice aggregation. For example: two subscriptions' individual consumptions may neither of them be large enough to achieve bulk buy discounts. When aggregated, though, the same two subscriptions' consumption may add up to a quantity which does merit a bulk buy discount within your tiering system.","verbs":["POST"]}
-	 */
-	AggregatingComponents []*CreateAggregatingComponentRequest `json:"aggregatingComponents,omitempty"`
+	// {"default":"(empty list)","description":"[Required if and only if `productRatePlan` is omitted] List of components whose prices should be recalculated upon invoice aggregation. For example: two subscriptions' individual consumptions may neither of them be large enough to achieve bulk buy discounts. When aggregated, though, the same two subscriptions' consumption may add up to a quantity which does merit a bulk buy discount within your tiering system.","verbs":["POST"]}
+	AggregatingComponents []*CreateAggregatingComponentRequest `json:"aggregatingComponents"`
 
-	/* { "description" : "The UTC DateTime when the object was created.", "verbs":[] }
-	 */
+	// { "description" : "The UTC DateTime when the object was created.", "verbs":[] }
 	Created strfmt.DateTime `json:"created,omitempty"`
 
-	/* {"description":"[Required if and only if `productRatePlan` is omitted] The currency of the product-rate-plan &mdash; as specified by a three-character ISO 4217 currency code (i.e. USD).","verbs":["POST"]}
-
-	Required: true
-	*/
+	// {"description":"[Required if and only if `productRatePlan` is omitted] The currency of the product-rate-plan &mdash; as specified by a three-character ISO 4217 currency code (i.e. USD).","verbs":["POST"]}
+	// Required: true
 	Currency *string `json:"currency"`
 
-	/* {"default":"(null)","description":"Description of the created subscription. This is primarily for your benefit &mdash; for example, you could write here the mechanism through which you obtained this customer. (e.g. 'Business signed up using BUSYGUYS coupon, at management trade show').","verbs":["POST"]}
-	 */
+	// {"default":"(null)","description":"Description of the created subscription. This is primarily for your benefit &mdash; for example, you could write here the mechanism through which you obtained this customer. (e.g. 'Business signed up using BUSYGUYS coupon, at management trade show').","verbs":["POST"]}
 	Description string `json:"description,omitempty"`
 
-	/* {"description":"[Required if and only if `productRatePlan` is omitted] Number of length-measures which constitute the rate plan's period.","verbs":["POST"]}
-	 */
+	// {"description":"[Required if and only if `productRatePlan` is omitted] Number of length-measures which constitute the rate plan's period.","verbs":["POST"]}
 	Duration int32 `json:"duration,omitempty"`
 
-	/* {"description":"[Required if and only if `productRatePlan` is omitted] Measure describing the magnitude of the rate plan's period.","verbs":["POST"]}
-	 */
+	// {"description":"[Required if and only if `productRatePlan` is omitted] Measure describing the magnitude of the rate plan's period.","verbs":["POST"]}
 	DurationPeriod string `json:"durationPeriod,omitempty"`
 
-	/* {"default":"(Subscription will be named after the rate plan to which the subscription subscribes)","description":"Name of the created subscription. This is primarily for your benefit &mdash; for example, to enable you to identify subscriptions at a glance in the BillForward web interface (e.g. 'BusinessCorp subscriptions, care of Mr Business (mr@busy.com)').","verbs":["POST"]}
-	 */
+	// {"default":"(Subscription will be named after the rate plan to which the subscription subscribes)","description":"Name of the created subscription. This is primarily for your benefit &mdash; for example, to enable you to identify subscriptions at a glance in the BillForward web interface (e.g. 'BusinessCorp subscriptions, care of Mr Business (mr@busy.com)').","verbs":["POST"]}
 	Name string `json:"name,omitempty"`
 
-	/* {"default":"(Auto-populated using your authentication credentials)","description":"ID of the BillForward Organization within which the requested Subscription should be created. If omitted, this will be auto-populated using your authentication credentials.","verbs":["POST"]}
-	 */
+	// {"default":"(Auto-populated using your authentication credentials)","description":"ID of the BillForward Organization within which the requested Subscription should be created. If omitted, this will be auto-populated using your authentication credentials.","verbs":["POST"]}
 	OrganizationID string `json:"organizationID,omitempty"`
 
-	/* {"description":"ID of the rate plan to which the subscription will be subscribing. If omitted: it will be assumed you wish to create a new rate plan as part of this request &mdash; this subscription will subscribe to that newly-created rate plan.","verbs":["POST"]}
-	 */
+	// {"description":"ID of the rate plan to which the subscription will be subscribing. If omitted: it will be assumed you wish to create a new rate plan as part of this request &mdash; this subscription will subscribe to that newly-created rate plan.","verbs":["POST"]}
 	ProductRatePlan string `json:"productRatePlan,omitempty"`
 
-	/* {"description":"[Required if and only if `productRatePlan` is omitted] The frequency of the rate plan &mdash; either recurring or non-recurring.","verbs":["POST"]}
-	 */
+	// {"description":"[Required if and only if `productRatePlan` is omitted] The frequency of the rate plan &mdash; either recurring or non-recurring.","verbs":["POST"]}
 	ProductType string `json:"productType,omitempty"`
 
-	/* {"default":"(ServerNow upon receiving request)","description":"ISO 8601 UTC DateTime (e.g. 2015-06-16T11:58:41Z) describing the date at which the subscription should enter its first service period.","verbs":["POST"]}
-	 */
+	// {"default":"(ServerNow upon receiving request)","description":"ISO 8601 UTC DateTime (e.g. 2015-06-16T11:58:41Z) describing the date at which the subscription should enter its first service period.","verbs":["POST"]}
 	Start strfmt.DateTime `json:"start,omitempty"`
 
-	/* {"default":"Provisioned","description":"The state in which the created subscription will begin.<br><span class=\"label label-default\">Provisioned</span> &mdash; The subscription will wait (without raising any invoices or beginning its service) until explicit action is taken to change its state.<br><span class=\"label label-default\">AwaitingPayment</span> &mdash; The subscription is activated. After `start` time is surpassed, it will begin service and raise its first invoice.","verbs":["POST"]}
-	 */
+	// {"default":"Provisioned","description":"The state in which the created subscription will begin.<br><span class=\"label label-default\">Provisioned</span> &mdash; The subscription will wait (without raising any invoices or beginning its service) until explicit action is taken to change its state.<br><span class=\"label label-default\">AwaitingPayment</span> &mdash; The subscription is activated. After `start` time is surpassed, it will begin service and raise its first invoice.","verbs":["POST"]}
 	State string `json:"state,omitempty"`
 }
 
@@ -135,6 +118,24 @@ func (m *CreateAggregatingSubscriptionRequest) validateAggregatingComponents(for
 		return nil
 	}
 
+	for i := 0; i < len(m.AggregatingComponents); i++ {
+
+		if swag.IsZero(m.AggregatingComponents[i]) { // not required
+			continue
+		}
+
+		if m.AggregatingComponents[i] != nil {
+
+			if err := m.AggregatingComponents[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("aggregatingComponents" + "." + strconv.Itoa(i))
+				}
+				return err
+			}
+		}
+
+	}
+
 	return nil
 }
 
@@ -149,17 +150,29 @@ func (m *CreateAggregatingSubscriptionRequest) validateCurrency(formats strfmt.R
 
 var createAggregatingSubscriptionRequestTypeDurationPeriodPropEnum []interface{}
 
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["minutes","days","months","years"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		createAggregatingSubscriptionRequestTypeDurationPeriodPropEnum = append(createAggregatingSubscriptionRequestTypeDurationPeriodPropEnum, v)
+	}
+}
+
+const (
+	// CreateAggregatingSubscriptionRequestDurationPeriodMinutes captures enum value "minutes"
+	CreateAggregatingSubscriptionRequestDurationPeriodMinutes string = "minutes"
+	// CreateAggregatingSubscriptionRequestDurationPeriodDays captures enum value "days"
+	CreateAggregatingSubscriptionRequestDurationPeriodDays string = "days"
+	// CreateAggregatingSubscriptionRequestDurationPeriodMonths captures enum value "months"
+	CreateAggregatingSubscriptionRequestDurationPeriodMonths string = "months"
+	// CreateAggregatingSubscriptionRequestDurationPeriodYears captures enum value "years"
+	CreateAggregatingSubscriptionRequestDurationPeriodYears string = "years"
+)
+
 // prop value enum
 func (m *CreateAggregatingSubscriptionRequest) validateDurationPeriodEnum(path, location string, value string) error {
-	if createAggregatingSubscriptionRequestTypeDurationPeriodPropEnum == nil {
-		var res []string
-		if err := json.Unmarshal([]byte(`["minutes","days","months","years"]`), &res); err != nil {
-			return err
-		}
-		for _, v := range res {
-			createAggregatingSubscriptionRequestTypeDurationPeriodPropEnum = append(createAggregatingSubscriptionRequestTypeDurationPeriodPropEnum, v)
-		}
-	}
 	if err := validate.Enum(path, location, value, createAggregatingSubscriptionRequestTypeDurationPeriodPropEnum); err != nil {
 		return err
 	}
@@ -182,17 +195,25 @@ func (m *CreateAggregatingSubscriptionRequest) validateDurationPeriod(formats st
 
 var createAggregatingSubscriptionRequestTypeProductTypePropEnum []interface{}
 
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["nonrecurring","recurring"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		createAggregatingSubscriptionRequestTypeProductTypePropEnum = append(createAggregatingSubscriptionRequestTypeProductTypePropEnum, v)
+	}
+}
+
+const (
+	// CreateAggregatingSubscriptionRequestProductTypeNonrecurring captures enum value "nonrecurring"
+	CreateAggregatingSubscriptionRequestProductTypeNonrecurring string = "nonrecurring"
+	// CreateAggregatingSubscriptionRequestProductTypeRecurring captures enum value "recurring"
+	CreateAggregatingSubscriptionRequestProductTypeRecurring string = "recurring"
+)
+
 // prop value enum
 func (m *CreateAggregatingSubscriptionRequest) validateProductTypeEnum(path, location string, value string) error {
-	if createAggregatingSubscriptionRequestTypeProductTypePropEnum == nil {
-		var res []string
-		if err := json.Unmarshal([]byte(`["nonrecurring","recurring"]`), &res); err != nil {
-			return err
-		}
-		for _, v := range res {
-			createAggregatingSubscriptionRequestTypeProductTypePropEnum = append(createAggregatingSubscriptionRequestTypeProductTypePropEnum, v)
-		}
-	}
 	if err := validate.Enum(path, location, value, createAggregatingSubscriptionRequestTypeProductTypePropEnum); err != nil {
 		return err
 	}
@@ -215,17 +236,35 @@ func (m *CreateAggregatingSubscriptionRequest) validateProductType(formats strfm
 
 var createAggregatingSubscriptionRequestTypeStatePropEnum []interface{}
 
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Trial","Provisioned","Paid","AwaitingPayment","Cancelled","Failed","Expired"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		createAggregatingSubscriptionRequestTypeStatePropEnum = append(createAggregatingSubscriptionRequestTypeStatePropEnum, v)
+	}
+}
+
+const (
+	// CreateAggregatingSubscriptionRequestStateTrial captures enum value "Trial"
+	CreateAggregatingSubscriptionRequestStateTrial string = "Trial"
+	// CreateAggregatingSubscriptionRequestStateProvisioned captures enum value "Provisioned"
+	CreateAggregatingSubscriptionRequestStateProvisioned string = "Provisioned"
+	// CreateAggregatingSubscriptionRequestStatePaid captures enum value "Paid"
+	CreateAggregatingSubscriptionRequestStatePaid string = "Paid"
+	// CreateAggregatingSubscriptionRequestStateAwaitingPayment captures enum value "AwaitingPayment"
+	CreateAggregatingSubscriptionRequestStateAwaitingPayment string = "AwaitingPayment"
+	// CreateAggregatingSubscriptionRequestStateCancelled captures enum value "Cancelled"
+	CreateAggregatingSubscriptionRequestStateCancelled string = "Cancelled"
+	// CreateAggregatingSubscriptionRequestStateFailed captures enum value "Failed"
+	CreateAggregatingSubscriptionRequestStateFailed string = "Failed"
+	// CreateAggregatingSubscriptionRequestStateExpired captures enum value "Expired"
+	CreateAggregatingSubscriptionRequestStateExpired string = "Expired"
+)
+
 // prop value enum
 func (m *CreateAggregatingSubscriptionRequest) validateStateEnum(path, location string, value string) error {
-	if createAggregatingSubscriptionRequestTypeStatePropEnum == nil {
-		var res []string
-		if err := json.Unmarshal([]byte(`["Trial","Provisioned","Paid","AwaitingPayment","Cancelled","Failed","Expired"]`), &res); err != nil {
-			return err
-		}
-		for _, v := range res {
-			createAggregatingSubscriptionRequestTypeStatePropEnum = append(createAggregatingSubscriptionRequestTypeStatePropEnum, v)
-		}
-	}
 	if err := validate.Enum(path, location, value, createAggregatingSubscriptionRequestTypeStatePropEnum); err != nil {
 		return err
 	}

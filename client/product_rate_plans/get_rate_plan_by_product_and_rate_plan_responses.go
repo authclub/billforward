@@ -19,7 +19,7 @@ type GetRatePlanByProductAndRatePlanReader struct {
 	formats strfmt.Registry
 }
 
-// ReadResponse reads a server response into the recieved o.
+// ReadResponse reads a server response into the received o.
 func (o *GetRatePlanByProductAndRatePlanReader) ReadResponse(response runtime.ClientResponse, consumer runtime.Consumer) (interface{}, error) {
 	switch response.Code() {
 
@@ -34,6 +34,9 @@ func (o *GetRatePlanByProductAndRatePlanReader) ReadResponse(response runtime.Cl
 		result := NewGetRatePlanByProductAndRatePlanDefault(response.Code())
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
+		}
+		if response.Code()/100 == 2 {
+			return result, nil
 		}
 		return nil, result
 	}

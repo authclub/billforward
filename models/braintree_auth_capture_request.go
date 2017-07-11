@@ -10,13 +10,12 @@ import (
 	strfmt "github.com/go-openapi/strfmt"
 
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
 
-/*BraintreeAuthCaptureRequest braintree auth capture request
-
-swagger:model BraintreeAuthCaptureRequest
-*/
+// BraintreeAuthCaptureRequest braintree auth capture request
+// swagger:model BraintreeAuthCaptureRequest
 type BraintreeAuthCaptureRequest struct {
 	accountIdField string
 
@@ -36,14 +35,11 @@ type BraintreeAuthCaptureRequest struct {
 
 	organizationIdField string
 
-	/* {"description":"(Required when vaulting a PayPal payment method; otherwise optional)<br>A JSON string providing information about the device your customer used to fill out the card capture form. This information is inserted into your form by <a href=\"https://developers.braintreepayments.com/javascript+node/guides/advanced-fraud-tools/client-side\">braintree-data.js</a> &mdash; if and only if you use Braintree's drop-in form integrations. You should ideally provide it if you have one (it aids with fraud detection), but it is only mandatory in the case of PayPal payment method vaulting.","verbs":["POST"]}
-	 */
+	// {"description":"(Required when vaulting a PayPal payment method; otherwise optional)<br>A JSON string providing information about the device your customer used to fill out the card capture form. This information is inserted into your form by <a href=\"https://developers.braintreepayments.com/javascript+node/guides/advanced-fraud-tools/client-side\">braintree-data.js</a> &mdash; if and only if you use Braintree's drop-in form integrations. You should ideally provide it if you have one (it aids with fraud detection), but it is only mandatory in the case of PayPal payment method vaulting.","verbs":["POST"]}
 	DeviceData string `json:"deviceData,omitempty"`
 
-	/* {"description":"One-use cryptographic nonce <a href=\"https://developers.braintreepayments.com/javascript+node/start/overview\">provided by Braintree's client-side card capture SDK</a>, in response to your capturing a card into the Braintree vault. This nonce will be used by BillForward to find the tokenized card within the Braintree vault &mdash; precursory to linking a BillForward PaymentMethod to that tokenized card","verbs":["POST"]}
-
-	Required: true
-	*/
+	// {"description":"One-use cryptographic nonce <a href=\"https://developers.braintreepayments.com/javascript+node/start/overview\">provided by Braintree's client-side card capture SDK</a>, in response to your capturing a card into the Braintree vault. This nonce will be used by BillForward to find the tokenized card within the Braintree vault &mdash; precursory to linking a BillForward PaymentMethod to that tokenized card","verbs":["POST"]}
+	// Required: true
 	PaymentMethodNonce *string `json:"paymentMethodNonce"`
 }
 
@@ -140,14 +136,11 @@ func (m *BraintreeAuthCaptureRequest) UnmarshalJSON(raw []byte) error {
 
 		OrganizationID string `json:"organizationID,omitempty"`
 
-		/* {"description":"(Required when vaulting a PayPal payment method; otherwise optional)<br>A JSON string providing information about the device your customer used to fill out the card capture form. This information is inserted into your form by <a href=\"https://developers.braintreepayments.com/javascript+node/guides/advanced-fraud-tools/client-side\">braintree-data.js</a> &mdash; if and only if you use Braintree's drop-in form integrations. You should ideally provide it if you have one (it aids with fraud detection), but it is only mandatory in the case of PayPal payment method vaulting.","verbs":["POST"]}
-		 */
+		// {"description":"(Required when vaulting a PayPal payment method; otherwise optional)<br>A JSON string providing information about the device your customer used to fill out the card capture form. This information is inserted into your form by <a href=\"https://developers.braintreepayments.com/javascript+node/guides/advanced-fraud-tools/client-side\">braintree-data.js</a> &mdash; if and only if you use Braintree's drop-in form integrations. You should ideally provide it if you have one (it aids with fraud detection), but it is only mandatory in the case of PayPal payment method vaulting.","verbs":["POST"]}
 		DeviceData string `json:"deviceData,omitempty"`
 
-		/* {"description":"One-use cryptographic nonce <a href=\"https://developers.braintreepayments.com/javascript+node/start/overview\">provided by Braintree's client-side card capture SDK</a>, in response to your capturing a card into the Braintree vault. This nonce will be used by BillForward to find the tokenized card within the Braintree vault &mdash; precursory to linking a BillForward PaymentMethod to that tokenized card","verbs":["POST"]}
-
-		Required: true
-		*/
+		// {"description":"One-use cryptographic nonce <a href=\"https://developers.braintreepayments.com/javascript+node/start/overview\">provided by Braintree's client-side card capture SDK</a>, in response to your capturing a card into the Braintree vault. This nonce will be used by BillForward to find the tokenized card within the Braintree vault &mdash; precursory to linking a BillForward PaymentMethod to that tokenized card","verbs":["POST"]}
+		// Required: true
 		PaymentMethodNonce *string `json:"paymentMethodNonce"`
 	}
 
@@ -197,14 +190,11 @@ func (m BraintreeAuthCaptureRequest) MarshalJSON() ([]byte, error) {
 
 		OrganizationID string `json:"organizationID,omitempty"`
 
-		/* {"description":"(Required when vaulting a PayPal payment method; otherwise optional)<br>A JSON string providing information about the device your customer used to fill out the card capture form. This information is inserted into your form by <a href=\"https://developers.braintreepayments.com/javascript+node/guides/advanced-fraud-tools/client-side\">braintree-data.js</a> &mdash; if and only if you use Braintree's drop-in form integrations. You should ideally provide it if you have one (it aids with fraud detection), but it is only mandatory in the case of PayPal payment method vaulting.","verbs":["POST"]}
-		 */
+		// {"description":"(Required when vaulting a PayPal payment method; otherwise optional)<br>A JSON string providing information about the device your customer used to fill out the card capture form. This information is inserted into your form by <a href=\"https://developers.braintreepayments.com/javascript+node/guides/advanced-fraud-tools/client-side\">braintree-data.js</a> &mdash; if and only if you use Braintree's drop-in form integrations. You should ideally provide it if you have one (it aids with fraud detection), but it is only mandatory in the case of PayPal payment method vaulting.","verbs":["POST"]}
 		DeviceData string `json:"deviceData,omitempty"`
 
-		/* {"description":"One-use cryptographic nonce <a href=\"https://developers.braintreepayments.com/javascript+node/start/overview\">provided by Braintree's client-side card capture SDK</a>, in response to your capturing a card into the Braintree vault. This nonce will be used by BillForward to find the tokenized card within the Braintree vault &mdash; precursory to linking a BillForward PaymentMethod to that tokenized card","verbs":["POST"]}
-
-		Required: true
-		*/
+		// {"description":"One-use cryptographic nonce <a href=\"https://developers.braintreepayments.com/javascript+node/start/overview\">provided by Braintree's client-side card capture SDK</a>, in response to your capturing a card into the Braintree vault. This nonce will be used by BillForward to find the tokenized card within the Braintree vault &mdash; precursory to linking a BillForward PaymentMethod to that tokenized card","verbs":["POST"]}
+		// Required: true
 		PaymentMethodNonce *string `json:"paymentMethodNonce"`
 	}
 
@@ -243,17 +233,18 @@ func (m *BraintreeAuthCaptureRequest) Validate(formats strfmt.Registry) error {
 
 var braintreeAuthCaptureRequestTypeGatewayPropEnum []interface{}
 
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["Balanced","Braintree","Cybersource","Paypal","Stripe","AuthorizeNet","Spreedly","SagePay","TrustCommerce","Payvision","Kash"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		braintreeAuthCaptureRequestTypeGatewayPropEnum = append(braintreeAuthCaptureRequestTypeGatewayPropEnum, v)
+	}
+}
+
 // property enum
 func (m *BraintreeAuthCaptureRequest) validateGatewayEnum(path, location string, value string) error {
-	if braintreeAuthCaptureRequestTypeGatewayPropEnum == nil {
-		var res []string
-		if err := json.Unmarshal([]byte(`["Balanced","Braintree","Cybersource","Paypal","Stripe","AuthorizeNet","Spreedly","SagePay","TrustCommerce","Payvision","Kash"]`), &res); err != nil {
-			return err
-		}
-		for _, v := range res {
-			braintreeAuthCaptureRequestTypeGatewayPropEnum = append(braintreeAuthCaptureRequestTypeGatewayPropEnum, v)
-		}
-	}
 	if err := validate.Enum(path, location, value, braintreeAuthCaptureRequestTypeGatewayPropEnum); err != nil {
 		return err
 	}
@@ -261,6 +252,10 @@ func (m *BraintreeAuthCaptureRequest) validateGatewayEnum(path, location string,
 }
 
 func (m *BraintreeAuthCaptureRequest) validateGateway(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.Gateway()) { // not required
+		return nil
+	}
 
 	// value enum
 	if err := m.validateGatewayEnum("gateway", "body", m.Gateway()); err != nil {

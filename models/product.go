@@ -12,98 +12,70 @@ import (
 	"github.com/go-openapi/validate"
 )
 
-/*Product Product
-
-swagger:model Product
-*/
+// Product Product
+// swagger:model Product
 type Product struct {
 
-	/* {"description":"","verbs":[]}
-	 */
+	// {"description":"","verbs":[]}
 	AccountID string `json:"accountID,omitempty"`
 
-	/* { "description" : "ID of the user who last updated the entity.", "verbs":[] }
-	 */
+	// { "description" : "ID of the user who last updated the entity.", "verbs":[] }
 	ChangedBy string `json:"changedBy,omitempty"`
 
-	/* { "description" : "The UTC DateTime when the object was created.", "verbs":[] }
-	 */
+	// { "description" : "The UTC DateTime when the object was created.", "verbs":[] }
 	Created strfmt.DateTime `json:"created,omitempty"`
 
-	/* {"description":"Customer-relationship-management ID of the product.","verbs":["GET","PUT","POST"]}
-	 */
+	// {"description":"Customer-relationship-management ID of the product.","verbs":["GET","PUT","POST"]}
 	CrmID string `json:"crmID,omitempty"`
 
-	/* {"description":"","verbs":["GET"]}
-
-	Required: true
-	*/
+	// {"description":"","verbs":["GET"]}
+	// Required: true
 	Deleted bool `json:"deleted"`
 
-	/* {"description":"A description &mdash; for your benefit &mdash; of the product. For example: you could explain what service this product entitles a customer to.","verbs":["POST","PUT","GET"]}
-
-	Required: true
-	*/
+	// {"description":"A description &mdash; for your benefit &mdash; of the product. For example: you could explain what service this product entitles a customer to.","verbs":["POST","PUT","GET"]}
+	// Required: true
 	Description *string `json:"description"`
 
-	/* {"description":"Number of length-measures which constitute the product's period.","verbs":["POST","PUT","GET"]}
-
-	Required: true
-	*/
+	// {"description":"Number of length-measures which constitute the product's period.","verbs":["POST","PUT","GET"]}
+	// Required: true
 	Duration *int32 `json:"duration"`
 
-	/* {"description":"Measure describing the magnitude of the product's period.","verbs":["POST","PUT","GET"]}
-
-	Required: true
-	*/
+	// {"description":"Measure describing the magnitude of the product's period.","verbs":["POST","PUT","GET"]}
+	// Required: true
 	DurationPeriod *string `json:"durationPeriod"`
 
-	/* {"description":"ID uniquely identifying this product.","verbs":["GET"]}
-	 */
+	// {"description":"ID uniquely identifying this product.","verbs":["GET"]}
 	ID string `json:"id,omitempty"`
 
-	/* metadata
-	 */
+	// metadata
 	Metadata DynamicMetadata `json:"metadata,omitempty"`
 
-	/* {"description":"A unique name &mdash; for your benefit &mdash; used to identify this product within BillForward. It should reflect the fact that this product confers some service to a customer (e.g. \"Gold membership\").<br>The product can also be defined by the frequency with which it recurs (e.g. \"Monthly Gold membership\").<br>Remember also that rate plans can override the timing prescribed by their product. If you intend to override that timing, you may consider the product's period duration to be an unimportant factor when it comes to naming it.","verbs":["POST","PUT","GET"]}
-
-	Required: true
-	*/
+	// {"description":"A unique name &mdash; for your benefit &mdash; used to identify this product within BillForward. It should reflect the fact that this product confers some service to a customer (e.g. \"Gold membership\").<br>The product can also be defined by the frequency with which it recurs (e.g. \"Monthly Gold membership\").<br>Remember also that rate plans can override the timing prescribed by their product. If you intend to override that timing, you may consider the product's period duration to be an unimportant factor when it comes to naming it.","verbs":["POST","PUT","GET"]}
+	// Required: true
 	Name *string `json:"name"`
 
-	/* payment terms
-	 */
+	// payment terms
 	PaymentTerms int64 `json:"paymentTerms,omitempty"`
 
-	/* {"default":"recurring","description":"The frequency of the product &mdash; either recurring or non-recurring.","verbs":["POST","PUT","GET"]}
-
-	Required: true
-	*/
+	// {"default":"recurring","description":"The frequency of the product &mdash; either recurring or non-recurring.","verbs":["POST","PUT","GET"]}
+	// Required: true
 	ProductType *string `json:"productType"`
 
-	/* {"description":"A friendly non-unique name used to identify this product","verbs":["POST","PUT","GET"]}
-	 */
+	// {"description":"A friendly non-unique name used to identify this product","verbs":["POST","PUT","GET"]}
 	PublicName string `json:"publicName,omitempty"`
 
-	/* {"description":"","verbs":[]}
-	 */
+	// {"description":"","verbs":[]}
 	StartDate strfmt.DateTime `json:"startDate,omitempty"`
 
-	/* {"default":0,"description":"Number of trial-length-measures which constitute the product's trial period","verbs":["POST","PUT","GET"]}
-
-	Required: true
-	*/
+	// {"default":0,"description":"Number of trial-length-measures which constitute the product's trial period","verbs":["POST","PUT","GET"]}
+	// Required: true
 	Trial *int32 `json:"trial"`
 
-	/* {"default":"none","description":"Measure describing the magnitude of the product's trial period.","verbs":["POST","PUT","GET"]}
-
-	Required: true
-	*/
+	// {"default":"none","description":"Measure describing the magnitude of the product's trial period.","verbs":["POST","PUT","GET"]}
+	// Required: true
 	TrialPeriod *string `json:"trialPeriod"`
 
-	/* { "description" : "The UTC DateTime when the object was last updated.", "verbs":[] }
-	 */
+	// { "description" : "The UTC DateTime when the object was last updated.", "verbs":[] }
 	Updated strfmt.DateTime `json:"updated,omitempty"`
 }
 
@@ -186,17 +158,29 @@ func (m *Product) validateDuration(formats strfmt.Registry) error {
 
 var productTypeDurationPeriodPropEnum []interface{}
 
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["minutes","days","months","years"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		productTypeDurationPeriodPropEnum = append(productTypeDurationPeriodPropEnum, v)
+	}
+}
+
+const (
+	// ProductDurationPeriodMinutes captures enum value "minutes"
+	ProductDurationPeriodMinutes string = "minutes"
+	// ProductDurationPeriodDays captures enum value "days"
+	ProductDurationPeriodDays string = "days"
+	// ProductDurationPeriodMonths captures enum value "months"
+	ProductDurationPeriodMonths string = "months"
+	// ProductDurationPeriodYears captures enum value "years"
+	ProductDurationPeriodYears string = "years"
+)
+
 // prop value enum
 func (m *Product) validateDurationPeriodEnum(path, location string, value string) error {
-	if productTypeDurationPeriodPropEnum == nil {
-		var res []string
-		if err := json.Unmarshal([]byte(`["minutes","days","months","years"]`), &res); err != nil {
-			return err
-		}
-		for _, v := range res {
-			productTypeDurationPeriodPropEnum = append(productTypeDurationPeriodPropEnum, v)
-		}
-	}
 	if err := validate.Enum(path, location, value, productTypeDurationPeriodPropEnum); err != nil {
 		return err
 	}
@@ -228,17 +212,25 @@ func (m *Product) validateName(formats strfmt.Registry) error {
 
 var productTypeProductTypePropEnum []interface{}
 
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["nonrecurring","recurring"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		productTypeProductTypePropEnum = append(productTypeProductTypePropEnum, v)
+	}
+}
+
+const (
+	// ProductProductTypeNonrecurring captures enum value "nonrecurring"
+	ProductProductTypeNonrecurring string = "nonrecurring"
+	// ProductProductTypeRecurring captures enum value "recurring"
+	ProductProductTypeRecurring string = "recurring"
+)
+
 // prop value enum
 func (m *Product) validateProductTypeEnum(path, location string, value string) error {
-	if productTypeProductTypePropEnum == nil {
-		var res []string
-		if err := json.Unmarshal([]byte(`["nonrecurring","recurring"]`), &res); err != nil {
-			return err
-		}
-		for _, v := range res {
-			productTypeProductTypePropEnum = append(productTypeProductTypePropEnum, v)
-		}
-	}
 	if err := validate.Enum(path, location, value, productTypeProductTypePropEnum); err != nil {
 		return err
 	}
@@ -270,17 +262,29 @@ func (m *Product) validateTrial(formats strfmt.Registry) error {
 
 var productTypeTrialPeriodPropEnum []interface{}
 
+func init() {
+	var res []string
+	if err := json.Unmarshal([]byte(`["none","minutes","days","months"]`), &res); err != nil {
+		panic(err)
+	}
+	for _, v := range res {
+		productTypeTrialPeriodPropEnum = append(productTypeTrialPeriodPropEnum, v)
+	}
+}
+
+const (
+	// ProductTrialPeriodNone captures enum value "none"
+	ProductTrialPeriodNone string = "none"
+	// ProductTrialPeriodMinutes captures enum value "minutes"
+	ProductTrialPeriodMinutes string = "minutes"
+	// ProductTrialPeriodDays captures enum value "days"
+	ProductTrialPeriodDays string = "days"
+	// ProductTrialPeriodMonths captures enum value "months"
+	ProductTrialPeriodMonths string = "months"
+)
+
 // prop value enum
 func (m *Product) validateTrialPeriodEnum(path, location string, value string) error {
-	if productTypeTrialPeriodPropEnum == nil {
-		var res []string
-		if err := json.Unmarshal([]byte(`["none","minutes","days","months"]`), &res); err != nil {
-			return err
-		}
-		for _, v := range res {
-			productTypeTrialPeriodPropEnum = append(productTypeTrialPeriodPropEnum, v)
-		}
-	}
 	if err := validate.Enum(path, location, value, productTypeTrialPeriodPropEnum); err != nil {
 		return err
 	}

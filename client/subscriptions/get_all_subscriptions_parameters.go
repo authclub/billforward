@@ -4,8 +4,14 @@ package subscriptions
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"net/http"
+	"time"
+
+	"golang.org/x/net/context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
+	cr "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/swag"
 
 	strfmt "github.com/go-openapi/strfmt"
@@ -15,12 +21,12 @@ import (
 // with the default values initialized.
 func NewGetAllSubscriptionsParams() *GetAllSubscriptionsParams {
 	var (
-		excludeChildrenDefault bool   = bool(true)
-		includeRetiredDefault  bool   = bool(false)
-		offsetDefault          int32  = int32(0)
-		orderDefault           string = string("DESC")
-		orderByDefault         string = string("created")
-		recordsDefault         int32  = int32(10)
+		excludeChildrenDefault = bool(true)
+		includeRetiredDefault  = bool(false)
+		offsetDefault          = int32(0)
+		orderDefault           = string("DESC")
+		orderByDefault         = string("created")
+		recordsDefault         = int32(10)
 	)
 	return &GetAllSubscriptionsParams{
 		ExcludeChildren: &excludeChildrenDefault,
@@ -29,6 +35,76 @@ func NewGetAllSubscriptionsParams() *GetAllSubscriptionsParams {
 		Order:           &orderDefault,
 		OrderBy:         &orderByDefault,
 		Records:         &recordsDefault,
+
+		timeout: cr.DefaultTimeout,
+	}
+}
+
+// NewGetAllSubscriptionsParamsWithTimeout creates a new GetAllSubscriptionsParams object
+// with the default values initialized, and the ability to set a timeout on a request
+func NewGetAllSubscriptionsParamsWithTimeout(timeout time.Duration) *GetAllSubscriptionsParams {
+	var (
+		excludeChildrenDefault = bool(true)
+		includeRetiredDefault  = bool(false)
+		offsetDefault          = int32(0)
+		orderDefault           = string("DESC")
+		orderByDefault         = string("created")
+		recordsDefault         = int32(10)
+	)
+	return &GetAllSubscriptionsParams{
+		ExcludeChildren: &excludeChildrenDefault,
+		IncludeRetired:  &includeRetiredDefault,
+		Offset:          &offsetDefault,
+		Order:           &orderDefault,
+		OrderBy:         &orderByDefault,
+		Records:         &recordsDefault,
+
+		timeout: timeout,
+	}
+}
+
+// NewGetAllSubscriptionsParamsWithContext creates a new GetAllSubscriptionsParams object
+// with the default values initialized, and the ability to set a context for a request
+func NewGetAllSubscriptionsParamsWithContext(ctx context.Context) *GetAllSubscriptionsParams {
+	var (
+		excludeChildrenDefault = bool(true)
+		includeRetiredDefault  = bool(false)
+		offsetDefault          = int32(0)
+		orderDefault           = string("DESC")
+		orderByDefault         = string("created")
+		recordsDefault         = int32(10)
+	)
+	return &GetAllSubscriptionsParams{
+		ExcludeChildren: &excludeChildrenDefault,
+		IncludeRetired:  &includeRetiredDefault,
+		Offset:          &offsetDefault,
+		Order:           &orderDefault,
+		OrderBy:         &orderByDefault,
+		Records:         &recordsDefault,
+
+		Context: ctx,
+	}
+}
+
+// NewGetAllSubscriptionsParamsWithHTTPClient creates a new GetAllSubscriptionsParams object
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
+func NewGetAllSubscriptionsParamsWithHTTPClient(client *http.Client) *GetAllSubscriptionsParams {
+	var (
+		excludeChildrenDefault = bool(true)
+		includeRetiredDefault  = bool(false)
+		offsetDefault          = int32(0)
+		orderDefault           = string("DESC")
+		orderByDefault         = string("created")
+		recordsDefault         = int32(10)
+	)
+	return &GetAllSubscriptionsParams{
+		ExcludeChildren: &excludeChildrenDefault,
+		IncludeRetired:  &includeRetiredDefault,
+		Offset:          &offsetDefault,
+		Order:           &orderDefault,
+		OrderBy:         &orderByDefault,
+		Records:         &recordsDefault,
+		HTTPClient:      client,
 	}
 }
 
@@ -81,71 +157,161 @@ type GetAllSubscriptionsParams struct {
 
 	*/
 	Records *int32
+
+	timeout    time.Duration
+	Context    context.Context
+	HTTPClient *http.Client
 }
 
-// WithAccountID adds the accountId to the get all subscriptions params
-func (o *GetAllSubscriptionsParams) WithAccountID(AccountID []string) *GetAllSubscriptionsParams {
-	o.AccountID = AccountID
+// WithTimeout adds the timeout to the get all subscriptions params
+func (o *GetAllSubscriptionsParams) WithTimeout(timeout time.Duration) *GetAllSubscriptionsParams {
+	o.SetTimeout(timeout)
 	return o
+}
+
+// SetTimeout adds the timeout to the get all subscriptions params
+func (o *GetAllSubscriptionsParams) SetTimeout(timeout time.Duration) {
+	o.timeout = timeout
+}
+
+// WithContext adds the context to the get all subscriptions params
+func (o *GetAllSubscriptionsParams) WithContext(ctx context.Context) *GetAllSubscriptionsParams {
+	o.SetContext(ctx)
+	return o
+}
+
+// SetContext adds the context to the get all subscriptions params
+func (o *GetAllSubscriptionsParams) SetContext(ctx context.Context) {
+	o.Context = ctx
+}
+
+// WithHTTPClient adds the HTTPClient to the get all subscriptions params
+func (o *GetAllSubscriptionsParams) WithHTTPClient(client *http.Client) *GetAllSubscriptionsParams {
+	o.SetHTTPClient(client)
+	return o
+}
+
+// SetHTTPClient adds the HTTPClient to the get all subscriptions params
+func (o *GetAllSubscriptionsParams) SetHTTPClient(client *http.Client) {
+	o.HTTPClient = client
+}
+
+// WithAccountID adds the accountID to the get all subscriptions params
+func (o *GetAllSubscriptionsParams) WithAccountID(accountID []string) *GetAllSubscriptionsParams {
+	o.SetAccountID(accountID)
+	return o
+}
+
+// SetAccountID adds the accountId to the get all subscriptions params
+func (o *GetAllSubscriptionsParams) SetAccountID(accountID []string) {
+	o.AccountID = accountID
 }
 
 // WithExcludeChildren adds the excludeChildren to the get all subscriptions params
-func (o *GetAllSubscriptionsParams) WithExcludeChildren(ExcludeChildren *bool) *GetAllSubscriptionsParams {
-	o.ExcludeChildren = ExcludeChildren
+func (o *GetAllSubscriptionsParams) WithExcludeChildren(excludeChildren *bool) *GetAllSubscriptionsParams {
+	o.SetExcludeChildren(excludeChildren)
 	return o
+}
+
+// SetExcludeChildren adds the excludeChildren to the get all subscriptions params
+func (o *GetAllSubscriptionsParams) SetExcludeChildren(excludeChildren *bool) {
+	o.ExcludeChildren = excludeChildren
 }
 
 // WithExcludeServiceEnded adds the excludeServiceEnded to the get all subscriptions params
-func (o *GetAllSubscriptionsParams) WithExcludeServiceEnded(ExcludeServiceEnded *bool) *GetAllSubscriptionsParams {
-	o.ExcludeServiceEnded = ExcludeServiceEnded
+func (o *GetAllSubscriptionsParams) WithExcludeServiceEnded(excludeServiceEnded *bool) *GetAllSubscriptionsParams {
+	o.SetExcludeServiceEnded(excludeServiceEnded)
 	return o
+}
+
+// SetExcludeServiceEnded adds the excludeServiceEnded to the get all subscriptions params
+func (o *GetAllSubscriptionsParams) SetExcludeServiceEnded(excludeServiceEnded *bool) {
+	o.ExcludeServiceEnded = excludeServiceEnded
 }
 
 // WithIncludeRetired adds the includeRetired to the get all subscriptions params
-func (o *GetAllSubscriptionsParams) WithIncludeRetired(IncludeRetired *bool) *GetAllSubscriptionsParams {
-	o.IncludeRetired = IncludeRetired
+func (o *GetAllSubscriptionsParams) WithIncludeRetired(includeRetired *bool) *GetAllSubscriptionsParams {
+	o.SetIncludeRetired(includeRetired)
 	return o
+}
+
+// SetIncludeRetired adds the includeRetired to the get all subscriptions params
+func (o *GetAllSubscriptionsParams) SetIncludeRetired(includeRetired *bool) {
+	o.IncludeRetired = includeRetired
 }
 
 // WithMetadata adds the metadata to the get all subscriptions params
-func (o *GetAllSubscriptionsParams) WithMetadata(Metadata *string) *GetAllSubscriptionsParams {
-	o.Metadata = Metadata
+func (o *GetAllSubscriptionsParams) WithMetadata(metadata *string) *GetAllSubscriptionsParams {
+	o.SetMetadata(metadata)
 	return o
+}
+
+// SetMetadata adds the metadata to the get all subscriptions params
+func (o *GetAllSubscriptionsParams) SetMetadata(metadata *string) {
+	o.Metadata = metadata
 }
 
 // WithOffset adds the offset to the get all subscriptions params
-func (o *GetAllSubscriptionsParams) WithOffset(Offset *int32) *GetAllSubscriptionsParams {
-	o.Offset = Offset
+func (o *GetAllSubscriptionsParams) WithOffset(offset *int32) *GetAllSubscriptionsParams {
+	o.SetOffset(offset)
 	return o
+}
+
+// SetOffset adds the offset to the get all subscriptions params
+func (o *GetAllSubscriptionsParams) SetOffset(offset *int32) {
+	o.Offset = offset
 }
 
 // WithOrder adds the order to the get all subscriptions params
-func (o *GetAllSubscriptionsParams) WithOrder(Order *string) *GetAllSubscriptionsParams {
-	o.Order = Order
+func (o *GetAllSubscriptionsParams) WithOrder(order *string) *GetAllSubscriptionsParams {
+	o.SetOrder(order)
 	return o
+}
+
+// SetOrder adds the order to the get all subscriptions params
+func (o *GetAllSubscriptionsParams) SetOrder(order *string) {
+	o.Order = order
 }
 
 // WithOrderBy adds the orderBy to the get all subscriptions params
-func (o *GetAllSubscriptionsParams) WithOrderBy(OrderBy *string) *GetAllSubscriptionsParams {
-	o.OrderBy = OrderBy
+func (o *GetAllSubscriptionsParams) WithOrderBy(orderBy *string) *GetAllSubscriptionsParams {
+	o.SetOrderBy(orderBy)
 	return o
+}
+
+// SetOrderBy adds the orderBy to the get all subscriptions params
+func (o *GetAllSubscriptionsParams) SetOrderBy(orderBy *string) {
+	o.OrderBy = orderBy
 }
 
 // WithOrganizations adds the organizations to the get all subscriptions params
-func (o *GetAllSubscriptionsParams) WithOrganizations(Organizations []string) *GetAllSubscriptionsParams {
-	o.Organizations = Organizations
+func (o *GetAllSubscriptionsParams) WithOrganizations(organizations []string) *GetAllSubscriptionsParams {
+	o.SetOrganizations(organizations)
 	return o
 }
 
+// SetOrganizations adds the organizations to the get all subscriptions params
+func (o *GetAllSubscriptionsParams) SetOrganizations(organizations []string) {
+	o.Organizations = organizations
+}
+
 // WithRecords adds the records to the get all subscriptions params
-func (o *GetAllSubscriptionsParams) WithRecords(Records *int32) *GetAllSubscriptionsParams {
-	o.Records = Records
+func (o *GetAllSubscriptionsParams) WithRecords(records *int32) *GetAllSubscriptionsParams {
+	o.SetRecords(records)
 	return o
+}
+
+// SetRecords adds the records to the get all subscriptions params
+func (o *GetAllSubscriptionsParams) SetRecords(records *int32) {
+	o.Records = records
 }
 
 // WriteToRequest writes these params to a swagger request
 func (o *GetAllSubscriptionsParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
+	if err := r.SetTimeout(o.timeout); err != nil {
+		return err
+	}
 	var res []error
 
 	valuesAccountID := o.AccountID

@@ -4,8 +4,14 @@ package payments
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"net/http"
+	"time"
+
+	"golang.org/x/net/context"
+
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
+	cr "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/swag"
 
 	strfmt "github.com/go-openapi/strfmt"
@@ -15,11 +21,11 @@ import (
 // with the default values initialized.
 func NewGetAllPaymentsParams() *GetAllPaymentsParams {
 	var (
-		includeRetiredDefault bool   = bool(true)
-		offsetDefault         int32  = int32(0)
-		orderDefault          string = string("DESC")
-		orderByDefault        string = string("created")
-		recordsDefault        int32  = int32(10)
+		includeRetiredDefault = bool(true)
+		offsetDefault         = int32(0)
+		orderDefault          = string("DESC")
+		orderByDefault        = string("created")
+		recordsDefault        = int32(10)
 	)
 	return &GetAllPaymentsParams{
 		IncludeRetired: &includeRetiredDefault,
@@ -27,6 +33,70 @@ func NewGetAllPaymentsParams() *GetAllPaymentsParams {
 		Order:          &orderDefault,
 		OrderBy:        &orderByDefault,
 		Records:        &recordsDefault,
+
+		timeout: cr.DefaultTimeout,
+	}
+}
+
+// NewGetAllPaymentsParamsWithTimeout creates a new GetAllPaymentsParams object
+// with the default values initialized, and the ability to set a timeout on a request
+func NewGetAllPaymentsParamsWithTimeout(timeout time.Duration) *GetAllPaymentsParams {
+	var (
+		includeRetiredDefault = bool(true)
+		offsetDefault         = int32(0)
+		orderDefault          = string("DESC")
+		orderByDefault        = string("created")
+		recordsDefault        = int32(10)
+	)
+	return &GetAllPaymentsParams{
+		IncludeRetired: &includeRetiredDefault,
+		Offset:         &offsetDefault,
+		Order:          &orderDefault,
+		OrderBy:        &orderByDefault,
+		Records:        &recordsDefault,
+
+		timeout: timeout,
+	}
+}
+
+// NewGetAllPaymentsParamsWithContext creates a new GetAllPaymentsParams object
+// with the default values initialized, and the ability to set a context for a request
+func NewGetAllPaymentsParamsWithContext(ctx context.Context) *GetAllPaymentsParams {
+	var (
+		includeRetiredDefault = bool(true)
+		offsetDefault         = int32(0)
+		orderDefault          = string("DESC")
+		orderByDefault        = string("created")
+		recordsDefault        = int32(10)
+	)
+	return &GetAllPaymentsParams{
+		IncludeRetired: &includeRetiredDefault,
+		Offset:         &offsetDefault,
+		Order:          &orderDefault,
+		OrderBy:        &orderByDefault,
+		Records:        &recordsDefault,
+
+		Context: ctx,
+	}
+}
+
+// NewGetAllPaymentsParamsWithHTTPClient creates a new GetAllPaymentsParams object
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
+func NewGetAllPaymentsParamsWithHTTPClient(client *http.Client) *GetAllPaymentsParams {
+	var (
+		includeRetiredDefault = bool(true)
+		offsetDefault         = int32(0)
+		orderDefault          = string("DESC")
+		orderByDefault        = string("created")
+		recordsDefault        = int32(10)
+	)
+	return &GetAllPaymentsParams{
+		IncludeRetired: &includeRetiredDefault,
+		Offset:         &offsetDefault,
+		Order:          &orderDefault,
+		OrderBy:        &orderByDefault,
+		Records:        &recordsDefault,
+		HTTPClient:     client,
 	}
 }
 
@@ -65,47 +135,117 @@ type GetAllPaymentsParams struct {
 
 	*/
 	Records *int32
+
+	timeout    time.Duration
+	Context    context.Context
+	HTTPClient *http.Client
+}
+
+// WithTimeout adds the timeout to the get all payments params
+func (o *GetAllPaymentsParams) WithTimeout(timeout time.Duration) *GetAllPaymentsParams {
+	o.SetTimeout(timeout)
+	return o
+}
+
+// SetTimeout adds the timeout to the get all payments params
+func (o *GetAllPaymentsParams) SetTimeout(timeout time.Duration) {
+	o.timeout = timeout
+}
+
+// WithContext adds the context to the get all payments params
+func (o *GetAllPaymentsParams) WithContext(ctx context.Context) *GetAllPaymentsParams {
+	o.SetContext(ctx)
+	return o
+}
+
+// SetContext adds the context to the get all payments params
+func (o *GetAllPaymentsParams) SetContext(ctx context.Context) {
+	o.Context = ctx
+}
+
+// WithHTTPClient adds the HTTPClient to the get all payments params
+func (o *GetAllPaymentsParams) WithHTTPClient(client *http.Client) *GetAllPaymentsParams {
+	o.SetHTTPClient(client)
+	return o
+}
+
+// SetHTTPClient adds the HTTPClient to the get all payments params
+func (o *GetAllPaymentsParams) SetHTTPClient(client *http.Client) {
+	o.HTTPClient = client
 }
 
 // WithIncludeRetired adds the includeRetired to the get all payments params
-func (o *GetAllPaymentsParams) WithIncludeRetired(IncludeRetired *bool) *GetAllPaymentsParams {
-	o.IncludeRetired = IncludeRetired
+func (o *GetAllPaymentsParams) WithIncludeRetired(includeRetired *bool) *GetAllPaymentsParams {
+	o.SetIncludeRetired(includeRetired)
 	return o
+}
+
+// SetIncludeRetired adds the includeRetired to the get all payments params
+func (o *GetAllPaymentsParams) SetIncludeRetired(includeRetired *bool) {
+	o.IncludeRetired = includeRetired
 }
 
 // WithOffset adds the offset to the get all payments params
-func (o *GetAllPaymentsParams) WithOffset(Offset *int32) *GetAllPaymentsParams {
-	o.Offset = Offset
+func (o *GetAllPaymentsParams) WithOffset(offset *int32) *GetAllPaymentsParams {
+	o.SetOffset(offset)
 	return o
+}
+
+// SetOffset adds the offset to the get all payments params
+func (o *GetAllPaymentsParams) SetOffset(offset *int32) {
+	o.Offset = offset
 }
 
 // WithOrder adds the order to the get all payments params
-func (o *GetAllPaymentsParams) WithOrder(Order *string) *GetAllPaymentsParams {
-	o.Order = Order
+func (o *GetAllPaymentsParams) WithOrder(order *string) *GetAllPaymentsParams {
+	o.SetOrder(order)
 	return o
+}
+
+// SetOrder adds the order to the get all payments params
+func (o *GetAllPaymentsParams) SetOrder(order *string) {
+	o.Order = order
 }
 
 // WithOrderBy adds the orderBy to the get all payments params
-func (o *GetAllPaymentsParams) WithOrderBy(OrderBy *string) *GetAllPaymentsParams {
-	o.OrderBy = OrderBy
+func (o *GetAllPaymentsParams) WithOrderBy(orderBy *string) *GetAllPaymentsParams {
+	o.SetOrderBy(orderBy)
 	return o
+}
+
+// SetOrderBy adds the orderBy to the get all payments params
+func (o *GetAllPaymentsParams) SetOrderBy(orderBy *string) {
+	o.OrderBy = orderBy
 }
 
 // WithOrganizations adds the organizations to the get all payments params
-func (o *GetAllPaymentsParams) WithOrganizations(Organizations []string) *GetAllPaymentsParams {
-	o.Organizations = Organizations
+func (o *GetAllPaymentsParams) WithOrganizations(organizations []string) *GetAllPaymentsParams {
+	o.SetOrganizations(organizations)
 	return o
 }
 
+// SetOrganizations adds the organizations to the get all payments params
+func (o *GetAllPaymentsParams) SetOrganizations(organizations []string) {
+	o.Organizations = organizations
+}
+
 // WithRecords adds the records to the get all payments params
-func (o *GetAllPaymentsParams) WithRecords(Records *int32) *GetAllPaymentsParams {
-	o.Records = Records
+func (o *GetAllPaymentsParams) WithRecords(records *int32) *GetAllPaymentsParams {
+	o.SetRecords(records)
 	return o
+}
+
+// SetRecords adds the records to the get all payments params
+func (o *GetAllPaymentsParams) SetRecords(records *int32) {
+	o.Records = records
 }
 
 // WriteToRequest writes these params to a swagger request
 func (o *GetAllPaymentsParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
+	if err := r.SetTimeout(o.timeout); err != nil {
+		return err
+	}
 	var res []error
 
 	if o.IncludeRetired != nil {
