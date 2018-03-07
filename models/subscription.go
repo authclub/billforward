@@ -22,6 +22,9 @@ type Subscription struct {
 	// Required: true
 	AccountID *string `json:"accountID"`
 
+	// active
+	Active bool `json:"active,omitempty"`
+
 	// {  "default":"true", "description":"Whether the subscription will aggregate all other subscriptions on the account.","verbs":["GET", "PUT", "POST"]}
 	AggregateAllSubscriptionsOnAccount *bool `json:"aggregateAllSubscriptionsOnAccount,omitempty"`
 

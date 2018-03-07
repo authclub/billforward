@@ -35424,6 +35424,9 @@
             "CancelSubscription",
             "None"
           ]
+        },
+        "active": {
+          "type": "boolean"
         }
       },
       "description": "Subscription",
